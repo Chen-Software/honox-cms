@@ -1,5 +1,6 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { parseArgs } from "node:util";
-import { createServer } from "vite";
 
 const { values } = parseArgs({
 	args: Bun.argv.slice(2),
@@ -9,16 +10,27 @@ const { values } = parseArgs({
 			short: "p",
 			default: "3000",
 		},
+		static: {
+			type: "boolean",
+		},
 	},
 	strict: true,
 });
 
 const port = Number.parseInt(values.port ?? "3000", 10);
 
-const vite = await createServer({
-	server: { middlewareMode: true, hmr: false },
-	appType: "custom",
-});
+if (values.static) {
+	const distPath = join(process.cwd(), "dist");
+	if (!existsSync(distPath)) {
+		console.log("Building for static production...");
+		const build = Bun.spawnSync(["bun", "run", "build"]);
+		if (!build.success) {
+			console.error("Build failed");
+			process.exit(1);
+		}
+	} else {
+		console.log("Using existing dist folder...");
+	}
 
 	// Map for file extensions to MIME types
 	const getMimeType = (filePath: string): string => {
@@ -45,9 +57,11 @@ const vite = await createServer({
 			const url = new URL(req.url);
 			const pathname = url.pathname;
 
-const server = Bun.serve({
-	fetch: async (request) => {
-		const url = new URL(request.url);
+			const pathsToTry = [
+				join(process.cwd(), "dist", pathname),
+				join(process.cwd(), "dist", `${pathname}.html`),
+				join(process.cwd(), "dist", pathname, "index.html"),
+			];
 
 			for (const path of pathsToTry) {
 				if (existsSync(path) && !path.endsWith("/")) {
@@ -100,23 +114,23 @@ const server = Bun.serve({
 								this.setHeader(k, v as string);
 							}
 						}
-					}
-				},
-				end(content: any) {
-					resolve(
-						new Response(content, {
-							status: this.statusCode,
-							headers: this.headers,
-						}),
-					);
-				},
-			};
-			vite.middlewares(req as any, res as any, () => {
-				resolve(app.fetch(request));
+					},
+					end(content: any) {
+						resolve(
+							new Response(content, {
+								status: this.statusCode,
+								headers: this.headers,
+							}),
+						);
+					},
+				};
+				vite.middlewares(req as any, res as any, () => {
+					resolve(app.fetch(request));
+				});
 			});
-		});
-	},
-	port,
-});
+		},
+		port,
+	});
 
-console.log(`Server running at ${server.url}`);
+	console.log(`Dev server running at ${server.url}`);
+}
