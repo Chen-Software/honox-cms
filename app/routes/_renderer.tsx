@@ -1,6 +1,8 @@
 import { jsxRenderer } from "hono/jsx-renderer";
 import { Link, Script } from "honox/server";
 
+export const __importing_islands = true;
+
 export default jsxRenderer(({ children }) => {
 	return (
 		<html lang="en">
