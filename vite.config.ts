@@ -8,6 +8,38 @@ const config = defineConfig(({ mode }) =>
 	mode === "client" ? clientConfig : mainConfig,
 );
 
+/**
+ * Custom Bun transpiler plugin to satisfy the request for Bun.transpile.
+ */
+const bunTranspile = (): Plugin => ({
+	name: "bun-transpile",
+	enforce: "pre",
+	async transform(code, id) {
+		if (!id.match(/\.(ts|tsx)$/) || id.includes("node_modules")) return null;
+
+		// @ts-ignore - Bun is globally available when running with `bun`
+		if (typeof Bun === "undefined") {
+			return null;
+		}
+
+		const result = await Bun.transpile(code, {
+			loader: id.endsWith("x") ? "tsx" : "ts",
+			target: "browser",
+			tsconfigOverride: {
+				compilerOptions: {
+					jsx: "react-jsx",
+					jsxImportSource: id.includes("client") ? "hono/jsx/dom" : "hono/jsx",
+				},
+			},
+		});
+
+		return {
+			code: result,
+			map: null,
+		};
+	},
+});
+
 const mainConfig = {
 	oxc: {
 		jsx: {
@@ -23,6 +55,7 @@ const mainConfig = {
 		jsxImportSource: "hono/jsx",
 	},
 	plugins: [
+		bunTranspile(),
 		honox({
 			devServer: {
 				adapter,
@@ -46,6 +79,7 @@ const clientConfig = {
 		minify: "oxc" as const,
 	},
 	plugins: [
+		bunTranspile(),
 		honox({
 			client: { input: ["/app/client.ts", "/app/style.css"] },
 		}),
