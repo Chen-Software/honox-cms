@@ -138,4 +138,15 @@ export const keyframes = defineKeyframes({
 			opacity: "0.5",
 		},
 	},
+	// Custom animations for blog page
+	"fade-in-up": {
+		from: {
+			opacity: "0",
+			transform: "translateY(20px)",
+		},
+		to: {
+			opacity: "1",
+			transform: "translateY(0)",
+		},
+	},
 });
