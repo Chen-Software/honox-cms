@@ -1,9 +1,9 @@
 import TextareaIsland from "../../islands/textarea";
+import { shouldHydrate } from "./island-utils";
 import {
 	type TextareaProps as BaseTextareaProps,
 	Textarea as TextareaPrimitive,
 } from "./textarea-primitive";
-import { shouldHydrate } from "./island-utils";
 
 export interface TextareaProps extends BaseTextareaProps {
 	interactive?: boolean;

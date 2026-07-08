@@ -2,6 +2,7 @@ import type { JSX } from "hono/jsx";
 import { css } from "styled-system/css";
 import PopoverIsland from "../../islands/popover";
 import { IconButton } from "./button";
+import { shouldHydrate } from "./island-utils";
 import {
 	PopoverArrow as Arrow,
 	PopoverArrowTip as ArrowTip,
@@ -17,7 +18,6 @@ import {
 	PopoverTitle as Title,
 	PopoverTrigger as Trigger,
 } from "./popover-primitive";
-import { shouldHydrate } from "./island-utils";
 
 interface PopoverProps extends PopoverRootProps {
 	interactive?: boolean; // keep — forces island hydration (default true)

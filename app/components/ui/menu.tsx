@@ -2,6 +2,7 @@ import type { JSX } from "hono/jsx";
 import { cx } from "styled-system/css";
 import { type MenuVariantProps, menu } from "styled-system/recipes";
 import InteractiveMenuRoot from "../../islands/menu";
+import { shouldHydrate } from "./island-utils";
 // Import primitive components from menu-primitive
 import {
 	MenuCheckboxItem as CheckboxItem,
@@ -16,7 +17,6 @@ import {
 	MenuSeparator as Separator,
 	MenuTrigger as Trigger,
 } from "./menu-primitive";
-import { shouldHydrate } from "./island-utils";
 
 // ============= Flattened API Types =============
 

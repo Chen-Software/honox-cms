@@ -9,8 +9,8 @@ import {
 	HoverCardRoot as RootPrimitive,
 	HoverCardTrigger as Trigger,
 } from "./hover-card-primitive";
-import { Text } from "./text";
 import { shouldHydrate } from "./island-utils";
+import { Text } from "./text";
 
 interface HoverCardProps extends HoverCardRootProps {
 	interactive?: boolean; // keep — forces island hydration (default true)

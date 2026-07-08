@@ -34,6 +34,7 @@ export { Menu, type MenuItem, type MenuProps } from "./menu";
 export * as MenuPrimitive from "./menu-primitive";
 export { Popover, type PopoverProps } from "./popover";
 export { Progress, type ProgressProps } from "./progress";
+export { RadioGroup, type RadioGroupProps } from "./radio-group";
 export { SegmentGroup, type SegmentGroupProps } from "./segment-group";
 export {
 	Skeleton,

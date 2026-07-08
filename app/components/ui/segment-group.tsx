@@ -1,4 +1,5 @@
 import SegmentGroupIsland from "../../islands/segment-group";
+import { shouldHydrate } from "./island-utils";
 import {
 	Indicator,
 	Item,
@@ -11,7 +12,6 @@ import {
 	SegmentGroupStructure,
 	type SegmentGroupStructureProps,
 } from "./segment-group-primitive";
-import { shouldHydrate } from "./island-utils";
 
 export interface SegmentGroupProps
 	extends RootProps,

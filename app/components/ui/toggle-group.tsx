@@ -1,4 +1,5 @@
 import ToggleGroupIsland from "../../islands/toggle-group";
+import { shouldHydrate } from "./island-utils";
 import {
 	Item,
 	Root,
@@ -6,7 +7,6 @@ import {
 	ToggleGroupStructure,
 	type ToggleGroupStructureProps,
 } from "./toggle-group-primitive";
-import { shouldHydrate } from "./island-utils";
 
 export interface ToggleGroupProps
 	extends RootProps,

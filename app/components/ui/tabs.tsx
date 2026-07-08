@@ -1,11 +1,11 @@
 import InteractiveTabsIsland from "../../islands/tabs";
+import { shouldHydrate } from "./island-utils";
 import {
 	type RootProps as InteractiveRootProps,
 	Root,
 	TabsStructure,
 	type TabsStructureProps,
 } from "./tabs-primitive";
-import { shouldHydrate } from "./island-utils";
 
 type TabsItemFromPrimitive = import("./tabs-primitive").TabsItem;
 

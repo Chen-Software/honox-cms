@@ -1,6 +1,7 @@
 import type { JSX } from "hono/jsx";
 import { css, cx } from "styled-system/css";
 import SliderIsland from "../../islands/slider";
+import { shouldHydrate } from "./island-utils";
 import {
 	Control,
 	Label,
@@ -14,7 +15,6 @@ import {
 	toValueArray,
 	ValueText,
 } from "./slider-primitive";
-import { shouldHydrate } from "./island-utils";
 
 interface SliderProps {
 	// Value

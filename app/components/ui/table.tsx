@@ -1,11 +1,11 @@
 import TableIsland from "../../islands/table";
+import { shouldHydrate } from "./island-utils";
 import {
 	TableBase,
 	type TableColumn,
 	type TableProps,
 	type TableRow,
 } from "./table-primitive";
-import { shouldHydrate } from "./island-utils";
 
 export function Table<T = Record<string, unknown>>(props: TableProps<T>) {
 	const hasRowClick = (props.rows ?? []).some(

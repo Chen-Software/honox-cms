@@ -18,6 +18,7 @@ import { hoverCard } from "./hover-card";
 import { menu } from "./menu";
 import { popover } from "./popover";
 import { progress } from "./progress";
+import { radioGroup } from "./radio-group";
 import { segmentGroup } from "./segment-group";
 import { skeleton } from "./skeleton";
 import { slider } from "./slider";
@@ -45,6 +46,7 @@ export const recipes = {
 };
 
 export const slotRecipes = {
+	radioGroup,
 	avatar,
 	toggleGroup,
 	segmentGroup,

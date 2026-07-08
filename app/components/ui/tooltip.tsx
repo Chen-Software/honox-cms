@@ -1,10 +1,10 @@
 import TooltipIsland from "../../islands/tooltip";
+import { shouldHydrate } from "./island-utils";
 import {
 	TooltipBase,
 	type TooltipBaseProps,
 	type TooltipRootProps,
 } from "./tooltip-primitive";
-import { shouldHydrate } from "./island-utils";
 
 export interface TooltipProps extends TooltipRootProps {
 	/**

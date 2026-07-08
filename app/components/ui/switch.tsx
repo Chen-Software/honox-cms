@@ -1,9 +1,9 @@
 import SwitchIsland from "../../islands/switch";
+import { shouldHydrate } from "./island-utils";
 import {
 	Switch as SwitchPrimitive,
 	type SwitchProps as SwitchPrimitiveProps,
 } from "./switch-primitive";
-import { shouldHydrate } from "./island-utils";
 
 export interface SwitchProps extends SwitchPrimitiveProps {
 	interactive?: boolean;
