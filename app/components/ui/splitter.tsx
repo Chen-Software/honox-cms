@@ -39,7 +39,7 @@ export const Splitter = (props: SplitterProps) => {
 		id: idProp,
 		orientation = "horizontal",
 		panels,
-		interactive,
+		interactive = true,
 		defaultSize,
 		size,
 		onSizeChange,
