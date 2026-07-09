@@ -93,7 +93,7 @@ export function Drawer(props: DrawerProps) {
 	const rootRef = rootRefProp || localRef;
 
 	return (
-		<Root {...rest} rootRef={rootRef} dialogRole={role}>
+		<Root {...rest} rootRef={rootRef} dialogRole={role} interactive>
 			{trigger && <Trigger asChild>{trigger}</Trigger>}
 			<Backdrop />
 			<Positioner>

@@ -204,6 +204,7 @@ export function Content(props: ContentProps) {
 			role={role}
 			data-part="content"
 			aria-modal="true"
+			tabIndex={-1}
 			{...nameProps}
 			{...(describedBy ? { "aria-describedby": describedBy } : {})}
 			class={cx(

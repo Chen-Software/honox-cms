@@ -195,8 +195,9 @@ export function useOverlay(opts: OverlayOptions) {
 			if (!target) return;
 			const dataPart = target.getAttribute("data-part");
 
-			if (dataPart === "backdrop") {
-				if (closeOnInteractOutside) {
+			if (dataPart === "backdrop" || dataPart === "positioner") {
+				// Only close if we clicked EXACTLY on the backdrop/positioner, not its children (Content)
+				if (closeOnInteractOutside && e.target === target) {
 					hide();
 					onChangeRef.current(false);
 				}
@@ -269,10 +270,10 @@ export function useOverlay(opts: OverlayOptions) {
 				}
 			}
 		};
-		root.addEventListener("keydown", onKeyDown);
+		window.addEventListener("keydown", onKeyDown, true);
 
 		return () => {
-			root.removeEventListener("keydown", onKeyDown);
+			window.removeEventListener("keydown", onKeyDown, true);
 			const i = openOverlayRoots.indexOf(root);
 			if (i !== -1) openOverlayRoots.splice(i, 1);
 			applyInert();
