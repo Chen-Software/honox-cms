@@ -1,3 +1,4 @@
+import { tagsInput } from "./tags-input";
 import { pagination } from "./pagination";
 import { absoluteCenter } from "./absolute-center";
 import { alert } from "./alert";
@@ -47,6 +48,7 @@ export const recipes = {
 };
 
 export const slotRecipes = {
+    tagsInput,
 	pagination,
 	radioGroup,
 	avatar,

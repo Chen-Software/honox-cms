@@ -38,6 +38,7 @@ import {
 	Switch,
 	Table,
 	Tabs,
+	TagsInput,
 	Text,
 	Textarea,
 	Toast,
@@ -2395,6 +2396,58 @@ export default createRoute((c) => {
 						})}
 						contentClass={css({ mt: "4" })}
 					/>
+				</div>
+			</div>
+
+			{/* TagsInput Examples */}
+			<div
+				class={css({
+					mt: "8",
+					display: "flex",
+					flexDirection: "column",
+					gap: "4",
+					alignItems: "center",
+					maxWidth: "xl",
+					mx: "auto",
+				})}
+			>
+				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
+					TagsInput Component Examples
+				</Heading>
+				<div
+					class={css({
+						width: "full",
+						display: "flex",
+						flexDirection: "column",
+						gap: "8",
+					})}
+				>
+					<div
+						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
+					>
+						<Text size="sm" class={css({ color: "fg.muted" })}>
+							Basic TagsInput (Static)
+						</Text>
+						<TagsInput
+							label="Frameworks"
+							defaultValue={["React", "Solid", "Vue"]}
+						/>
+					</div>
+
+					<div
+						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
+					>
+						<Text size="sm" class={css({ color: "fg.muted" })}>
+							Interactive TagsInput
+						</Text>
+						<TagsInput
+							label="Frameworks"
+							defaultValue={["Hono", "HonoX"]}
+							onValueChange={(details) =>
+								console.log("Tags changed:", details.value)
+							}
+						/>
+					</div>
 				</div>
 			</div>
 

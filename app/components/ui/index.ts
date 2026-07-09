@@ -51,6 +51,8 @@ export {
     type TableRow
 } from "./table";
 export { Tabs, type TabsItem, type TabsProps } from "./tabs";
+export { TagsInput, type TagsInputProps } from "./tags-input";
+export * as TagsInputPrimitive from "./tags-input-primitive";
 export { Text, type TextProps } from "./text";
 export { Textarea, type TextareaProps } from "./textarea";
 export * as Toast from "./toast";
