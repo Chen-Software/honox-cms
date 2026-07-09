@@ -24,6 +24,7 @@ import {
 	IconButton,
 	Loader,
 	Menu,
+	Pagination,
 	Popover,
 	Progress,
 	RadioGroup,
@@ -2394,6 +2395,58 @@ export default createRoute((c) => {
 						})}
 						contentClass={css({ mt: "4" })}
 					/>
+				</div>
+			</div>
+
+			{/* Pagination Examples */}
+			<div
+				class={css({
+					mt: "8",
+					display: "flex",
+					flexDirection: "column",
+					gap: "4",
+					alignItems: "center",
+					maxWidth: "xl",
+					mx: "auto",
+					pb: "20",
+				})}
+			>
+				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
+					Pagination Component Examples
+				</Heading>
+				<div
+					class={css({
+						width: "full",
+						display: "flex",
+						flexDirection: "column",
+						gap: "8",
+					})}
+				>
+					<div
+						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
+					>
+						<Text size="sm" class={css({ color: "fg.muted" })}>
+							Basic Pagination (Uncontrolled)
+						</Text>
+						<Pagination count={100} pageSize={10} defaultPage={1} />
+					</div>
+
+					<div
+						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
+					>
+						<Text size="sm" class={css({ color: "fg.muted" })}>
+							Interactive Pagination
+						</Text>
+						<Pagination
+							interactive
+							count={100}
+							pageSize={10}
+							defaultPage={3}
+							onPageChange={(details) =>
+								console.log("Page changed to:", details.page)
+							}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>,

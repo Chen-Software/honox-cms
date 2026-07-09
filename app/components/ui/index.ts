@@ -1,22 +1,20 @@
 export {
-	AbsoluteCenter,
-	type AbsoluteCenterProps,
+    AbsoluteCenter,
+    type AbsoluteCenterProps
 } from "./absolute-center";
 export { Alert, AlertIcon, type AlertProps } from "./alert";
 export { Avatar, type AvatarProps } from "./avatar";
 export { Badge, type BadgeProps } from "./badge";
 export {
-	Breadcrumb,
-	type BreadcrumbItem,
-	type BreadcrumbProps,
+    Breadcrumb,
+    type BreadcrumbItem,
+    type BreadcrumbProps
 } from "./breadcrumb";
 export {
-	Button,
-	ButtonGroup,
-	type ButtonGroupProps,
-	type ButtonProps,
-	CloseButton,
-	IconButton,
+    Button,
+    ButtonGroup, CloseButton,
+    IconButton, type ButtonGroupProps,
+    type ButtonProps
 } from "./button";
 export { Card, type CardProps } from "./card";
 export { Checkbox, type CheckboxProps } from "./checkbox";
@@ -32,27 +30,25 @@ export { HoverCard, type HoverCardProps } from "./hover-card";
 export { Loader, type LoaderProps } from "./loader";
 export { Menu, type MenuItem, type MenuProps } from "./menu";
 export * as MenuPrimitive from "./menu-primitive";
+export { Pagination, type PaginationProps } from "./pagination";
 export { Popover, type PopoverProps } from "./popover";
 export { Progress, type ProgressProps } from "./progress";
 export { RadioGroup, type RadioGroupProps } from "./radio-group";
 export { SegmentGroup, type SegmentGroupProps } from "./segment-group";
 export {
-	Skeleton,
-	SkeletonCircle,
-	type SkeletonCircleProps,
-	type SkeletonProps,
-	SkeletonText,
-	type SkeletonTextProps,
+    Skeleton,
+    SkeletonCircle, SkeletonText, type SkeletonCircleProps,
+    type SkeletonProps, type SkeletonTextProps
 } from "./skeleton";
 export { Slider, type SliderProps } from "./slider";
 export { Spinner, type SpinnerProps } from "./spinner";
-export { type PanelConfig, Splitter, type SplitterProps } from "./splitter";
+export { Splitter, type PanelConfig, type SplitterProps } from "./splitter";
 export { Switch, type SwitchProps } from "./switch";
 export {
-	Table,
-	type TableColumn,
-	type TableProps,
-	type TableRow,
+    Table,
+    type TableColumn,
+    type TableProps,
+    type TableRow
 } from "./table";
 export { Tabs, type TabsItem, type TabsProps } from "./tabs";
 export { Text, type TextProps } from "./text";
