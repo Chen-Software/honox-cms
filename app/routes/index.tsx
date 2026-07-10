@@ -43,9 +43,9 @@ import {
 	Textarea,
 	Toast,
 	ToggleGroup,
+	PaginatedTable,
 	Tooltip,
 } from "../components/ui";
-import PaginatedTable from "../islands/paginated-table";
 
 const items = [
 	{ label: "React", value: "react" },

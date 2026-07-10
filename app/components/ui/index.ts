@@ -55,6 +55,7 @@ export {
 	type TableProps,
 	type TableRow,
 } from "./table";
+export { PaginatedTable } from "./paginated-table";
 export { Tabs, type TabsItem, type TabsProps } from "./tabs";
 export { TagsInput, type TagsInputProps } from "./tags-input";
 export * as TagsInputPrimitive from "./tags-input-primitive";

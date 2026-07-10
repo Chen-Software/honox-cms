@@ -1,7 +1,12 @@
 import { useState } from "hono/jsx";
 import { css } from "styled-system/css";
 import { Badge } from "../components/ui/badge";
-import { Pagination } from "../components/ui/pagination";
+import {
+	NextTrigger,
+	PaginationItems,
+	Root as PaginationRoot,
+	PrevTrigger,
+} from "../components/ui/pagination-primitive";
 import { TableBase } from "../components/ui/table-primitive";
 
 interface User {
@@ -259,13 +264,16 @@ export default function PaginatedTable() {
 			/>
 
 			<div class={css({ display: "flex", justifyContent: "center", mt: "4" })}>
-				<Pagination
-					interactive
+				<PaginationRoot
 					count={totalItems}
 					pageSize={pageSize}
 					page={page}
 					onPageChange={(details) => setPage(details.page)}
-				/>
+				>
+					<PrevTrigger />
+					<PaginationItems />
+					<NextTrigger />
+				</PaginationRoot>
 			</div>
 		</div>
 	);
