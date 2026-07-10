@@ -1,0 +1,341 @@
+{
+  "title": "Pulse — Real-Time Product Analytics",
+  "content": [
+    {
+      "type": "alert",
+      "status": "info",
+      "variant": "subtle",
+      "title": "Limited-time launch offer",
+      "description": "Get 3 months free on annual plans — through July 31."
+    },
+    {
+      "type": "stack",
+      "direction": "vertical",
+      "align": "center",
+      "gap": "4",
+      "children": [
+        {
+          "type": "badge",
+          "text": "New · Pulse 2.0",
+          "variant": "subtle",
+          "colorPalette": "purple"
+        },
+        {
+          "type": "heading",
+          "text": "Ship faster with real-time product insight",
+          "size": "6xl",
+          "as": "h1",
+          "style": "text-align:center;max-width:44rem"
+        },
+        {
+          "type": "text",
+          "size": "lg",
+          "content": "Pulse unifies your analytics, alerts, and team collaboration into one live dashboard — so you always know what's happening, the moment it happens.",
+          "style": "text-align:center;max-width:38rem"
+        },
+        {
+          "type": "stack",
+          "direction": "horizontal",
+          "gap": "4",
+          "children": [
+            {
+              "type": "button",
+              "text": "Start Free Trial",
+              "variant": "solid",
+              "colorPalette": "blue",
+              "size": "lg"
+            },
+            {
+              "type": "button",
+              "text": "Book a Demo",
+              "variant": "outline",
+              "colorPalette": "blue",
+              "size": "lg"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "size": "sm",
+          "content": "No credit card required · Free 14-day trial"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Trusted by fast-moving teams",
+      "size": "xl",
+      "as": "h2",
+      "style": "text-align:center"
+    },
+    {
+      "type": "stack",
+      "direction": "horizontal",
+      "gap": "4",
+      "justify": "center",
+      "children": [
+        { "type": "badge", "text": "Acme Corp", "variant": "outline", "colorPalette": "slate" },
+        { "type": "badge", "text": "Globex", "variant": "outline", "colorPalette": "slate" },
+        { "type": "badge", "text": "Umbrella", "variant": "outline", "colorPalette": "slate" },
+        { "type": "badge", "text": "Initech", "variant": "outline", "colorPalette": "slate" },
+        { "type": "badge", "text": "Soylent", "variant": "outline", "colorPalette": "slate" }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Everything you need to move fast",
+      "size": "3xl",
+      "as": "h2"
+    },
+    {
+      "type": "text",
+      "size": "lg",
+      "content": "One platform to replace your dashboard sprawl."
+    },
+    {
+      "type": "stack",
+      "direction": "horizontal",
+      "gap": "6",
+      "children": [
+        {
+          "type": "card",
+          "title": "Real-Time Dashboards",
+          "description": "Live metrics, zero refresh",
+          "body": "Track every KPI as it happens with sub-second latency streaming straight from your data warehouse.",
+          "imagePosition": "top",
+          "children": [
+            { "type": "badge", "text": "Live", "variant": "subtle", "colorPalette": "green" }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "Smart Alerts",
+          "description": "Know before it breaks",
+          "body": "Anomaly detection flags issues automatically and routes them to the right team in Slack or PagerDuty.",
+          "imagePosition": "top",
+          "children": [
+            { "type": "badge", "text": "AI-Powered", "variant": "subtle", "colorPalette": "purple" }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "Team Collaboration",
+          "description": "Insights, not silos",
+          "body": "Annotate charts, leave comments, and share saved views so everyone works from the same source of truth.",
+          "imagePosition": "top",
+          "children": [
+            { "type": "badge", "text": "Collaborative", "variant": "subtle", "colorPalette": "blue" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "See your metrics come alive",
+      "description": "A single pane of glass for your whole stack.",
+      "body": "Connect Postgres, Snowflake, Stripe, and 40+ other sources in minutes. No pipelines, no code required.",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+      "imagePosition": "left",
+      "children": [
+        {
+          "type": "button",
+          "text": "Explore Features",
+          "variant": "solid",
+          "colorPalette": "blue",
+          "size": "md"
+        },
+        {
+          "type": "badge",
+          "text": "2-minute setup",
+          "variant": "outline",
+          "colorPalette": "slate"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "“Pulse cut our incident response time by 60%.”",
+      "description": "Jane Cooper — VP Engineering, Acme Corp",
+      "body": "We used to stitch together five tools to know something was wrong. Now Pulse tells us before our customers do.",
+      "imagePosition": "top"
+    },
+    {
+      "type": "heading",
+      "text": "Simple, transparent pricing",
+      "size": "3xl",
+      "as": "h2"
+    },
+    {
+      "type": "text",
+      "size": "lg",
+      "content": "Start free. Upgrade when you're ready."
+    },
+    {
+      "type": "stack",
+      "direction": "horizontal",
+      "gap": "6",
+      "children": [
+        {
+          "type": "card",
+          "title": "Starter",
+          "description": "$0 / month",
+          "body": "Up to 3 team members. 1 project. Community support.",
+          "imagePosition": "top",
+          "children": [
+            {
+              "type": "button",
+              "text": "Get Started",
+              "variant": "outline",
+              "colorPalette": "blue",
+              "size": "md"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "Pro",
+          "description": "$49 / month",
+          "body": "Unlimited team members and projects. Priority support. Smart alerts included.",
+          "imagePosition": "top",
+          "children": [
+            { "type": "badge", "text": "Most Popular", "variant": "solid", "colorPalette": "blue" },
+            {
+              "type": "button",
+              "text": "Choose Pro",
+              "variant": "solid",
+              "colorPalette": "blue",
+              "size": "md"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "Enterprise",
+          "description": "Let's talk",
+          "body": "SSO & SAML. Dedicated support engineer. Custom data retention. SLA guarantees.",
+          "imagePosition": "top",
+          "children": [
+            {
+              "type": "button",
+              "text": "Contact Sales",
+              "variant": "outline",
+              "colorPalette": "blue",
+              "size": "md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Frequently asked questions",
+      "size": "3xl",
+      "as": "h2"
+    },
+    {
+      "type": "stack",
+      "direction": "vertical",
+      "gap": "4",
+      "children": [
+        {
+          "type": "collapsible",
+          "triggerText": "Can I cancel anytime?",
+          "showIndicator": true,
+          "indicatorPlacement": "end",
+          "open": false,
+          "children": [
+            {
+              "type": "text",
+              "size": "md",
+              "content": "Yes. There are no long-term contracts — cancel or downgrade your plan anytime from account settings."
+            }
+          ]
+        },
+        {
+          "type": "collapsible",
+          "triggerText": "Does Pulse support self-hosting?",
+          "showIndicator": true,
+          "indicatorPlacement": "end",
+          "open": false,
+          "children": [
+            {
+              "type": "text",
+              "size": "md",
+              "content": "Enterprise plans include a self-hosted deployment option with full data residency control."
+            }
+          ]
+        },
+        {
+          "type": "collapsible",
+          "triggerText": "What data sources are supported?",
+          "showIndicator": true,
+          "indicatorPlacement": "end",
+          "open": false,
+          "children": [
+            {
+              "type": "text",
+              "size": "md",
+              "content": "Pulse connects to Postgres, MySQL, Snowflake, BigQuery, Stripe, and 40+ other sources out of the box."
+            }
+          ]
+        },
+        {
+          "type": "collapsible",
+          "triggerText": "Is there a free trial?",
+          "showIndicator": true,
+          "indicatorPlacement": "end",
+          "open": false,
+          "children": [
+            {
+              "type": "text",
+              "size": "md",
+              "content": "Every plan starts with a 14-day free trial — no credit card required."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "direction": "vertical",
+      "align": "center",
+      "gap": "4",
+      "children": [
+        {
+          "type": "heading",
+          "text": "Ready to see it for yourself?",
+          "size": "3xl",
+          "as": "h2",
+          "style": "text-align:center"
+        },
+        {
+          "type": "text",
+          "size": "lg",
+          "content": "Join thousands of teams shipping with confidence.",
+          "style": "text-align:center"
+        },
+        {
+          "type": "stack",
+          "direction": "horizontal",
+          "gap": "4",
+          "children": [
+            {
+              "type": "button",
+              "text": "Start Free Trial",
+              "variant": "solid",
+              "colorPalette": "blue",
+              "size": "lg"
+            },
+            {
+              "type": "button",
+              "text": "Talk to Sales",
+              "variant": "outline",
+              "colorPalette": "blue",
+              "size": "lg"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
