@@ -24,6 +24,7 @@ import {
 	IconButton,
 	Loader,
 	Menu,
+	PaginatedTable,
 	Pagination,
 	Popover,
 	Progress,
@@ -34,8 +35,8 @@ import {
 	SkeletonText,
 	Slider,
 	Spinner,
-	Stack,
 	Splitter,
+	Stack,
 	Switch,
 	Table,
 	Tabs,
@@ -44,7 +45,6 @@ import {
 	Textarea,
 	Toast,
 	ToggleGroup,
-	PaginatedTable,
 	Tooltip,
 } from "../components/ui";
 
@@ -1110,7 +1110,9 @@ export default createRoute((c) => {
 						</Text>
 						<Stack gap="4" justify="center">
 							<div class={css({ boxSize: "10", bg: "red.9", rounded: "md" })} />
-							<div class={css({ boxSize: "10", bg: "blue.9", rounded: "md" })} />
+							<div
+								class={css({ boxSize: "10", bg: "blue.9", rounded: "md" })}
+							/>
 							<div
 								class={css({ boxSize: "10", bg: "green.9", rounded: "md" })}
 							/>
@@ -1122,7 +1124,9 @@ export default createRoute((c) => {
 							Vertical Stack
 						</Text>
 						<Stack direction="vertical" gap="2" align="center">
-							<div class={css({ h: "10", w: "20", bg: "red.9", rounded: "md" })} />
+							<div
+								class={css({ h: "10", w: "20", bg: "red.9", rounded: "md" })}
+							/>
 							<div
 								class={css({ h: "10", w: "20", bg: "blue.9", rounded: "md" })}
 							/>
@@ -1136,7 +1140,16 @@ export default createRoute((c) => {
 						<Text size="sm" class={css({ mb: "2", color: "fg.muted" })}>
 							Stack with Spacing and Alignment
 						</Text>
-						<Stack gap="10" align="end" justify="between" class={css({ border: "1px solid", p: "4", borderColor: "border" })}>
+						<Stack
+							gap="10"
+							align="end"
+							justify="between"
+							class={css({
+								border: "1px solid",
+								p: "4",
+								borderColor: "border",
+							})}
+						>
 							<Text>Item 1</Text>
 							<Text>Item 2</Text>
 							<Text>Item 3</Text>
