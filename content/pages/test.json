@@ -151,11 +151,11 @@
       "confirmText": "",
       "cancelText": "",
       "footer": "Footer",
+      "closable": true,
       "interactive": true,
       "trigger": "TriggerDrawer",
       "cancel": "",
-      "confirm": "",
-      "closable": true
+      "confirm": ""
     },
     {
       "type": "hoverCard",
@@ -184,6 +184,25 @@
       "invalid": false,
       "required": true,
       "readOnly": false
+    },
+    {
+      "type": "radioGroup",
+      "label": "label",
+      "defaultValue": "",
+      "items": [
+        {
+          "label": "label1",
+          "value": "value1",
+          "disabled": false
+        },
+        {
+          "label": "label2",
+          "value": "value2",
+          "disabled": false
+        }
+      ],
+      "colorPalette": "",
+      "size": "md"
     }
   ]
 }
