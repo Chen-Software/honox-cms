@@ -51,7 +51,6 @@ export default defineConfig({
 			skeleton: ["*"],
 			slider: ["*"],
 			spinner: ["*"],
-			stack: ["*"],
 			splitter: ["*"],
 			switch: ["*"],
 			table: ["*"],
@@ -61,6 +60,9 @@ export default defineConfig({
 			toast: ["*"],
 			toggleGroup: ["*"],
 			tooltip: ["*"],
+		},
+		patterns: {
+			stack: ["*"],
 		},
 	},
 

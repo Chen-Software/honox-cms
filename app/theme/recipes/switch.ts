@@ -46,7 +46,9 @@ export const switchRecipe = defineSlotRecipe({
 			position: "relative",
 			width: "var(--switch-width)",
 			height: "var(--switch-height)",
-			transition: "backgrounds",
+			transitionProperty: "background",
+			transitionDuration: "fast",
+			transitionTimingFunction: "default",
 			_disabled: {
 				layerStyle: "disabled",
 			},
@@ -63,6 +65,7 @@ export const switchRecipe = defineSlotRecipe({
 			flexShrink: 0,
 			transitionProperty: "translate",
 			transitionDuration: "fast",
+			transitionTimingFunction: "default",
 			borderRadius: "inherit",
 			_peerChecked: {
 				translate: "var(--switch-x) 0",

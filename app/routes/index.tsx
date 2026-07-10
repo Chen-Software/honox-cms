@@ -1155,6 +1155,27 @@ export default createRoute((c) => {
 							<Text>Item 3</Text>
 						</Stack>
 					</div>
+
+					<div class={css({ textAlign: "center" })}>
+						<Text size="sm" class={css({ mb: "2", color: "fg.muted" })}>
+							Responsive Stack (collapses to a vertical stack on mobile)
+						</Text>
+						<Stack
+							direction={{ base: "column", md: "row" }}
+							gap={{ base: "3", md: "6" }}
+							align={{ base: "stretch", md: "center" }}
+							justify="center"
+							class={css({
+								border: "1px solid",
+								p: "4",
+								borderColor: "border",
+							})}
+						>
+							<Text>Item 1</Text>
+							<Text>Item 2</Text>
+							<Text>Item 3</Text>
+						</Stack>
+					</div>
 				</div>
 			</div>
 
