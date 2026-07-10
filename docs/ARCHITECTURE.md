@@ -140,6 +140,7 @@ Applies to:
 | `avatar` | `src` (async image load / error lifecycle) | ✅ `avatar.tsx` (Tier-2) |
 | `pagination` | `onPageChange`, or non-link `page` / `defaultPage` / `pageSize` / `defaultPageSize` | ✅ `pagination.tsx` |
 | `tags-input` | `onValueChange` / `onInputValueChange` / `value` / `inputValue` / `defaultValue` / `defaultInputValue` | ✅ `tags-input.tsx` |
+| `paginated-table` | Always island (manages internal pagination state) | ✅ `paginated-table.tsx` (Tier-2 logic) |
 
 ### Tier-3 (presentational)
 

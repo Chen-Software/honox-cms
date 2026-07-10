@@ -30,34 +30,26 @@ Live demo: [https://honox.chen.so](https://honox.chen.so)
 | `/blog/tag/:tag` | `app/routes/blog/tag/[tag].tsx` | Tag-filtered post list (static) |
 | `/blog/:slug` | `app/routes/blog/[slug].tsx` | Individual post |
 | `/admin/` | `public/admin/index.html` | Sveltia CMS UI |
+| `/pages/:slug` | `app/routes/pages/[slug].tsx` | Dynamic CMS-built pages |
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for UI components architecture details.
 
 ---
 
-## Blog & CMS
+## Blog, Pages & CMS
 
 ### How it works
 
-1. **Write** — Markdown files in `content/posts/*.md` with YAML frontmatter:
-   ````markdown
-   ---
-   title: "My Post"
-   date: "2026-07-04"
-   description: "A summary..."
-   tags: ["tutorial", "honox"]
-   draft: false
-   ---
-   
-   Post body in markdown...
-   ````
+#### Blog Posts
+1. **Write** — Markdown files in `content/posts/*.md` with YAML frontmatter.
+2. **Manage** — Visit `/admin/` to edit posts.
+3. **Build** — `bun run build` generates static HTML for post list and individual posts.
 
-2. **Manage** — Visit `/admin/` to edit posts via Sveltia CMS.
-
-3. **Build** — `bun run build` generates:
-   - `dist/blog/index.html` — post list
-   - `dist/blog/[slug].html` — individual post pages
-   - `dist/blog/tag/[tag].html` — tag-filtered post lists (static, no JS needed)
+#### Dynamic Pages
+1. **Design** — Create pages in `content/pages/*.json` using the CMS UI.
+2. **Components** — Choose from 25+ UI components (Stack, Card, Dialog, etc.).
+3. **Nesting** — Build complex layouts with recursive nesting (e.g., a Card inside a Stack inside another Stack).
+4. **Render** — The `PageRenderer` component (`app/components/page-renderer.tsx`) maps JSON data to themed UI components.
 
 ---
 
