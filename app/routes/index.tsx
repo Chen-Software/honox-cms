@@ -1394,7 +1394,7 @@ export default createRoute((c) => {
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Skeleton Circle
 						</Text>
-						<Skeleton variant="circle" size="12" />
+						<Skeleton shape="circle" size="12" />
 					</div>
 
 					<div
@@ -1408,7 +1408,7 @@ export default createRoute((c) => {
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Skeleton Text
 						</Text>
-						<Skeleton variant="text" noOfLines={3} gap="3" />
+						<Skeleton shape="text" noOfLines={3} gap="3" />
 					</div>
 
 					<div

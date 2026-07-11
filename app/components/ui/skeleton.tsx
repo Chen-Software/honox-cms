@@ -4,16 +4,13 @@ import { stack } from "styled-system/patterns";
 import { type SkeletonVariantProps, skeleton } from "styled-system/recipes";
 
 interface SkeletonProps
-	extends PropsWithChildren<Omit<SkeletonVariantProps, "variant">>,
-		Omit<
-			import("hono/jsx").JSX.IntrinsicElements["div"],
-			"children" | "width" | "height" | "size"
-		> {
+	extends PropsWithChildren<Omit<SkeletonVariantProps, "circle">>,
+		Omit<import("hono/jsx").JSX.IntrinsicElements["div"], "children" | "width" | "height" | "size"> {
 	class?: string;
 	width?: string | number;
 	height?: string | number;
 	size?: string | number;
-	variant?: "pulse" | "shine" | "none" | "circle" | "text";
+	shape?: "circle" | "text" | "children";
 	noOfLines?: number;
 	gap?: string | number;
 }
@@ -30,11 +27,11 @@ function getPandaSize(val: string | number) {
 
 function Skeleton(props: SkeletonProps) {
 	const [variantProps, localProps] = skeleton.splitVariantProps(props);
-	const { children, class: classProp, style: styleProp, width, height, size, noOfLines, gap, ...restProps } = localProps;
+	const { children, class: classProp, style: styleProp, width, height, size, shape = "children", noOfLines, gap, ...restProps } = localProps;
 
-	// Check if the user specified the visual variant ("circle" or "text") via the variant prop or explicitly
-	const isCircle = variantProps.circle || props.variant === "circle";
-	const isText = props.variant === "text";
+	// Check if the shape is circle or text
+	const isCircle = shape === "circle";
+	const isText = shape === "text";
 
 	if (isText) {
 		return (
@@ -61,16 +58,23 @@ function Skeleton(props: SkeletonProps) {
 		styles.height = getPandaSize(height);
 	}
 
-	const inlineStyles = [
-		...Object.entries(styles).map(([k, v]) => `${k}:${v}`),
-		styleProp,
-	].filter(Boolean).join(";");
+	// Resolve inline style to string or object to be safe with Hono JSX
+	let finalStyle: string | Record<string, string | number> | undefined;
 
-	// Resolve animation variant. If it is circle/text shape variant, default animation is pulse
-	const resolvedVariant =
-		props.variant === "circle" || props.variant === "text"
-			? undefined
-			: props.variant;
+	if (typeof styleProp === "object" && styleProp !== null) {
+		finalStyle = {
+			...styles,
+			...styleProp,
+		};
+	} else if (typeof styleProp === "string" && styleProp) {
+		const styleString = [
+			...Object.entries(styles).map(([k, v]) => `${k}:${v}`),
+			styleProp,
+		].filter(Boolean).join(";");
+		finalStyle = styleString || undefined;
+	} else {
+		finalStyle = Object.keys(styles).length > 0 ? styles : undefined;
+	}
 
 	return (
 		<div
@@ -78,11 +82,10 @@ function Skeleton(props: SkeletonProps) {
 				skeleton({
 					...variantProps,
 					circle: isCircle,
-					variant: resolvedVariant,
 				}),
 				classProp,
 			)}
-			style={inlineStyles || undefined}
+			style={finalStyle}
 			{...restProps}
 		>
 			{children}
@@ -93,7 +96,7 @@ function Skeleton(props: SkeletonProps) {
 interface SkeletonCircleProps extends SkeletonProps {}
 
 function SkeletonCircle(props: SkeletonCircleProps) {
-	return <Skeleton circle {...props} />;
+	return <Skeleton shape="circle" {...props} />;
 }
 
 interface SkeletonTextProps extends SkeletonProps {
