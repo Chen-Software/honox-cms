@@ -153,7 +153,7 @@ export function Track(
 			data-part="track"
 			class={cx(context?.styles.track, classProp)}
 			data-orientation={context?.orientation}
-			style={{ position: "relative", width: "100%", height: "100%", ...style }}
+			style={{ position: "relative", ...style }}
 			{...rest}
 		>
 			{children}
@@ -348,6 +348,7 @@ export function Marker(
 	return (
 		<div
 			data-part="marker"
+			data-value={value}
 			class={cx(context?.styles.marker, classProp)}
 			data-orientation={context?.orientation}
 			style={{ ...markerStyle, ...style }}
@@ -464,10 +465,24 @@ export function InteractiveSlider(props: InteractiveSliderProps) {
 				element.setAttribute("data-orientation", orientation);
 			}
 			for (const element of Array.from(
-				root.querySelectorAll('[data-part="marker"]'),
+				root.querySelectorAll<HTMLElement>('[data-part="marker"]'),
 			)) {
 				addClass(element, styles.marker);
 				element.setAttribute("data-orientation", orientation);
+				const markerValue = Number(element.getAttribute("data-value"));
+				if (Number.isFinite(markerValue)) {
+					const percent = percentForValue(markerValue);
+					if (orientation === "horizontal") {
+						element.style.left = `${percent}%`;
+						element.style.bottom = "";
+						element.style.transform = "translateX(-50%)";
+					} else {
+						element.style.bottom = `${percent}%`;
+						element.style.left = "";
+						element.style.transform = "translateY(50%)";
+					}
+					element.style.position = "absolute";
+				}
 			}
 			for (const element of Array.from(
 				root.querySelectorAll('[data-part="marker-indicator"]'),
