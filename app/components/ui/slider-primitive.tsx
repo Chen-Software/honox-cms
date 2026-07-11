@@ -175,28 +175,28 @@ export function Range(
 	};
 
 	if (values.length === 1) {
-		const percent = ((values[0] ?? min - min) / (max - min)) * 100;
+		const percent = (((values[0] ?? min) - min) / (max - min)) * 100;
 		if (context?.orientation === "horizontal") {
 			rangeStyle = {
 				...rangeStyle,
-				left: `${percent}%`,
-				width: "0px",
+				left: "0%",
+				width: `${percent}%`,
 				height: "100%",
 				bottom: "0",
 			};
 		} else {
 			rangeStyle = {
 				...rangeStyle,
-				bottom: `${percent}%`,
-				height: "0px",
+				bottom: "0%",
+				height: `${percent}%`,
 				width: "100%",
 				left: "0",
 			};
 		}
 	} else {
-		const startPercent = ((values[0] ?? min - min) / (max - min)) * 100;
+		const startPercent = (((values[0] ?? min) - min) / (max - min)) * 100;
 		const endPercent =
-			((values[values.length - 1] ?? min - min) / (max - min)) * 100;
+			(((values[values.length - 1] ?? min) - min) / (max - min)) * 100;
 		if (context?.orientation === "horizontal") {
 			rangeStyle = {
 				...rangeStyle,
