@@ -466,9 +466,7 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 				const focusable = getFocusable(content);
 				(focusable[0] ?? content).focus();
 			}
-			const trigger = root.querySelector<HTMLElement>(
-				'[data-part="trigger"]',
-			);
+			const trigger = root.querySelector<HTMLElement>('[data-part="trigger"]');
 			if (trigger) {
 				trigger.setAttribute("data-state", "open");
 				trigger.setAttribute("aria-expanded", "true");
@@ -487,15 +485,11 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 				p.style.cssText = "display: none !important;";
 				p.setAttribute("data-state", "closed");
 			});
-			const content = root.querySelector<HTMLElement>(
-				'[data-part="content"]',
-			);
+			const content = root.querySelector<HTMLElement>('[data-part="content"]');
 			if (content) {
 				content.setAttribute("data-state", "closed");
 			}
-			const trigger = root.querySelector<HTMLElement>(
-				'[data-part="trigger"]',
-			);
+			const trigger = root.querySelector<HTMLElement>('[data-part="trigger"]');
 			if (trigger) {
 				trigger.setAttribute("data-state", "closed");
 				trigger.setAttribute("aria-expanded", "false");
@@ -538,17 +532,13 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 				p.style.cssText = "display: block !important;";
 				p.setAttribute("data-state", "open");
 			});
-			const content = root.querySelector<HTMLElement>(
-				'[data-part="content"]',
-			);
+			const content = root.querySelector<HTMLElement>('[data-part="content"]');
 			if (content) {
 				content.setAttribute("data-state", "open");
 				const focusable = getFocusable(content);
 				(focusable[0] ?? content).focus();
 			}
-			const trigger = root.querySelector<HTMLElement>(
-				'[data-part="trigger"]',
-			);
+			const trigger = root.querySelector<HTMLElement>('[data-part="trigger"]');
 			if (trigger) {
 				trigger.setAttribute("data-state", "open");
 				trigger.setAttribute("aria-expanded", "true");
@@ -570,15 +560,11 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 				p.style.cssText = "display: none !important;";
 				p.setAttribute("data-state", "closed");
 			});
-			const content = root.querySelector<HTMLElement>(
-				'[data-part="content"]',
-			);
+			const content = root.querySelector<HTMLElement>('[data-part="content"]');
 			if (content) {
 				content.setAttribute("data-state", "closed");
 			}
-			const trigger = root.querySelector<HTMLElement>(
-				'[data-part="trigger"]',
-			);
+			const trigger = root.querySelector<HTMLElement>('[data-part="trigger"]');
 			if (trigger) {
 				trigger.setAttribute("data-state", "closed");
 				trigger.setAttribute("aria-expanded", "false");
@@ -593,7 +579,9 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 		};
 
 		const handleClick = (e: Event) => {
-			const target = (e.target as HTMLElement).closest("[data-part]") as HTMLElement;
+			const target = (e.target as HTMLElement).closest(
+				"[data-part]",
+			) as HTMLElement;
 			if (!target) return;
 			const dataPart = target.getAttribute("data-part");
 
@@ -647,35 +635,35 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 }
 
 export type {
-	PopoverStyles,
-	PopoverContextValue,
-	PopoverRootProps,
-	PopoverTriggerProps,
-	PopoverPositionerProps,
-	PopoverContentProps,
-	PopoverTitleProps,
-	PopoverDescriptionProps,
-	PopoverCloseTriggerProps,
-	PopoverAnchorProps,
-	PopoverIndicatorProps,
 	InteractivePopoverProps,
+	PopoverAnchorProps,
+	PopoverCloseTriggerProps,
+	PopoverContentProps,
+	PopoverContextValue,
+	PopoverDescriptionProps,
+	PopoverIndicatorProps,
+	PopoverPositionerProps,
+	PopoverRootProps,
+	PopoverStyles,
+	PopoverTitleProps,
+	PopoverTriggerProps,
 };
 export {
-	Root,
-	RootProvider,
 	Anchor,
-	Trigger,
-	Positioner,
 	Arrow,
 	ArrowTip,
-	Content,
-	CloseTrigger,
-	Header,
 	Body,
-	Footer,
-	Title,
-	Description,
-	Indicator,
+	CloseTrigger,
+	Content,
 	Context,
+	Description,
+	Footer,
+	Header,
+	Indicator,
 	InteractivePopoverRoot,
+	Positioner,
+	Root,
+	RootProvider,
+	Title,
+	Trigger,
 };

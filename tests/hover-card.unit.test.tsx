@@ -47,4 +47,25 @@ describe("HoverCard Unit Tests", () => {
 		expect(html).toContain("Custom Content");
 		expect(html).not.toContain("HoverCard Title");
 	});
+
+	test("should render compound/composable API correctly", () => {
+		const html = (
+			<HoverCard.Root>
+				<HoverCard.Trigger>
+					<span>Hover me</span>
+				</HoverCard.Trigger>
+				<HoverCard.Positioner>
+					<HoverCard.Content>
+						Supplementary information shown on hover.
+					</HoverCard.Content>
+				</HoverCard.Positioner>
+			</HoverCard.Root>
+		).toString();
+
+		expect(html).toContain('data-part="trigger"');
+		expect(html).toContain("Hover me");
+		expect(html).toContain('data-part="positioner"');
+		expect(html).toContain('role="dialog"');
+		expect(html).toContain("Supplementary information shown on hover.");
+	});
 });

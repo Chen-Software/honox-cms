@@ -2,12 +2,15 @@ import type { JSX } from "hono/jsx";
 import { css } from "styled-system/css";
 import HoverCardIsland from "../../islands/hover-card";
 import {
-	HoverCardArrow as Arrow,
-	HoverCardContent as Content,
+	Arrow,
+	ArrowTip,
+	Content,
+	Context,
 	type HoverCardRootProps,
-	HoverCardPositioner as Positioner,
-	HoverCardRoot as RootPrimitive,
-	HoverCardTrigger as Trigger,
+	Positioner,
+	Root as RootPrimitive,
+	RootProvider,
+	Trigger,
 } from "./hover-card-primitive";
 import { shouldHydrate } from "./island-utils";
 import { Text } from "./text";
@@ -62,5 +65,28 @@ function HoverCard(props: HoverCardProps) {
 	);
 }
 
-export { HoverCard, type HoverCardProps };
-export default HoverCard;
+const HoverCardComponent = Object.assign(HoverCard, {
+	Root,
+	RootProvider,
+	Trigger,
+	Positioner,
+	Content,
+	Arrow,
+	ArrowTip,
+	Context,
+});
+
+export {
+	Arrow,
+	ArrowTip,
+	Content,
+	Context,
+	HoverCardComponent as HoverCard,
+	type HoverCardProps,
+	Positioner,
+	Root,
+	RootProvider,
+	Trigger,
+};
+
+export default HoverCardComponent;

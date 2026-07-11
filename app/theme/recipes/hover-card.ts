@@ -20,11 +20,11 @@ export const hoverCard = defineSlotRecipe({
 			transformOrigin: "var(--transform-origin)",
 			zIndex: "popover",
 			_open: {
-				animationStyle: "scale-fade-in",
+				animationStyle: "slide-fade-in",
 				animationDuration: "fast",
 			},
 			_closed: {
-				animationStyle: "scale-fade-out",
+				animationStyle: "slide-fade-out",
 				animationDuration: "faster",
 			},
 		},
