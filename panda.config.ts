@@ -23,7 +23,18 @@ export default defineConfig({
 	// are used and would only emit the gray default. Without this, every badge
 	// renders with the same fallback color regardless of its colorPalette prop.
 	staticCss: {
-		// utilities: ["colorPalette"],
+		utilities: ["colorPalette"],
+		// Every recipe here must keep `["*"]`: none of them (aside from alert,
+		// button, skeleton, input) declare a `jsx: [...]` mapping in their recipe
+		// definition, so Panda's static extractor cannot associate `<Foo size="sm">`
+		// JSX usage with the recipe at all — it only sees `recipe(variantProps)`
+		// calls inside the primitive files, always with a runtime-destructured
+		// object, never literal args. Verified empirically: dropping force-generation
+		// for e.g. `code` silently removed every non-default size/variant class
+		// (`code--size_sm/lg/xl`, `code--variant_solid/surface/outline/plain`) even
+		// though app/routes/index.tsx uses them all literally. A real reduction here
+		// would require adding `jsx: [...]` to each recipe first — a separate,
+		// larger change — not just trimming this list.
 		recipes: {
 			select: ["*"],
 			pagination: ["*"],

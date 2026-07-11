@@ -137,11 +137,9 @@ function renderMenuItem(item: MenuItem, index: number): JSX.Element {
 		case "submenu": {
 			const submenuItem = item as MenuSubmenuItem;
 			return (
-				<div key={index}>
-					<ItemText>
-						{submenuItem.label} (submenu not supported in simplified API)
-					</ItemText>
-				</div>
+				<Item key={index} value={`submenu:${submenuItem.label}`} disabled>
+					<ItemText>{submenuItem.label}</ItemText>
+				</Item>
 			);
 		}
 
