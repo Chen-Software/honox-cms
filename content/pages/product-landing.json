@@ -316,7 +316,14 @@
               "content": "Enterprise plans include a self-hosted deployment option with full data residency control."
             }
           ],
-          "triggerText": "Does Pulse support self-hosting?",
+          "triggerText": "",
+          "trigger": [
+            {
+              "type": "text",
+              "size": "md",
+              "content": "Does Pulse support self-hosting?"
+            }
+          ],
           "showIndicator": true,
           "indicatorPlacement": "end",
           "open": false
@@ -330,7 +337,14 @@
               "content": "Pulse connects to Postgres, MySQL, Snowflake, BigQuery, Stripe, and 40+ other sources out of the box."
             }
           ],
-          "triggerText": "What data sources are supported?",
+          "triggerText": "",
+          "trigger": [
+            {
+              "type": "text",
+              "size": "md",
+              "content": "What data sources are supported?"
+            }
+          ],
           "showIndicator": true,
           "indicatorPlacement": "end",
           "open": false
@@ -344,7 +358,14 @@
               "content": "Every plan starts with a 14-day free trial — no credit card required."
             }
           ],
-          "triggerText": "Is there a free trial?",
+          "triggerText": "",
+          "trigger": [
+            {
+              "type": "text",
+              "size": "md",
+              "content": "Is there a free trial?"
+            }
+          ],
           "showIndicator": true,
           "indicatorPlacement": "end",
           "open": false
