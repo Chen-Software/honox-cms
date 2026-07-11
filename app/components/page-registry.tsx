@@ -445,8 +445,11 @@ const registry: Record<string, BlockRenderer> = {
 	skeleton: (b) => {
 		const { children } = b;
 		const { shape, variant, noOfLines, loaded, ...rest } = propsOf(b);
-		const resolvedShape = shape || (variant === "text" || variant === "circle" ? variant : "children");
-		const resolvedVariant = (variant === "text" || variant === "circle") ? undefined : variant;
+		const resolvedShape =
+			shape ||
+			(variant === "text" || variant === "circle" ? variant : "children");
+		const resolvedVariant =
+			variant === "text" || variant === "circle" ? undefined : variant;
 
 		return (
 			<Skeleton

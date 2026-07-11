@@ -48,8 +48,12 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 	const initialFocused =
 		parseSingleDate(focusedValueProp ?? defaultFocusedValue) ??
 		(currentValue[0] || fromJSDate(new Date()));
-	const [focusedValue, setFocusedValue] = useState<CalendarDate>(initialFocused);
-	const currentFocusedValue = focusedValueProp !== undefined ? parseSingleDate(focusedValueProp)! : focusedValue;
+	const [focusedValue, setFocusedValue] =
+		useState<CalendarDate>(initialFocused);
+	const currentFocusedValue =
+		focusedValueProp !== undefined
+			? parseSingleDate(focusedValueProp)!
+			: focusedValue;
 
 	// Keep refs for event handlers to avoid closure stale state
 	const stateRef = useRef({
@@ -70,7 +74,14 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 			selectionMode,
 			closeOnSelect,
 		};
-	}, [open, currentValue, currentView, currentFocusedValue, selectionMode, closeOnSelect]);
+	}, [
+		open,
+		currentValue,
+		currentView,
+		currentFocusedValue,
+		selectionMode,
+		closeOnSelect,
+	]);
 
 	const updateValue = (nextValues: CalendarDate[]) => {
 		setValue(nextValues);
@@ -120,7 +131,12 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 	};
 
 	const handleCellClick = (cellVal: CalendarDate | number) => {
-		const { view: activeView, value: vals, selectionMode: mode, closeOnSelect: cos } = stateRef.current;
+		const {
+			view: activeView,
+			value: vals,
+			selectionMode: mode,
+			closeOnSelect: cos,
+		} = stateRef.current;
 
 		if (activeView === "day" && cellVal instanceof CalendarDate) {
 			let nextValues: CalendarDate[] = [];
@@ -238,16 +254,27 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 				const activeView = stateRef.current.view;
 				if (activeView === "day") {
 					const cell = cellTrigger.closest('[data-part="table-cell"]');
-					const dayCellIndex = Array.from(root.querySelectorAll('[data-part="table-cell"]')).indexOf(cell as any);
+					const dayCellIndex = Array.from(
+						root.querySelectorAll('[data-part="table-cell"]'),
+					).indexOf(cell as any);
 					if (dayCellIndex !== -1) {
-						const flatWeeks = stateRef.current.focusedValue ? getMonthWeeks(stateRef.current.focusedValue.year, stateRef.current.focusedValue.month).flat() : [];
+						const flatWeeks = stateRef.current.focusedValue
+							? getMonthWeeks(
+									stateRef.current.focusedValue.year,
+									stateRef.current.focusedValue.month,
+								).flat()
+							: [];
 						const dateValue = flatWeeks[dayCellIndex];
 						if (dateValue) {
 							handleCellClick(dateValue);
 						}
 					}
 				} else if (activeView === "month") {
-					const cells = Array.from(root.querySelectorAll('[data-part="table-cell-trigger"][data-view="month"]'));
+					const cells = Array.from(
+						root.querySelectorAll(
+							'[data-part="table-cell-trigger"][data-view="month"]',
+						),
+					);
 					const idx = cells.indexOf(cellTrigger);
 					if (idx !== -1) {
 						handleCellClick(idx + 1); // 1-based month value
@@ -263,10 +290,14 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 			const target = e.target as HTMLSelectElement;
 			if (target.getAttribute("data-part") === "month-select") {
 				const monthVal = Number(target.value);
-				setFocusedValue(new CalendarDate(stateRef.current.focusedValue.year, monthVal, 1));
+				setFocusedValue(
+					new CalendarDate(stateRef.current.focusedValue.year, monthVal, 1),
+				);
 			} else if (target.getAttribute("data-part") === "year-select") {
 				const yearVal = Number(target.value);
-				setFocusedValue(new CalendarDate(yearVal, stateRef.current.focusedValue.month, 1));
+				setFocusedValue(
+					new CalendarDate(yearVal, stateRef.current.focusedValue.month, 1),
+				);
 			}
 		};
 
@@ -297,7 +328,9 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 			view={currentView}
 			selectionMode={selectionMode}
 		>
-			{children || <DatePickerStructure selectionMode={selectionMode} {...rest} />}
+			{children || (
+				<DatePickerStructure selectionMode={selectionMode} {...rest} />
+			)}
 		</DatePickerRoot>
 	);
 }

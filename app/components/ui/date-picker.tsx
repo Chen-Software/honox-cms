@@ -40,16 +40,34 @@ export interface DatePickerProps extends DatePickerRootProps {
 }
 
 export function DatePickerRoot(props: DatePickerProps) {
-	const { interactive, value, defaultValue, min, max, focusedValue, defaultFocusedValue, isDateUnavailable, ...rest } = props;
+	const {
+		interactive,
+		value,
+		defaultValue,
+		min,
+		max,
+		focusedValue,
+		defaultFocusedValue,
+		isDateUnavailable,
+		...rest
+	} = props;
 	const isInteractive = shouldHydrate(interactive, true);
 
 	if (isInteractive) {
-		const serializedValue = value ? parseValue(value).map(v => v.toString()) : undefined;
-		const serializedDefaultValue = defaultValue ? parseValue(defaultValue).map(v => v.toString()) : undefined;
+		const serializedValue = value
+			? parseValue(value).map((v) => v.toString())
+			: undefined;
+		const serializedDefaultValue = defaultValue
+			? parseValue(defaultValue).map((v) => v.toString())
+			: undefined;
 		const serializedMin = min ? parseSingleDate(min)?.toString() : undefined;
 		const serializedMax = max ? parseSingleDate(max)?.toString() : undefined;
-		const serializedFocusedValue = focusedValue ? parseSingleDate(focusedValue)?.toString() : undefined;
-		const serializedDefaultFocusedValue = defaultFocusedValue ? parseSingleDate(defaultFocusedValue)?.toString() : undefined;
+		const serializedFocusedValue = focusedValue
+			? parseSingleDate(focusedValue)?.toString()
+			: undefined;
+		const serializedDefaultFocusedValue = defaultFocusedValue
+			? parseSingleDate(defaultFocusedValue)?.toString()
+			: undefined;
 
 		const { children, ...islandRest } = rest as any;
 

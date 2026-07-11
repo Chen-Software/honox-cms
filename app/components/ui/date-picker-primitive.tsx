@@ -11,7 +11,11 @@ import type { DatePickerVariantProps } from "styled-system/recipes";
 import { datePicker } from "styled-system/recipes";
 
 export class CalendarDate {
-	constructor(public year: number, public month: number, public day: number) {}
+	constructor(
+		public year: number,
+		public month: number,
+		public day: number,
+	) {}
 
 	toString() {
 		const mm = String(this.month).padStart(2, "0");
@@ -34,7 +38,11 @@ export function parseDate(str: string): CalendarDate {
 }
 
 export function fromJSDate(date: Date): CalendarDate {
-	return new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+	return new CalendarDate(
+		date.getFullYear(),
+		date.getMonth() + 1,
+		date.getDate(),
+	);
 }
 
 export function parseValue(val: any): CalendarDate[] {
@@ -97,8 +105,13 @@ export interface DatePickerContextValue {
 	goToPrev: () => void;
 	setView: (view: "day" | "month" | "year") => void;
 	setFocusedValue: (val: CalendarDate) => void;
-	getMonthsGrid: (opts?: { columns?: number; format?: "short" | "long" }) => { value: number; label: string }[][];
-	getYearsGrid: (opts?: { columns?: number }) => { value: number; label: string }[][];
+	getMonthsGrid: (opts?: {
+		columns?: number;
+		format?: "short" | "long";
+	}) => { value: number; label: string }[][];
+	getYearsGrid: (opts?: {
+		columns?: number;
+	}) => { value: number; label: string }[][];
 }
 
 const DatePickerCtx = createContext<DatePickerContextValue | null>(null);
@@ -108,7 +121,9 @@ export const useDatePickerContext = () => {
 	return context;
 };
 
-export interface DatePickerRootProps extends DatePickerVariantProps, PropsWithChildren {
+export interface DatePickerRootProps
+	extends DatePickerVariantProps,
+		PropsWithChildren {
 	id?: string;
 	open?: boolean;
 	focused?: boolean;
@@ -136,7 +151,11 @@ export interface DatePickerRootProps extends DatePickerVariantProps, PropsWithCh
 	[key: string]: any;
 }
 
-export function getMonthWeeks(year: number, month: number, startOfWeek = 0): CalendarDate[][] {
+export function getMonthWeeks(
+	year: number,
+	month: number,
+	startOfWeek = 0,
+): CalendarDate[][] {
 	const firstDay = new Date(year, month - 1, 1);
 	const firstDayOfWeek = firstDay.getDay();
 	const prevDaysCount = (firstDayOfWeek - startOfWeek + 7) % 7;
@@ -203,9 +222,14 @@ export function DatePickerRoot(props: DatePickerRootProps) {
 	const [valState, setValState] = useState<CalendarDate[]>(initialValue);
 	const value = valueProp ? parseValue(valueProp) : valState;
 
-	const initialFocused = parseSingleDate(focusedValueProp ?? defaultFocusedValue) ?? (value[0] || fromJSDate(new Date()));
-	const [focusedState, setFocusedState] = useState<CalendarDate>(initialFocused);
-	const focusedValue = focusedValueProp ? parseSingleDate(focusedValueProp)! : focusedState;
+	const initialFocused =
+		parseSingleDate(focusedValueProp ?? defaultFocusedValue) ??
+		(value[0] || fromJSDate(new Date()));
+	const [focusedState, setFocusedState] =
+		useState<CalendarDate>(initialFocused);
+	const focusedValue = focusedValueProp
+		? parseSingleDate(focusedValueProp)!
+		: focusedState;
 
 	const min = parseSingleDate(minProp);
 	const max = parseSingleDate(maxProp);
@@ -244,33 +268,59 @@ export function DatePickerRoot(props: DatePickerRootProps) {
 	const goToNext = () => {
 		if (currentView === "day") {
 			const nextMonth = focusedValue.month === 12 ? 1 : focusedValue.month + 1;
-			const nextYear = focusedValue.month === 12 ? focusedValue.year + 1 : focusedValue.year;
+			const nextYear =
+				focusedValue.month === 12 ? focusedValue.year + 1 : focusedValue.year;
 			setFocusedState(new CalendarDate(nextYear, nextMonth, 1));
 		} else if (currentView === "month") {
-			setFocusedState(new CalendarDate(focusedValue.year + 1, focusedValue.month, 1));
+			setFocusedState(
+				new CalendarDate(focusedValue.year + 1, focusedValue.month, 1),
+			);
 		} else {
-			setFocusedState(new CalendarDate(focusedValue.year + 10, focusedValue.month, 1));
+			setFocusedState(
+				new CalendarDate(focusedValue.year + 10, focusedValue.month, 1),
+			);
 		}
 	};
 
 	const goToPrev = () => {
 		if (currentView === "day") {
 			const prevMonth = focusedValue.month === 1 ? 12 : focusedValue.month - 1;
-			const prevYear = focusedValue.month === 1 ? focusedValue.year - 1 : focusedValue.year;
+			const prevYear =
+				focusedValue.month === 1 ? focusedValue.year - 1 : focusedValue.year;
 			setFocusedState(new CalendarDate(prevYear, prevMonth, 1));
 		} else if (currentView === "month") {
-			setFocusedState(new CalendarDate(focusedValue.year - 1, focusedValue.month, 1));
+			setFocusedState(
+				new CalendarDate(focusedValue.year - 1, focusedValue.month, 1),
+			);
 		} else {
-			setFocusedState(new CalendarDate(focusedValue.year - 10, focusedValue.month, 1));
+			setFocusedState(
+				new CalendarDate(focusedValue.year - 10, focusedValue.month, 1),
+			);
 		}
 	};
 
 	const formatMonthYear = (date: CalendarDate) => {
 		const dateObj = date.toDate();
 		try {
-			return dateObj.toLocaleDateString(locale, { month: "long", year: "numeric" });
+			return dateObj.toLocaleDateString(locale, {
+				month: "long",
+				year: "numeric",
+			});
 		} catch {
-			const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			const months = [
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"September",
+				"October",
+				"November",
+				"December",
+			];
 			return `${months[date.month - 1]} ${date.year}`;
 		}
 	};
@@ -281,7 +331,10 @@ export function DatePickerRoot(props: DatePickerRootProps) {
 		end: formatMonthYear(focusedValue),
 	};
 
-	const getMonthsGrid = (opts?: { columns?: number; format?: "short" | "long" }) => {
+	const getMonthsGrid = (opts?: {
+		columns?: number;
+		format?: "short" | "long";
+	}) => {
 		const columns = opts?.columns ?? 4;
 		const format = opts?.format ?? "short";
 		const months = [
@@ -298,7 +351,7 @@ export function DatePickerRoot(props: DatePickerRootProps) {
 			{ value: 11, label: format === "short" ? "Nov" : "November" },
 			{ value: 12, label: format === "short" ? "Dec" : "December" },
 		];
-		const grid: typeof months[] = [];
+		const grid: (typeof months)[] = [];
 		for (let i = 0; i < months.length; i += columns) {
 			grid.push(months.slice(i, i + columns));
 		}
@@ -312,14 +365,15 @@ export function DatePickerRoot(props: DatePickerRootProps) {
 		for (let y = startYear; y < startYear + 10; y++) {
 			years.push({ value: y, label: String(y) });
 		}
-		const grid: typeof years[] = [];
+		const grid: (typeof years)[] = [];
 		for (let i = 0; i < years.length; i += columns) {
 			grid.push(years.slice(i, i + columns));
 		}
 		return grid;
 	};
 
-	const isMaxSelected = maxSelectedDates !== undefined && value.length >= maxSelectedDates;
+	const isMaxSelected =
+		maxSelectedDates !== undefined && value.length >= maxSelectedDates;
 
 	return (
 		<DatePickerCtx.Provider
@@ -395,7 +449,9 @@ export function DatePickerLabel(props: PropsWithChildren<{ class?: string }>) {
 	);
 }
 
-export function DatePickerControl(props: PropsWithChildren<{ class?: string }>) {
+export function DatePickerControl(
+	props: PropsWithChildren<{ class?: string }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -411,8 +467,18 @@ export function DatePickerControl(props: PropsWithChildren<{ class?: string }>) 
 	);
 }
 
-export function DatePickerInput(props: { class?: string; index?: number; placeholder?: string; [key: string]: any }) {
-	const { class: classProp, index = 0, placeholder = "YYYY-MM-DD", ...rest } = props;
+export function DatePickerInput(props: {
+	class?: string;
+	index?: number;
+	placeholder?: string;
+	[key: string]: any;
+}) {
+	const {
+		class: classProp,
+		index = 0,
+		placeholder = "YYYY-MM-DD",
+		...rest
+	} = props;
 	const context = useDatePickerContext();
 	const val = context?.value[index]?.toString() ?? "";
 
@@ -434,7 +500,9 @@ export function DatePickerInput(props: { class?: string; index?: number; placeho
 	);
 }
 
-export function DatePickerTrigger(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerTrigger(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -470,7 +538,9 @@ export function DatePickerTrigger(props: PropsWithChildren<{ class?: string; [ke
 	);
 }
 
-export function DatePickerClearTrigger(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerClearTrigger(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -503,14 +573,20 @@ export function DatePickerClearTrigger(props: PropsWithChildren<{ class?: string
 	);
 }
 
-export function DatePickerPositioner(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerPositioner(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
 		<div
 			data-scope="date-picker"
 			data-part="positioner"
-			class={cx(context?.styles.positioner, classProp, !context?.open && css({ display: "none" }))}
+			class={cx(
+				context?.styles.positioner,
+				classProp,
+				!context?.open && css({ display: "none" }),
+			)}
 			style={{
 				position: "absolute",
 				top: "100%",
@@ -525,7 +601,9 @@ export function DatePickerPositioner(props: PropsWithChildren<{ class?: string; 
 	);
 }
 
-export function DatePickerContent(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerContent(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -541,7 +619,13 @@ export function DatePickerContent(props: PropsWithChildren<{ class?: string; [ke
 	);
 }
 
-export function DatePickerView(props: PropsWithChildren<{ class?: string; view: "day" | "month" | "year"; [key: string]: any }>) {
+export function DatePickerView(
+	props: PropsWithChildren<{
+		class?: string;
+		view: "day" | "month" | "year";
+		[key: string]: any;
+	}>,
+) {
 	const { children, class: classProp, view, ...rest } = props;
 	const context = useDatePickerContext();
 	const active = context?.view === view;
@@ -551,7 +635,11 @@ export function DatePickerView(props: PropsWithChildren<{ class?: string; view: 
 			data-scope="date-picker"
 			data-part="view"
 			data-view={view}
-			class={cx(context?.styles.view, classProp, !active && css({ display: "none" }))}
+			class={cx(
+				context?.styles.view,
+				classProp,
+				!active && css({ display: "none" }),
+			)}
 			style={{ display: active ? "flex" : "none", flexDirection: "column" }}
 			{...rest}
 		>
@@ -560,7 +648,9 @@ export function DatePickerView(props: PropsWithChildren<{ class?: string; view: 
 	);
 }
 
-export function DatePickerViewControl(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerViewControl(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -576,7 +666,9 @@ export function DatePickerViewControl(props: PropsWithChildren<{ class?: string;
 	);
 }
 
-export function DatePickerPrevTrigger(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerPrevTrigger(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -608,7 +700,9 @@ export function DatePickerPrevTrigger(props: PropsWithChildren<{ class?: string;
 	);
 }
 
-export function DatePickerNextTrigger(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerNextTrigger(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -640,7 +734,9 @@ export function DatePickerNextTrigger(props: PropsWithChildren<{ class?: string;
 	);
 }
 
-export function DatePickerViewTrigger(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerViewTrigger(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -657,7 +753,9 @@ export function DatePickerViewTrigger(props: PropsWithChildren<{ class?: string;
 	);
 }
 
-export function DatePickerRangeText(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerRangeText(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -672,7 +770,9 @@ export function DatePickerRangeText(props: PropsWithChildren<{ class?: string; [
 	);
 }
 
-export function DatePickerTable(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerTable(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -688,7 +788,9 @@ export function DatePickerTable(props: PropsWithChildren<{ class?: string; [key:
 	);
 }
 
-export function DatePickerTableHead(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerTableHead(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -704,7 +806,9 @@ export function DatePickerTableHead(props: PropsWithChildren<{ class?: string; [
 	);
 }
 
-export function DatePickerTableHeader(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerTableHeader(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -721,7 +825,9 @@ export function DatePickerTableHeader(props: PropsWithChildren<{ class?: string;
 	);
 }
 
-export function DatePickerTableRow(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerTableRow(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -737,7 +843,9 @@ export function DatePickerTableRow(props: PropsWithChildren<{ class?: string; [k
 	);
 }
 
-export function DatePickerTableBody(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerTableBody(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -753,9 +861,13 @@ export function DatePickerTableBody(props: PropsWithChildren<{ class?: string; [
 	);
 }
 
-const TableCellContext = createContext<{ value: CalendarDate | number } | null>(null);
+const TableCellContext = createContext<{ value: CalendarDate | number } | null>(
+	null,
+);
 
-export function DatePickerTableCell(props: PropsWithChildren<{ value: any; class?: string; [key: string]: any }>) {
+export function DatePickerTableCell(
+	props: PropsWithChildren<{ value: any; class?: string; [key: string]: any }>,
+) {
 	const { children, value, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -772,13 +884,19 @@ export function DatePickerTableCell(props: PropsWithChildren<{ value: any; class
 	);
 }
 
-export function DatePickerTableCellTrigger(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerTableCellTrigger(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	const cell = useContext(TableCellContext);
 
 	if (!cell || !context) {
-		return <button type="button" class={classProp} {...rest}>{children}</button>;
+		return (
+			<button type="button" class={classProp} {...rest}>
+				{children}
+			</button>
+		);
 	}
 
 	const value = cell.value;
@@ -813,16 +931,22 @@ export function DatePickerTableCellTrigger(props: PropsWithChildren<{ class?: st
 			isDisabled = value.toDate().getTime() < context.min.toDate().getTime();
 		}
 		if (context.max) {
-			isDisabled = isDisabled || value.toDate().getTime() > context.max.toDate().getTime();
+			isDisabled =
+				isDisabled || value.toDate().getTime() > context.max.toDate().getTime();
 		}
 		if (context.isDateUnavailable) {
-			isDisabled = isDisabled || context.isDateUnavailable(value, context.locale);
+			isDisabled =
+				isDisabled || context.isDateUnavailable(value, context.locale);
 		}
 	} else if (typeof value === "number") {
 		// Month view or Year view
 		if (context.view === "month") {
-			isToday = value === new Date().getMonth() + 1 && context.focusedValue.year === new Date().getFullYear();
-			isSelected = context.value[0]?.month === value && context.value[0]?.year === context.focusedValue.year;
+			isToday =
+				value === new Date().getMonth() + 1 &&
+				context.focusedValue.year === new Date().getFullYear();
+			isSelected =
+				context.value[0]?.month === value &&
+				context.value[0]?.year === context.focusedValue.year;
 		} else if (context.view === "year") {
 			isToday = value === new Date().getFullYear();
 			isSelected = context.value[0]?.year === value;
@@ -849,7 +973,9 @@ export function DatePickerTableCellTrigger(props: PropsWithChildren<{ class?: st
 	);
 }
 
-export function DatePickerMonthSelect(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerMonthSelect(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	const months = [
@@ -885,7 +1011,9 @@ export function DatePickerMonthSelect(props: PropsWithChildren<{ class?: string;
 	);
 }
 
-export function DatePickerYearSelect(props: PropsWithChildren<{ class?: string; [key: string]: any }>) {
+export function DatePickerYearSelect(
+	props: PropsWithChildren<{ class?: string; [key: string]: any }>,
+) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	const startYear = (context?.focusedValue.year ?? 2025) - 50;
@@ -913,7 +1041,13 @@ export function DatePickerYearSelect(props: PropsWithChildren<{ class?: string; 
 	);
 }
 
-export function DatePickerPresetTrigger(props: PropsWithChildren<{ value: string; class?: string; [key: string]: any }>) {
+export function DatePickerPresetTrigger(
+	props: PropsWithChildren<{
+		value: string;
+		class?: string;
+		[key: string]: any;
+	}>,
+) {
 	const { children, value, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
 	return (
@@ -931,8 +1065,19 @@ export function DatePickerPresetTrigger(props: PropsWithChildren<{ value: string
 	);
 }
 
-export function DatePickerValueText(props: PropsWithChildren<{ class?: string; placeholder?: string; [key: string]: any }>) {
-	const { children, class: classProp, placeholder = "Select date", ...rest } = props;
+export function DatePickerValueText(
+	props: PropsWithChildren<{
+		class?: string;
+		placeholder?: string;
+		[key: string]: any;
+	}>,
+) {
+	const {
+		children,
+		class: classProp,
+		placeholder = "Select date",
+		...rest
+	} = props;
 	const context = useDatePickerContext();
 
 	let valStr = "";
@@ -954,7 +1099,9 @@ export function DatePickerValueText(props: PropsWithChildren<{ class?: string; p
 	);
 }
 
-export function DatePickerContext(props: { children: (api: DatePickerContextValue) => any }) {
+export function DatePickerContext(props: {
+	children: (api: DatePickerContextValue) => any;
+}) {
 	const context = useDatePickerContext();
 	if (!context) return null;
 	return props.children(context);

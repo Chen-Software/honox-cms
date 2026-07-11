@@ -705,7 +705,6 @@ export function InteractiveSlider(props: InteractiveSliderProps) {
 			thumbKeydownListeners.push({ thumb, handler });
 		});
 
-
 		return () => {
 			control.removeEventListener("mousedown", handleControlDown);
 			control.removeEventListener("touchstart", handleControlDown);

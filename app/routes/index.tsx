@@ -1123,7 +1123,6 @@ export default createRoute((c) => {
 				/>
 			</div>
 
-
 			{/* Group Examples */}
 			<div
 				class={css({
@@ -2013,19 +2012,31 @@ export default createRoute((c) => {
 					})}
 				>
 					{/* Basic DatePicker (Single selection) */}
-					<div class={css({ display: "flex", flexDirection: "column", gap: "2" })}>
+					<div
+						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
+					>
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic DatePicker (Single selection)
 						</Text>
-						<DatePicker interactive label="Choose Date" selectionMode="single" />
+						<DatePicker
+							interactive
+							label="Choose Date"
+							selectionMode="single"
+						/>
 					</div>
 
 					{/* Range Selection DatePicker */}
-					<div class={css({ display: "flex", flexDirection: "column", gap: "2" })}>
+					<div
+						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
+					>
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Range Selection DatePicker
 						</Text>
-						<DatePicker interactive label="Select Date Range" selectionMode="range" />
+						<DatePicker
+							interactive
+							label="Select Date Range"
+							selectionMode="range"
+						/>
 					</div>
 				</div>
 			</div>

@@ -40,18 +40,18 @@ import { toggleGroup } from "./toggle-group";
 import { tooltip } from "./tooltip";
 
 export const recipes = {
-    absoluteCenter,
-    badge,
-    button,
-    group,
-    heading,
-    spinner,
-    text,
-    textarea,
-    skeleton,
-    code,
-    input,
-    datePicker
+	absoluteCenter,
+	badge,
+	button,
+	group,
+	heading,
+	spinner,
+	text,
+	textarea,
+	skeleton,
+	code,
+	input,
+	datePicker,
 };
 
 export const slotRecipes = {
