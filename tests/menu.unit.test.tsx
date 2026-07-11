@@ -38,4 +38,18 @@ describe("Menu Unit Tests", () => {
 		expect(html).toContain('role="menuitemcheckbox"');
 		expect(html).toContain('aria-checked="true"');
 	});
+
+	test("should degrade submenu to a disabled item (no debug leak)", () => {
+		const html = (
+			<Menu.Root
+				interactive={false}
+				items={[{ type: "submenu", label: "More", items: [] }]}
+			/>
+		).toString();
+
+		expect(html).toContain('data-part="item"');
+		expect(html).toContain("data-disabled");
+		expect(html).toContain("More");
+		expect(html).not.toContain("not supported in simplified API");
+	});
 });
