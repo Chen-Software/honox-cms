@@ -91,7 +91,13 @@ test("PageRenderer renders dialog correctly", () => {
 			type: "dialog",
 			title: "Confirm Action",
 			description: "Are you sure?",
-			triggerText: "Open Dialog",
+			trigger: [
+				{
+					type: "button",
+					text: "Open Dialog",
+					variant: "outline"
+				}
+			],
 			confirmText: "Yes",
 			cancelText: "No"
 		}
@@ -112,7 +118,13 @@ test("PageRenderer renders drawer correctly", () => {
 			type: "drawer",
 			title: "Sidebar",
 			description: "Extra options.",
-			triggerText: "Open Drawer",
+			trigger: [
+				{
+					type: "button",
+					text: "Open Drawer",
+					variant: "outline"
+				}
+			],
 			confirmText: "Save",
 			cancelText: "Close"
 		}

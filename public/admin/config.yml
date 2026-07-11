@@ -427,7 +427,6 @@ collections:
                     fields: &dialog_fields
                       - { label: Title, name: title, widget: string }
                       - { label: Description, name: description, widget: string, required: false }
-                      - { label: Trigger Text, name: triggerText, widget: string, required: false }
                       - label: Trigger
                         name: trigger
                         widget: list
@@ -448,7 +447,6 @@ collections:
                     fields: &drawer_fields
                       - { label: Title, name: title, widget: string }
                       - { label: Description, name: description, widget: string, required: false }
-                      - { label: Trigger Text, name: triggerText, widget: string, required: false }
                       - label: Trigger
                         name: trigger
                         widget: list
@@ -675,7 +673,6 @@ collections:
             fields:
               - { label: Title, name: title, widget: string }
               - { label: Description, name: description, widget: string, required: false }
-              - { label: Trigger Text, name: triggerText, widget: string, required: false }
               - label: Trigger
                 name: trigger
                 widget: list
@@ -699,7 +696,6 @@ collections:
             fields:
               - { label: Title, name: title, widget: string }
               - { label: Description, name: description, widget: string, required: false }
-              - { label: Trigger Text, name: triggerText, widget: string, required: false }
               - label: Trigger
                 name: trigger
                 widget: list

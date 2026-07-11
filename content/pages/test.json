@@ -114,10 +114,15 @@
               "type": "dialog",
               "title": "Terms of Service",
               "description": "Please read our terms before proceeding.",
-              "triggerText": "View Terms (Dialog)",
               "body": "",
               "footer": "",
-              "trigger": "",
+              "trigger": [
+                {
+                  "type": "button",
+                  "text": "View Terms (Dialog)",
+                  "variant": "outline"
+                }
+              ],
               "cancel": "",
               "confirm": "",
               "confirmText": "Accept",
@@ -128,10 +133,15 @@
               "type": "drawer",
               "title": "Feedback Panel",
               "description": "We would love to hear from you.",
-              "triggerText": "Give Feedback (Drawer)",
               "body": "",
               "footer": "",
-              "trigger": "",
+              "trigger": [
+                {
+                  "type": "button",
+                  "text": "Give Feedback (Drawer)",
+                  "variant": "outline"
+                }
+              ],
               "cancel": "",
               "confirm": "",
               "confirmText": "Submit",
@@ -146,13 +156,18 @@
       "title": "TitleDrawer",
       "description": "Description",
       "body": "Body",
-      "triggerText": "triggg",
       "confirmText": "",
       "cancelText": "",
       "footer": "Footer",
       "closable": true,
       "interactive": true,
-      "trigger": "TriggerDrawer",
+      "trigger": [
+        {
+          "type": "button",
+          "text": "TriggerDrawer",
+          "variant": "solid"
+        }
+      ],
       "cancel": "",
       "confirm": ""
     },

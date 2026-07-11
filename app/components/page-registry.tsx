@@ -223,7 +223,6 @@ const registry: Record<string, BlockRenderer> = {
 		const {
 			title,
 			description,
-			triggerText,
 			confirmText,
 			cancelText,
 			role,
@@ -242,9 +241,6 @@ const registry: Record<string, BlockRenderer> = {
 			} else if (typeof cmsTrigger === "string") {
 				trigger = cmsTrigger;
 			}
-		}
-		if (!trigger && triggerText) {
-			trigger = <Button variant="outline">{triggerText}</Button>;
 		}
 
 		const confirm = confirmText ? <Button>{confirmText}</Button> : undefined;
@@ -273,7 +269,6 @@ const registry: Record<string, BlockRenderer> = {
 		const {
 			title,
 			description,
-			triggerText,
 			confirmText,
 			cancelText,
 			trigger: cmsTrigger,
@@ -291,9 +286,6 @@ const registry: Record<string, BlockRenderer> = {
 			} else if (typeof cmsTrigger === "string") {
 				trigger = cmsTrigger;
 			}
-		}
-		if (!trigger && triggerText) {
-			trigger = <Button variant="outline">{triggerText}</Button>;
 		}
 
 		const confirm = confirmText ? <Button>{confirmText}</Button> : undefined;
