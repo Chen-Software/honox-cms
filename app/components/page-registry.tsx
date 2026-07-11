@@ -145,7 +145,6 @@ const registry: Record<string, BlockRenderer> = {
 	collapsible: (b) => {
 		const { children } = b;
 		const {
-			triggerText,
 			showIndicator,
 			indicatorPlacement,
 			open,
@@ -167,9 +166,8 @@ const registry: Record<string, BlockRenderer> = {
 			}
 		}
 
-		// Fallback to triggerText for deprecated behavior
-		if (!trigger && triggerText) {
-			trigger = triggerText;
+		if (!trigger) {
+			trigger = "Toggle";
 		}
 
 		const indicator = showIndicator ? (

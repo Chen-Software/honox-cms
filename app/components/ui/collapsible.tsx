@@ -14,12 +14,7 @@ interface CollapsibleProps {
 	 * The trigger element or string.
 	 * If a string is provided, it will be wrapped in a button.
 	 */
-	trigger?: JSX.Element | string;
-	/**
-	 * Deprecated in favor of the trigger prop.
-	 * @deprecated Use `trigger` instead.
-	 */
-	triggerText?: string;
+	trigger: JSX.Element | string;
 	/**
 	 * The content to be shown/hidden.
 	 */
@@ -79,7 +74,6 @@ interface CollapsibleProps {
 function Collapsible(props: CollapsibleProps) {
 	const {
 		trigger,
-		triggerText,
 		content,
 		indicator,
 		indicatorPlacement = "end",
@@ -98,8 +92,6 @@ function Collapsible(props: CollapsibleProps) {
 
 	const isInteractive = shouldHydrate(interactive, true);
 
-	const resolvedTrigger = trigger || triggerText || "";
-
 	const rootProps = {
 		...rest,
 		id,
@@ -115,10 +107,10 @@ function Collapsible(props: CollapsibleProps) {
 	const Root = isInteractive ? (CollapsibleIsland as any) : RootPrimitive;
 
 	const triggerElement =
-		typeof resolvedTrigger === "string" ? (
-			<button type="button">{resolvedTrigger}</button>
+		typeof trigger === "string" ? (
+			<button type="button">{trigger}</button>
 		) : (
-			resolvedTrigger
+			trigger
 		);
 
 	const triggerWithIndicator = indicator
