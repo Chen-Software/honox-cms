@@ -10,6 +10,10 @@ export interface FieldProps extends BaseFieldProps {
 	defaultValue?: string;
 }
 
+/**
+ * A highly production-ready flattened Field component ported to Hono/JSX.
+ * It provides support for validation, helper text, error text, and label styling.
+ */
 export function Field(props: FieldProps) {
 	const {
 		interactive,

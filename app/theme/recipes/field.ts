@@ -4,20 +4,19 @@ export const field = defineSlotRecipe({
 	className: "field",
 	slots: [
 		"root",
-		"errorText",
-		"helperText",
-		"input",
 		"label",
-		"requiredIndicator",
+		"input",
 		"textarea",
 		"select",
+		"helperText",
+		"errorText",
+		"requiredIndicator",
 	],
 	base: {
 		root: {
 			display: "flex",
 			flexDirection: "column",
 			gap: "1.5",
-			width: "full",
 		},
 		label: {
 			alignItems: "center",

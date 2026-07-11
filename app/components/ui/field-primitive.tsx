@@ -10,7 +10,7 @@ import { cx } from "styled-system/css";
 import type { FieldVariantProps } from "styled-system/recipes";
 import { field } from "styled-system/recipes";
 
-interface FieldContextValue {
+export interface FieldContextValue {
 	id: string;
 	disabled?: boolean;
 	invalid?: boolean;
@@ -27,7 +27,7 @@ interface FieldContextValue {
 	errorText?: string;
 }
 
-const FieldContext = createContext<FieldContextValue | null>(null);
+export const FieldContext = createContext<FieldContextValue | null>(null);
 
 export interface FieldProps extends FieldVariantProps {
 	children?: Child;
