@@ -156,18 +156,18 @@
       "title": "TitleDrawer",
       "description": "Description",
       "body": "Body",
+      "trigger": [
+        {
+          "type": "button",
+          "variant": "solid",
+          "text": "TriggerDrawer"
+        }
+      ],
       "confirmText": "",
       "cancelText": "",
       "footer": "Footer",
       "closable": true,
       "interactive": true,
-      "trigger": [
-        {
-          "type": "button",
-          "text": "TriggerDrawer",
-          "variant": "solid"
-        }
-      ],
       "cancel": "",
       "confirm": ""
     },
