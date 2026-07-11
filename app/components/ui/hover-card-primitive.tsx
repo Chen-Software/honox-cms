@@ -307,7 +307,7 @@ export function InteractiveHoverCardRoot(props: HoverCardRootProps) {
 		const openHoverCard = () => {
 			root.setAttribute("data-state", "open");
 			getPositioners().forEach((p) => {
-				p.style.cssText = "display: block !important;";
+				p.style.setProperty("display", "block", "important");
 				p.setAttribute("data-state", "open");
 			});
 			const content = root.querySelector<HTMLElement>('[data-part="content"]');
@@ -324,7 +324,7 @@ export function InteractiveHoverCardRoot(props: HoverCardRootProps) {
 		const closeHoverCard = () => {
 			root.setAttribute("data-state", "closed");
 			getPositioners().forEach((p) => {
-				p.style.cssText = "display: none !important;";
+				p.style.setProperty("display", "none", "important");
 				p.setAttribute("data-state", "closed");
 			});
 			const content = root.querySelector<HTMLElement>('[data-part="content"]');
@@ -389,7 +389,12 @@ export function InteractiveHoverCardRoot(props: HoverCardRootProps) {
 	}, [openDelay, closeDelay]);
 
 	return (
-		<div id={rootId} ref={rootRef} data-state={open ? "open" : "closed"}>
+		<div
+			id={rootId}
+			ref={rootRef}
+			data-state={open ? "open" : "closed"}
+			style={{ position: "relative", display: "inline-block" }}
+		>
 			<Root
 				{...rest}
 				id={idProp}

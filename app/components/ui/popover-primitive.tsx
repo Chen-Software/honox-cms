@@ -457,7 +457,7 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 			prevFocusRef.current = document.activeElement as HTMLElement | null;
 			root.setAttribute("data-state", "open");
 			getPositioners().forEach((p) => {
-				p.style.cssText = "display: block !important;";
+				p.style.setProperty("display", "block", "important");
 				p.setAttribute("data-state", "open");
 			});
 			const content = root.querySelector<HTMLElement>('[data-part="content"]');
@@ -482,7 +482,7 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 		const closePopover = () => {
 			root.setAttribute("data-state", "closed");
 			getPositioners().forEach((p) => {
-				p.style.cssText = "display: none !important;";
+				p.style.setProperty("display", "none", "important");
 				p.setAttribute("data-state", "closed");
 			});
 			const content = root.querySelector<HTMLElement>('[data-part="content"]');
@@ -529,7 +529,7 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 				root.querySelectorAll<HTMLElement>('[data-part="positioner"]'),
 			);
 			positioners.forEach((p) => {
-				p.style.cssText = "display: block !important;";
+				p.style.setProperty("display", "block", "important");
 				p.setAttribute("data-state", "open");
 			});
 			const content = root.querySelector<HTMLElement>('[data-part="content"]');
@@ -557,7 +557,7 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 				root.querySelectorAll<HTMLElement>('[data-part="positioner"]'),
 			);
 			positioners.forEach((p) => {
-				p.style.cssText = "display: none !important;";
+				p.style.setProperty("display", "none", "important");
 				p.setAttribute("data-state", "closed");
 			});
 			const content = root.querySelector<HTMLElement>('[data-part="content"]');
@@ -626,7 +626,11 @@ function InteractivePopoverRoot(props: InteractivePopoverProps) {
 	}, [rootId]);
 
 	return (
-		<div id={rootId} data-state={open ? "open" : "closed"}>
+		<div
+			id={rootId}
+			data-state={open ? "open" : "closed"}
+			style={{ position: "relative", display: "inline-block" }}
+		>
 			<Root {...rest} open={open}>
 				{children}
 			</Root>
