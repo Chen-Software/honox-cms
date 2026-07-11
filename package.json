@@ -17,15 +17,15 @@
 	},
 	"dependencies": {
 		"hono": "^4.12.29",
-		"honox": "0.1.56"
+		"honox": "0.1.59"
 	},
 	"peerDependencies": {
-		"typescript": "^5.9.3"
+		"typescript": "^6.0.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.3",
 		"@hono/vite-build": "^1.11.1",
-		"@hono/vite-dev-server": "^0.25.3",
+		"@hono/vite-dev-server": "^0.26.0",
 		"@hono/vite-ssg": "^0.3.3",
 		"@pandacss/dev": "^1.11.4",
 		"@types/bun": "latest",
