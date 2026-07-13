@@ -1,6 +1,14 @@
 import { createRoute } from "honox/factory";
 import { css } from "styled-system/css";
-import { Badge, Button, Card, Drawer, Heading, Text } from "../components/ui";
+import {
+	Badge,
+	Button,
+	Card,
+	Drawer,
+	Heading,
+	Stack,
+	Text,
+} from "../components/ui";
 import { parseFrontmatter } from "../utils/markdown";
 
 // Use Vite's import.meta.glob to import all markdown files at build time
@@ -198,14 +206,11 @@ export default createRoute(async (c) => {
 				</Text>
 
 				{/* Stats row */}
-				<div
-					class={css({
-						display: "flex",
-						justifyContent: "center",
-						gap: { base: "6", md: "10" },
-						mt: "8",
-						flexWrap: "wrap",
-					})}
+				<Stack
+					gap={{ base: "6", md: "10" }}
+					justify="center"
+					wrap="wrap"
+					class={css({ mt: "8" })}
 				>
 					<div class={css({ textAlign: "center" })}>
 						<Text
@@ -247,20 +252,12 @@ export default createRoute(async (c) => {
 							Categories
 						</Text>
 					</div>
-				</div>
+				</Stack>
 			</header>
 
 			{/* Filter Button - Opens Drawer */}
 			<section class={css({ mb: "8" })}>
-				<div
-					class={css({
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center",
-						flexWrap: "wrap",
-						gap: "4",
-					})}
-				>
+				<Stack gap="4" align="center" justify="space-between" wrap="wrap">
 					{/* Results Count */}
 					<Text
 						size="sm"
@@ -415,13 +412,7 @@ export default createRoute(async (c) => {
 												})}
 											/>
 										</div>
-										<div
-											class={css({
-												display: "flex",
-												gap: "2",
-												justifyContent: "flex-end",
-											})}
-										>
+										<Stack gap="2" justify="flex-end">
 											{searchQuery && (
 												<a href="/blog" style={{ textDecoration: "none" }}>
 													<Button variant="plain" size="sm">
@@ -432,7 +423,7 @@ export default createRoute(async (c) => {
 											<Button type="submit" variant="solid" colorPalette="blue">
 												Apply
 											</Button>
-										</div>
+										</Stack>
 									</form>
 								</div>
 
@@ -458,13 +449,7 @@ export default createRoute(async (c) => {
 									>
 										Filter by Tag
 									</Text>
-									<div
-										class={css({
-											display: "flex",
-											flexDirection: "column",
-											gap: "1",
-										})}
-									>
+									<Stack direction="column" gap="1">
 										{["All", ...tags].map((tag) => {
 											const href = tag === "All" ? "/blog" : `/blog/tag/${tag}`;
 
@@ -495,7 +480,7 @@ export default createRoute(async (c) => {
 												</a>
 											);
 										})}
-									</div>
+									</Stack>
 								</div>
 
 								{/* Active Filters */}
@@ -521,14 +506,7 @@ export default createRoute(async (c) => {
 										>
 											Active Filters
 										</Text>
-										<div
-											class={css({
-												display: "flex",
-												flexWrap: "wrap",
-												gap: "2",
-												alignItems: "center",
-											})}
-										>
+										<Stack gap="2" align="center" wrap="wrap">
 											<Badge
 												variant="subtle"
 												colorPalette="blue"
@@ -545,13 +523,13 @@ export default createRoute(async (c) => {
 													Clear all
 												</Button>
 											</a>
-										</div>
+										</Stack>
 									</div>
 								)}
 							</div>
 						}
 					/>
-				</div>
+				</Stack>
 			</section>
 
 			{/* Posts Grid */}
@@ -563,7 +541,10 @@ export default createRoute(async (c) => {
 						px: "4",
 					})}
 				>
-					<div
+					<Stack
+						gap="0"
+						align="center"
+						justify="center"
 						class={css({
 							w: "24",
 							h: "24",
@@ -571,9 +552,6 @@ export default createRoute(async (c) => {
 							mb: "6",
 							bg: "gray.subtle.bg",
 							borderRadius: "full",
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
 							animation: "pulse",
 						})}
 					>
@@ -590,7 +568,7 @@ export default createRoute(async (c) => {
 							<circle cx="11" cy="11" r="8" />
 							<path d="m21 21-4.3-4.3" />
 						</svg>
-					</div>
+					</Stack>
 					<Heading as="h3" size="xl" class={css({ mb: "3" })}>
 						No articles found
 					</Heading>
@@ -692,34 +670,28 @@ export default createRoute(async (c) => {
 						bodyClass={css({ p: "6", pt: "3" })}
 						footerClass={css({ p: "6", pt: "0" })}
 						footer={
-							<div
+							<Stack
+								gap="0"
+								align="center"
+								justify="space-between"
 								class={css({
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "space-between",
 									pt: "4",
 									borderTopWidth: "1px",
 									borderColor: "border.subtle",
 									width: "full",
 								})}
 							>
-								<div
-									class={css({
-										display: "flex",
-										alignItems: "center",
-										gap: "2.5",
-									})}
-								>
+								<Stack gap="2.5" align="center">
 									{/* Author Avatar */}
-									<div
+									<Stack
+										gap="0"
+										align="center"
+										justify="center"
 										class={css({
 											w: "9",
 											h: "9",
 											borderRadius: "full",
 											bg: "blue.9",
-											display: "flex",
-											alignItems: "center",
-											justifyContent: "center",
 											color: "white",
 											fontSize: "sm",
 											fontWeight: "semibold",
@@ -727,7 +699,7 @@ export default createRoute(async (c) => {
 										})}
 									>
 										{post.author?.charAt(0).toUpperCase() || "A"}
-									</div>
+									</Stack>
 									<div>
 										<Text
 											size="sm"
@@ -739,14 +711,7 @@ export default createRoute(async (c) => {
 										>
 											{post.author}
 										</Text>
-										<div
-											class={css({
-												display: "flex",
-												gap: "2",
-												alignItems: "center",
-												mt: "0.5",
-											})}
-										>
+										<Stack gap="2" align="center" class={css({ mt: "0.5" })}>
 											<Text size="xs" class={css({ color: "fg.muted" })}>
 												{new Date(post.date).toLocaleDateString("en-US", {
 													month: "short",
@@ -757,9 +722,9 @@ export default createRoute(async (c) => {
 											<Text size="xs" class={css({ color: "fg.muted" })}>
 												· {post.readTime}
 											</Text>
-										</div>
+										</Stack>
 									</div>
-								</div>
+								</Stack>
 
 								{/* Read More Button */}
 								<a
@@ -797,7 +762,7 @@ export default createRoute(async (c) => {
 										</svg>
 									</Button>
 								</a>
-							</div>
+							</Stack>
 						}
 					>
 						<div>
@@ -818,14 +783,7 @@ export default createRoute(async (c) => {
 
 							{/* Tags */}
 							{post.tags.length > 0 && (
-								<div
-									class={css({
-										display: "flex",
-										flexWrap: "wrap",
-										gap: "2",
-										mb: "3",
-									})}
-								>
+								<Stack gap="2" wrap="wrap" class={css({ mb: "3" })}>
 									{post.tags.slice(0, 3).map((tag) => (
 										<Badge
 											key={tag}
@@ -857,7 +815,7 @@ export default createRoute(async (c) => {
 											+{post.tags.length - 3}
 										</Badge>
 									)}
-								</div>
+								</Stack>
 							)}
 						</div>
 					</Card>
@@ -913,7 +871,10 @@ export default createRoute(async (c) => {
 						zIndex: "1",
 					})}
 				>
-					<div
+					<Stack
+						gap="0"
+						align="center"
+						justify="center"
 						class={css({
 							w: "16",
 							h: "16",
@@ -921,9 +882,6 @@ export default createRoute(async (c) => {
 							mb: "4",
 							bg: "blue.9",
 							borderRadius: "2xl",
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
 							shadow: "lg",
 						})}
 					>
@@ -939,7 +897,7 @@ export default createRoute(async (c) => {
 							<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
 							<polyline points="22,6 12,13 2,6" />
 						</svg>
-					</div>
+					</Stack>
 
 					<Badge
 						variant="subtle"

@@ -1,7 +1,14 @@
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
 import { css } from "styled-system/css";
-import { Badge, Button, Card, Heading, Text } from "../../../components/ui";
+import {
+	Badge,
+	Button,
+	Card,
+	Heading,
+	Stack,
+	Text,
+} from "../../../components/ui";
 import { parseFrontmatter } from "../../../utils/markdown";
 
 // Use Vite's import.meta.glob to import all markdown files at build time
@@ -184,7 +191,10 @@ export default createRoute(
 					</div>
 
 					{/* Tag Icon */}
-					<div
+					<Stack
+						gap="0"
+						align="center"
+						justify="center"
 						class={css({
 							w: "20",
 							h: "20",
@@ -194,9 +204,6 @@ export default createRoute(
 							gradientFrom: "blue.9",
 							gradientTo: "purple.9",
 							borderRadius: "2xl",
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
 							shadow: "lg",
 							position: "relative",
 							"&::before": {
@@ -230,7 +237,7 @@ export default createRoute(
 							<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
 							<line x1="7" y1="7" x2="7.01" y2="7" />
 						</svg>
-					</div>
+					</Stack>
 
 					<Badge
 						variant="subtle"
@@ -294,14 +301,7 @@ export default createRoute(
 						>
 							Filter by tag
 						</Text>
-						<div
-							class={css({
-								display: "flex",
-								gap: "3",
-								flexWrap: "wrap",
-								alignItems: "center",
-							})}
-						>
+						<Stack gap="3" align="center" wrap="wrap">
 							<a href="/blog" style={{ textDecoration: "none" }}>
 								<Badge
 									variant="subtle"
@@ -369,7 +369,7 @@ export default createRoute(
 									</Badge>
 								</a>
 							))}
-						</div>
+						</Stack>
 					</section>
 				)}
 
@@ -382,7 +382,10 @@ export default createRoute(
 							px: "4",
 						})}
 					>
-						<div
+						<Stack
+							gap="0"
+							align="center"
+							justify="center"
 							class={css({
 								w: "28",
 								h: "28",
@@ -392,9 +395,6 @@ export default createRoute(
 								gradientFrom: "blue.3",
 								gradientTo: "purple.3",
 								borderRadius: "full",
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "center",
 								animation: "pulse",
 								shadow: "lg",
 							})}
@@ -412,7 +412,7 @@ export default createRoute(
 								<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
 								<line x1="7" y1="7" x2="7.01" y2="7" />
 							</svg>
-						</div>
+						</Stack>
 						<Heading
 							as="h3"
 							size="2xl"
@@ -537,26 +537,23 @@ export default createRoute(
 							bodyClass={css({ p: "7", pt: "4" })}
 							footerClass={css({ p: "7", pt: "0" })}
 							footer={
-								<div
+								<Stack
+									gap="0"
+									align="center"
+									justify="space-between"
 									class={css({
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "space-between",
 										pt: "5",
 										borderTopWidth: "1px",
 										borderColor: "border.subtle",
 										width: "full",
 									})}
 								>
-									<div
-										class={css({
-											display: "flex",
-											alignItems: "center",
-											gap: "3",
-										})}
-									>
+									<Stack gap="3" align="center">
 										{/* Author Avatar */}
-										<div
+										<Stack
+											gap="0"
+											align="center"
+											justify="center"
 											class={css({
 												w: "10",
 												h: "10",
@@ -564,9 +561,6 @@ export default createRoute(
 												bgGradient: "to-r",
 												gradientFrom: "blue.9",
 												gradientTo: "purple.9",
-												display: "flex",
-												alignItems: "center",
-												justifyContent: "center",
 												color: "white",
 												fontSize: "sm",
 												fontWeight: "bold",
@@ -575,7 +569,7 @@ export default createRoute(
 											})}
 										>
 											{post.author?.charAt(0).toUpperCase() || "A"}
-										</div>
+										</Stack>
 										<div>
 											<Text
 												size="sm"
@@ -588,14 +582,7 @@ export default createRoute(
 											>
 												{post.author}
 											</Text>
-											<div
-												class={css({
-													display: "flex",
-													gap: "2",
-													alignItems: "center",
-													mt: "0.5",
-												})}
-											>
+											<Stack gap="2" align="center" class={css({ mt: "0.5" })}>
 												<Text size="xs" class={css({ color: "fg.muted" })}>
 													{new Date(post.date).toLocaleDateString("en-US", {
 														month: "short",
@@ -606,9 +593,9 @@ export default createRoute(
 												<Text size="xs" class={css({ color: "fg.muted" })}>
 													· {post.readTime}
 												</Text>
-											</div>
+											</Stack>
 										</div>
-									</div>
+									</Stack>
 
 									{/* Read More Button */}
 									<a
@@ -647,7 +634,7 @@ export default createRoute(
 											</svg>
 										</Button>
 									</a>
-								</div>
+								</Stack>
 							}
 						>
 							<div>
@@ -677,14 +664,7 @@ export default createRoute(
 
 								{/* Tags */}
 								{post.tags.length > 0 && (
-									<div
-										class={css({
-											display: "flex",
-											flexWrap: "wrap",
-											gap: "2",
-											mb: "4",
-										})}
-									>
+									<Stack gap="2" wrap="wrap" class={css({ mb: "4" })}>
 										{post.tags.slice(0, 3).map((tag) => (
 											<Badge
 												key={tag}
@@ -722,7 +702,7 @@ export default createRoute(
 												+{post.tags.length - 3}
 											</Badge>
 										)}
-									</div>
+									</Stack>
 								)}
 							</div>
 						</Card>

@@ -1,7 +1,7 @@
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
 import { css } from "styled-system/css";
-import { Badge, Button, Heading, Text } from "../../components/ui";
+import { Badge, Button, Heading, Stack, Text } from "../../components/ui";
 import { markdownToHtml, parseFrontmatter } from "../../utils/markdown";
 
 // Use Vite's import.meta.glob to import all markdown files at build time
@@ -172,14 +172,7 @@ export default createRoute(
 							>
 								{/* Tags */}
 								{Array.isArray(data.tags) && data.tags.length > 0 && (
-									<div
-										class={css({
-											display: "flex",
-											gap: "2",
-											flexWrap: "wrap",
-											mb: "4",
-										})}
-									>
+									<Stack gap="2" wrap="wrap" class={css({ mb: "4" })}>
 										{data.tags.map((tag: string) => (
 											<Badge
 												key={tag}
@@ -194,7 +187,7 @@ export default createRoute(
 												{tag}
 											</Badge>
 										))}
-									</div>
+									</Stack>
 								)}
 
 								{/* Title */}
@@ -241,26 +234,22 @@ export default createRoute(
 								)}
 
 								{/* Meta Information */}
-								<div
+								<Stack
+									gap="6"
+									align="center"
+									wrap="wrap"
 									class={css({
-										display: "flex",
-										alignItems: "center",
-										gap: "6",
-										flexWrap: "wrap",
 										pb: "6",
 										borderBottomWidth: "1px",
 										borderColor: "border.subtle",
 									})}
 								>
 									{/* Author */}
-									<div
-										class={css({
-											display: "flex",
-											alignItems: "center",
-											gap: "3",
-										})}
-									>
-										<div
+									<Stack gap="3" align="center">
+										<Stack
+											gap="0"
+											align="center"
+											justify="center"
 											class={css({
 												w: "10",
 												h: "10",
@@ -268,16 +257,13 @@ export default createRoute(
 												bgGradient: "to-br",
 												gradientFrom: "blue.9",
 												gradientTo: "purple.9",
-												display: "flex",
-												alignItems: "center",
-												justifyContent: "center",
 												color: "white",
 												fontSize: "lg",
 												fontWeight: "bold",
 											})}
 										>
 											{(data.author || "A").charAt(0).toUpperCase()}
-										</div>
+										</Stack>
 										<div>
 											<Text
 												size="sm"
@@ -290,17 +276,11 @@ export default createRoute(
 												{data.author || "Artefact Team"}
 											</Text>
 										</div>
-									</div>
+									</Stack>
 
 									{/* Date */}
 									{data.date && (
-										<div
-											class={css({
-												display: "flex",
-												alignItems: "center",
-												gap: "2",
-											})}
-										>
+										<Stack gap="2" align="center">
 											<svg
 												width="18"
 												height="18"
@@ -334,18 +314,12 @@ export default createRoute(
 													day: "numeric",
 												})}
 											</Text>
-										</div>
+										</Stack>
 									)}
 
 									{/* Read Time */}
-									{data.readTime && (
-										<div
-											class={css({
-												display: "flex",
-												alignItems: "center",
-												gap: "2",
-											})}
-										>
+									{data.readTime ? (
+										<Stack gap="2" align="center">
 											<svg
 												width="18"
 												height="18"
@@ -366,9 +340,9 @@ export default createRoute(
 											>
 												{data.readTime}
 											</Text>
-										</div>
-									)}
-								</div>
+										</Stack>
+									) : null}
+								</Stack>
 							</div>
 
 							{/* Share & Markdown Content */}
@@ -379,13 +353,7 @@ export default createRoute(
 								})}
 							>
 								{/* Share Button */}
-								<div
-									class={css({
-										display: "flex",
-										justifyContent: "flex-end",
-										mb: "8",
-									})}
-								>
+								<Stack gap="0" justify="flex-end" class={css({ mb: "8" })}>
 									<Button
 										variant="outline"
 										size="sm"
@@ -423,7 +391,7 @@ export default createRoute(
 										</svg>
 										Share
 									</Button>
-								</div>
+								</Stack>
 
 								{/* Markdown Content */}
 								<div

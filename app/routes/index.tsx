@@ -67,27 +67,12 @@ export default createRoute((c) => {
 			</Heading>
 
 			{/* Button Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "2" })}>
 					Button Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
+				<Stack gap="4" justify="center" wrap="wrap">
 					<Button variant="solid" colorPalette="blue">
 						Solid Blue
 					</Button>
@@ -107,23 +92,16 @@ export default createRoute((c) => {
 						Plain Amber
 					</Button>
 					<Button variant="plain">Plain</Button>
-				</div>
+				</Stack>
 
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
+				<Stack gap="4" justify="center" wrap="wrap">
 					<Button size="xs">Extra Small</Button>
 					<Button size="sm">Small</Button>
 					<Button size="md">Medium</Button>
 					<Button size="lg">Large</Button>
-				</div>
+				</Stack>
 
-				<div class={css({ display: "flex", gap: "4", alignItems: "center" })}>
+				<Stack gap="4" align="center">
 					<Button loading loadingText="Saving...">
 						Save
 					</Button>
@@ -149,36 +127,21 @@ export default createRoute((c) => {
 						</svg>
 					</IconButton>
 					<CloseButton />
-				</div>
+				</Stack>
 
 				<ButtonGroup variant="outline" attached>
 					<Button>Left</Button>
 					<Button>Middle</Button>
 					<Button>Right</Button>
 				</ButtonGroup>
-			</div>
+			</Stack>
 
 			{/* Heading Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "2" })}>
 					Heading Component Examples
 				</Heading>
-				<div
-					class={css({
-						display: "flex",
-						flexDirection: "column",
-						gap: "4",
-						alignItems: "center",
-					})}
-				>
+				<Stack direction="column" gap="4" align="center">
 					<Heading size="6xl">Heading 6xl</Heading>
 					<Heading size="4xl">Heading 4xl</Heading>
 					<Heading size="2xl">Heading 2xl</Heading>
@@ -186,74 +149,51 @@ export default createRoute((c) => {
 					<Heading size="md">Heading md</Heading>
 					<Heading size="sm">Heading sm</Heading>
 					<Heading size="xs">Heading xs</Heading>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Avatar Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Avatar Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-						alignItems: "center",
-					})}
-				>
-					<div class={css({ display: "flex", gap: "4", alignItems: "center" })}>
+				<Stack direction="column" gap="8" align="center">
+					<Stack gap="4" align="center">
 						<Avatar
 							name="John Doe"
 							src="https://avatars.githubusercontent.com/u/1029?v=4"
 						/>
 						<Avatar name="Jane Doe" />
 						<Avatar />
-					</div>
+					</Stack>
 
-					<div class={css({ display: "flex", gap: "4", alignItems: "center" })}>
+					<Stack gap="4" align="center">
 						<Avatar size="xs" name="XS" />
 						<Avatar size="sm" name="SM" />
 						<Avatar size="md" name="MD" />
 						<Avatar size="lg" name="LG" />
 						<Avatar size="xl" name="XL" />
 						<Avatar size="2xl" name="2XL" />
-					</div>
+					</Stack>
 
-					<div class={css({ display: "flex", gap: "4", alignItems: "center" })}>
+					<Stack gap="4" align="center">
 						<Avatar shape="square" name="Square" />
 						<Avatar shape="rounded" name="Rounded" />
 						<Avatar shape="full" name="Full" />
-					</div>
+					</Stack>
 
-					<div class={css({ display: "flex", gap: "4", alignItems: "center" })}>
+					<Stack gap="4" align="center">
 						<Avatar variant="solid" name="Solid" colorPalette="blue" />
 						<Avatar variant="subtle" name="Subtle" colorPalette="blue" />
 						<Avatar variant="outline" name="Outline" colorPalette="blue" />
 						<Avatar variant="surface" name="Surface" colorPalette="blue" />
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Code Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Code Component Examples
 				</Heading>
@@ -262,54 +202,30 @@ export default createRoute((c) => {
 				<Text size="sm" class={css({ color: "fg.muted" })}>
 					Code Sizes
 				</Text>
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						alignItems: "center",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
+				<Stack gap="4" align="center" justify="center" wrap="wrap">
 					<Code size="sm">console.log("sm")</Code>
 					<Code size="md">console.log("md")</Code>
 					<Code size="lg">console.log("lg")</Code>
 					<Code size="xl">console.log("xl")</Code>
-				</div>
+				</Stack>
 
 				{/* Code Variants */}
 				<Text size="sm" class={css({ color: "fg.muted", mt: "4" })}>
 					Code Variants
 				</Text>
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						alignItems: "center",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
+				<Stack gap="4" align="center" justify="center" wrap="wrap">
 					<Code variant="solid">solid</Code>
 					<Code variant="subtle">subtle</Code>
 					<Code variant="surface">surface</Code>
 					<Code variant="outline">outline</Code>
 					<Code variant="plain">plain</Code>
-				</div>
+				</Stack>
 
 				{/* Code Colors */}
 				<Text size="sm" class={css({ color: "fg.muted", mt: "4" })}>
 					Code Colors
 				</Text>
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						alignItems: "center",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
+				<Stack gap="4" align="center" justify="center" wrap="wrap">
 					<Code colorPalette="blue" variant="solid">
 						blue solid
 					</Code>
@@ -322,19 +238,11 @@ export default createRoute((c) => {
 					<Code colorPalette="orange" variant="outline">
 						orange outline
 					</Code>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Badge Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading
 					as="h2"
 					class={css({
@@ -354,14 +262,11 @@ export default createRoute((c) => {
 				>
 					Semantic Colors
 				</Text>
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						flexWrap: "wrap",
-						justifyContent: "center",
-						width: "100%",
-					})}
+				<Stack
+					gap="4"
+					justify="center"
+					wrap="wrap"
+					class={css({ width: "100%" })}
 				>
 					<Badge variant="solid" colorPalette="red">
 						Error
@@ -375,7 +280,7 @@ export default createRoute((c) => {
 					<Badge variant="solid" colorPalette="blue">
 						Info
 					</Badge>
-				</div>
+				</Stack>
 
 				{/* All Color Palettes */}
 				<Text
@@ -389,14 +294,11 @@ export default createRoute((c) => {
 				>
 					All Color Palettes
 				</Text>
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						flexWrap: "wrap",
-						justifyContent: "center",
-						width: "100%",
-					})}
+				<Stack
+					gap="4"
+					justify="center"
+					wrap="wrap"
+					class={css({ width: "100%" })}
 				>
 					<Badge variant="subtle" colorPalette="red">
 						Red
@@ -422,7 +324,7 @@ export default createRoute((c) => {
 					<Badge variant="subtle" colorPalette="slate">
 						Slate
 					</Badge>
-				</div>
+				</Stack>
 
 				{/* Variants */}
 				<Text
@@ -436,14 +338,11 @@ export default createRoute((c) => {
 				>
 					Variants (Blue)
 				</Text>
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						flexWrap: "wrap",
-						justifyContent: "center",
-						width: "100%",
-					})}
+				<Stack
+					gap="4"
+					justify="center"
+					wrap="wrap"
+					class={css({ width: "100%" })}
 				>
 					<Badge variant="solid" colorPalette="blue">
 						Solid
@@ -457,7 +356,7 @@ export default createRoute((c) => {
 					<Badge variant="surface" colorPalette="blue">
 						Surface
 					</Badge>
-				</div>
+				</Stack>
 
 				{/* Sizes */}
 				<Text
@@ -471,101 +370,55 @@ export default createRoute((c) => {
 				>
 					Sizes
 				</Text>
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						flexWrap: "wrap",
-						justifyContent: "center",
-						width: "100%",
-						alignItems: "center",
-					})}
+				<Stack
+					gap="4"
+					align="center"
+					justify="center"
+					wrap="wrap"
+					class={css({ width: "100%" })}
 				>
 					<Badge size="sm">Small</Badge>
 					<Badge size="md">Medium</Badge>
 					<Badge size="lg">Large</Badge>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Switch Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "2" })}>
 					Switch Component Examples
 				</Heading>
-				<div
-					class={css({
-						display: "flex",
-						gap: "8",
-						alignItems: "center",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "center",
-						})}
-					>
+				<Stack gap="8" align="center" justify="center" wrap="wrap">
+					<Stack direction="column" gap="2" align="center">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Sizes
 						</Text>
-						<div
-							class={css({ display: "flex", gap: "4", alignItems: "center" })}
-						>
+						<Stack gap="4" align="center">
 							<Switch size="sm">Small</Switch>
 							<Switch size="md">Medium</Switch>
 							<Switch size="lg">Large</Switch>
-						</div>
-					</div>
+						</Stack>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "center",
-						})}
-					>
+					<Stack direction="column" gap="2" align="center">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							States
 						</Text>
-						<div
-							class={css({ display: "flex", gap: "4", alignItems: "center" })}
-						>
+						<Stack gap="4" align="center">
 							<Switch checked>Checked</Switch>
 							<Switch disabled>Disabled</Switch>
 							<Switch disabled checked>
 								Disabled Checked
 							</Switch>
 							<Switch invalid>Invalid</Switch>
-						</div>
-					</div>
+						</Stack>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "center",
-						})}
-					>
+					<Stack direction="column" gap="2" align="center">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Interactive
 						</Text>
-						<div
-							class={css({ display: "flex", gap: "4", alignItems: "center" })}
-						>
+						<Stack gap="4" align="center">
 							<Switch interactive defaultChecked>
 								Interactive
 							</Switch>
@@ -581,88 +434,45 @@ export default createRoute((c) => {
 							>
 								Check Console
 							</Switch>
-						</div>
-					</div>
-				</div>
-			</div>
+						</Stack>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Checkbox Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "2" })}>
 					Checkbox Component Examples
 				</Heading>
-				<div
-					class={css({
-						display: "flex",
-						gap: "8",
-						alignItems: "center",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "center",
-						})}
-					>
+				<Stack gap="8" align="center" justify="center" wrap="wrap">
+					<Stack direction="column" gap="2" align="center">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Sizes
 						</Text>
-						<div
-							class={css({ display: "flex", gap: "4", alignItems: "center" })}
-						>
+						<Stack gap="4" align="center">
 							<Checkbox size="sm">Small</Checkbox>
 							<Checkbox size="md">Medium</Checkbox>
 							<Checkbox size="lg">Large</Checkbox>
-						</div>
-					</div>
+						</Stack>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "center",
-						})}
-					>
+					<Stack direction="column" gap="2" align="center">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							States
 						</Text>
-						<div
-							class={css({ display: "flex", gap: "4", alignItems: "center" })}
-						>
+						<Stack gap="4" align="center">
 							<Checkbox checked>Checked</Checkbox>
 							<Checkbox checked="indeterminate">Indeterminate</Checkbox>
 							<Checkbox disabled>Disabled</Checkbox>
 							<Checkbox invalid>Invalid</Checkbox>
-						</div>
-					</div>
+						</Stack>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "center",
-						})}
-					>
+					<Stack direction="column" gap="2" align="center">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Interactive
 						</Text>
-						<div
-							class={css({ display: "flex", gap: "4", alignItems: "center" })}
-						>
+						<Stack gap="4" align="center">
 							<Checkbox interactive defaultChecked>
 								Interactive
 							</Checkbox>
@@ -678,54 +488,31 @@ export default createRoute((c) => {
 							>
 								Check Console
 							</Checkbox>
-						</div>
-					</div>
-				</div>
-			</div>
+						</Stack>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Spinner Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "2" })}>
 					Spinner Component Examples
 				</Heading>
-				<div class={css({ display: "flex", gap: "4", alignItems: "center" })}>
+				<Stack gap="4" align="center">
 					<Spinner size="sm" />
 					<Spinner size="md" />
 					<Spinner size="lg" />
 					<Spinner size="xl" />
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Text Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-				})}
-			>
+			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Text Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						display: "flex",
-						flexDirection: "column",
-						gap: "2",
-						alignItems: "center",
-					})}
-				>
+				<Stack direction="column" gap="2" align="center">
 					<Text size="7xl">Text 7xl</Text>
 					<Text size="4xl">Text 4xl</Text>
 					<Text size="2xl">Text 2xl</Text>
@@ -733,33 +520,21 @@ export default createRoute((c) => {
 					<Text size="md">Text md</Text>
 					<Text size="sm">Text sm</Text>
 					<Text size="xs">Text xs</Text>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Alert Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "5xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "5xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Alert Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						display: "flex",
-						flexDirection: "column",
-						gap: "4",
-						width: "full",
-					})}
-				>
+				<Stack direction="column" gap="4" class={css({ width: "full" })}>
 					<Alert
 						status="info"
 						title="Info Alert"
@@ -787,20 +562,15 @@ export default createRoute((c) => {
 						description="An error occurred while processing your request."
 						indicator={AlertIcon()}
 					/>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Dialog Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Dialog Component Examples
@@ -814,19 +584,14 @@ export default createRoute((c) => {
 					cancel={<Button variant="outline">Cancel</Button>}
 					confirm={<Button>Confirm</Button>}
 				/>
-			</div>
+			</Stack>
 
 			{/* Drawer Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Drawer Component Examples
@@ -841,19 +606,14 @@ export default createRoute((c) => {
 					cancel={<Button variant="outline">Close</Button>}
 					confirm={<Button>Action</Button>}
 				/>
-			</div>
+			</Stack>
 
 			{/* Menu Examples (Flattened API) */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Menu Component Examples (Flattened API)
@@ -913,31 +673,19 @@ export default createRoute((c) => {
 						},
 					]}
 				/>
-			</div>
+			</Stack>
 
 			{/* Slider Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Slider Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
 					{/* Interactive Slider with Value Text */}
 					<Slider
 						label="Basic Slider"
@@ -978,14 +726,7 @@ export default createRoute((c) => {
 					/>
 
 					{/* Vertical Slider */}
-					<div
-						class={css({
-							display: "flex",
-							justifyContent: "center",
-							gap: "12",
-							height: "200px",
-						})}
-					>
+					<Stack gap="12" justify="center" class={css({ height: "200px" })}>
 						<Slider
 							interactive
 							orientation="vertical"
@@ -1002,21 +743,16 @@ export default createRoute((c) => {
 							height="200px"
 							showValueText
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Popover Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Popover Component Examples
@@ -1027,24 +763,19 @@ export default createRoute((c) => {
 					title="Popover Title"
 					body="This is the popover body content."
 				/>
-			</div>
+			</Stack>
 
 			{/* HoverCard Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					HoverCard Component Examples
 				</Heading>
-				<div class={css({ display: "flex", gap: "8" })}>
+				<Stack gap="8">
 					<div class={css({ position: "relative" })}>
 						<HoverCard
 							trigger={
@@ -1095,20 +826,15 @@ export default createRoute((c) => {
 							}
 						/>
 					</div>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Combobox Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Combobox Component Examples
@@ -1119,7 +845,7 @@ export default createRoute((c) => {
 					label="Framework"
 					placeholder="Select a Framework"
 				/>
-			</div>
+			</Stack>
 
 			{/* Select Examples */}
 			<div class={css({ mt: "8" })}>
@@ -1135,24 +861,17 @@ export default createRoute((c) => {
 			</div>
 
 			{/* Group Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Group Component Examples
 				</Heading>
 
-				<div
-					class={css({ display: "flex", flexDirection: "column", gap: "8" })}
-				>
+				<Stack direction="column" gap="8">
 					<div class={css({ textAlign: "center" })}>
 						<Text size="sm" class={css({ mb: "2", color: "fg.muted" })}>
 							Attached Group
@@ -1183,33 +902,21 @@ export default createRoute((c) => {
 							<Button variant="outline">Bottom</Button>
 						</Group>
 					</div>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Stack Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Stack Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-						width: "full",
-					})}
-				>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
 					<div class={css({ textAlign: "center" })}>
 						<Text size="sm" class={css({ mb: "2", color: "fg.muted" })}>
 							Horizontal Stack (Default)
@@ -1282,20 +989,15 @@ export default createRoute((c) => {
 							<Text>Item 3</Text>
 						</Stack>
 					</div>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* AbsoluteCenter Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					AbsoluteCenter Component Examples
@@ -1318,19 +1020,14 @@ export default createRoute((c) => {
 						</Badge>
 					</AbsoluteCenter>
 				</div>
-			</div>
+			</Stack>
 
 			{/* Field Examples - using plain HTML to isolate */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "8",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="8"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Field Component Examples
@@ -1355,141 +1052,83 @@ export default createRoute((c) => {
 					defaultValue="usr"
 					placeholder="Enter username"
 				/>
-			</div>
+			</Stack>
 
 			{/* Skeleton Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Skeleton Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-						width: "full",
-					})}
-				>
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "flex-start",
-						})}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2" align="flex-start">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic Skeleton
 						</Text>
 						<Skeleton class={css({ height: "4", width: "full" })} />
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "flex-start",
-						})}
-					>
+					<Stack direction="column" gap="2" align="flex-start">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Skeleton Circle
 						</Text>
 						<Skeleton shape="circle" size="12" />
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "flex-start",
-						})}
-					>
+					<Stack direction="column" gap="2" align="flex-start">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Skeleton Text
 						</Text>
 						<Skeleton shape="text" noOfLines={3} gap="3" />
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "flex-start",
-						})}
-					>
+					<Stack direction="column" gap="2" align="flex-start">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Skeleton with Children (Loading: true)
 						</Text>
 						<Skeleton loading={true}>
 							<Button>Loaded Content</Button>
 						</Skeleton>
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							alignItems: "flex-start",
-						})}
-					>
+					<Stack direction="column" gap="2" align="flex-start">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Skeleton with Children (Loading: false)
 						</Text>
 						<Skeleton loading={false}>
 							<Button>Loaded Content</Button>
 						</Skeleton>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Breadcrumb Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Breadcrumb Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						display: "flex",
-						flexDirection: "column",
-						gap: "6",
-						width: "full",
-						alignItems: "center",
-					})}
+				<Stack
+					direction="column"
+					gap="6"
+					align="center"
+					class={css({ width: "full" })}
 				>
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							width: "full",
-							alignItems: "center",
-						})}
+					<Stack
+						direction="column"
+						gap="2"
+						align="center"
+						class={css({ width: "full" })}
 					>
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic Breadcrumb (Flattened API)
@@ -1501,16 +1140,13 @@ export default createRoute((c) => {
 								{ label: "Breadcrumb" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							width: "full",
-							alignItems: "center",
-						})}
+					<Stack
+						direction="column"
+						gap="2"
+						align="center"
+						class={css({ width: "full" })}
 					>
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Underline Variant
@@ -1523,16 +1159,13 @@ export default createRoute((c) => {
 								{ label: "Getting Started" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							width: "full",
-							alignItems: "center",
-						})}
+					<Stack
+						direction="column"
+						gap="2"
+						align="center"
+						class={css({ width: "full" })}
 					>
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Custom Separator
@@ -1545,16 +1178,13 @@ export default createRoute((c) => {
 								{ label: "Smartphones" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							width: "full",
-							alignItems: "center",
-						})}
+					<Stack
+						direction="column"
+						gap="2"
+						align="center"
+						class={css({ width: "full" })}
 					>
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Custom Separator as JSX
@@ -1582,16 +1212,13 @@ export default createRoute((c) => {
 								{ label: "Reports" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({
-							display: "flex",
-							flexDirection: "column",
-							gap: "2",
-							width: "full",
-							alignItems: "center",
-						})}
+					<Stack
+						direction="column"
+						gap="2"
+						align="center"
+						class={css({ width: "full" })}
 					>
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Custom Separator (Slash)
@@ -1604,21 +1231,16 @@ export default createRoute((c) => {
 								{ label: "Security" },
 							]}
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Card Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Card Component Examples
@@ -1650,21 +1272,21 @@ export default createRoute((c) => {
 						title="John Doe"
 						description="Software Engineer"
 						avatar={
-							<div
+							<Stack
+								gap="0"
+								align="center"
+								justify="center"
 								class={css({
 									w: "10",
 									h: "10",
 									bg: "blue.9",
 									rounded: "full",
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "center",
 									color: "white",
 									fontWeight: "bold",
 								})}
 							>
 								JD
-							</div>
+							</Stack>
 						}
 						headerAction={
 							<IconButton variant="plain" size="sm" aria-label="Settings">
@@ -1716,19 +1338,14 @@ export default createRoute((c) => {
 						</Text>
 					</Card>
 				</div>
-			</div>
+			</Stack>
 
 			{/* Fieldset Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Fieldset Component Examples
@@ -1749,34 +1366,20 @@ export default createRoute((c) => {
 				>
 					<Field label="Email" defaultValue="invalid-email" />
 				</Fieldset>
-			</div>
+			</Stack>
 
 			{/* Textarea Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Textarea Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Textarea (with `validator`)
 						</Text>
@@ -1788,43 +1391,29 @@ export default createRoute((c) => {
 							}
 							helperText="Minimum 10 characters required."
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Disabled
 						</Text>
 						<Textarea placeholder="Disabled Textarea" disabled />
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Toast Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Toast Component Examples
 				</Heading>
 				<Toast.Toaster />
-				<div
-					class={css({
-						display: "flex",
-						gap: "4",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
+				<Stack gap="4" justify="center" wrap="wrap">
 					<Button
 						variant="outline"
 						onclick="window.dispatchEvent(new CustomEvent('park-ui:toast:create', { detail: { id: Math.random().toString(36).substring(2, 9), title: 'Success', description: 'Action completed successfully', closable: true, type: 'success' } }))"
@@ -1843,25 +1432,20 @@ export default createRoute((c) => {
 					>
 						Show Loading Toast
 					</Button>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Tooltip Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Tooltip Component Examples
 				</Heading>
-				<div class={css({ display: "flex", gap: "8" })}>
+				<Stack gap="8">
 					<Tooltip content="This is a tooltip">
 						<Button variant="outline">Tooltip</Button>
 					</Tooltip>
@@ -1869,20 +1453,15 @@ export default createRoute((c) => {
 					<Tooltip content="Tooltip with Arrow" showArrow>
 						<Button variant="outline">With Arrow</Button>
 					</Tooltip>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* Table Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "3xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "3xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Table Component Examples (Flattened API)
@@ -1988,36 +1567,22 @@ export default createRoute((c) => {
 						},
 					]}
 				/>
-			</div>
+			</Stack>
 
 			{/* DatePicker Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					DatePicker Component Examples
 				</Heading>
 
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
 					{/* Basic DatePicker (Single selection) */}
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic DatePicker (Single selection)
 						</Text>
@@ -2026,12 +1591,10 @@ export default createRoute((c) => {
 							label="Choose Date"
 							selectionMode="single"
 						/>
-					</div>
+					</Stack>
 
 					{/* Range Selection DatePicker */}
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Range Selection DatePicker
 						</Text>
@@ -2040,33 +1603,21 @@ export default createRoute((c) => {
 							label="Select Date Range"
 							selectionMode="range"
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Progress Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Progress Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
 					<Progress label="Default Progress" value={40} showValueText />
 					<Progress
 						label="Subtle Progress"
@@ -2077,9 +1628,7 @@ export default createRoute((c) => {
 					/>
 					<Progress label="Indeterminate Progress" value={null} />
 
-					<div
-						class={css({ display: "flex", gap: "8", justifyContent: "center" })}
-					>
+					<Stack gap="8" justify="center">
 						<Progress
 							label="Circular Progress"
 							value={75}
@@ -2087,74 +1636,44 @@ export default createRoute((c) => {
 							type="circular"
 							showValueText
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", gap: "8", justifyContent: "center" })}
-					>
+					<Stack gap="8" justify="center">
 						<Progress value={25} size="sm" type="circular" />
 						<Progress value={null} size="md" type="circular" />
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Loader Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "3xl",
-					mx: "auto",
-					pb: "20",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "3xl", mx: "auto", pb: "20" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Loader Component Examples
 				</Heading>
-				<div
-					class={css({
-						display: "flex",
-						gap: "8",
-						alignItems: "center",
-						flexWrap: "wrap",
-						justifyContent: "center",
-					})}
-				>
+				<Stack gap="8" align="center" justify="center" wrap="wrap">
 					<Loader text="Loading..." />
 					<Loader spinnerPlacement="end">Processing</Loader>
 					<Loader spinner={<Spinner color="blue.9" />}>Custom Spinner</Loader>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* RadioGroup Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					RadioGroup Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic RadioGroup (Interactive)
 						</Text>
@@ -2168,11 +1687,9 @@ export default createRoute((c) => {
 								{ label: "Vue", value: "vue" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							RadioGroup with Disabled Items
 						</Text>
@@ -2185,15 +1702,13 @@ export default createRoute((c) => {
 								{ label: "Svelte", value: "svelte" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Sizes
 						</Text>
-						<div class={css({ display: "flex", gap: "8" })}>
+						<Stack gap="8">
 							<RadioGroup
 								size="sm"
 								defaultValue="sm"
@@ -2209,37 +1724,23 @@ export default createRoute((c) => {
 								defaultValue="lg"
 								items={[{ label: "Large", value: "lg" }]}
 							/>
-						</div>
-					</div>
-				</div>
-			</div>
+						</Stack>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* SegmentGroup Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					SegmentGroup Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic SegmentGroup (Interactive)
 						</Text>
@@ -2252,11 +1753,9 @@ export default createRoute((c) => {
 								{ label: "Vue", value: "vue" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Vertical SegmentGroup
 						</Text>
@@ -2269,11 +1768,9 @@ export default createRoute((c) => {
 								{ label: "Svelte", value: "svelte" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Fitted SegmentGroup
 						</Text>
@@ -2285,36 +1782,22 @@ export default createRoute((c) => {
 								{ label: "Solid", value: "solid" },
 							]}
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* ToggleGroup Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					ToggleGroup Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic ToggleGroup (Single Selection)
 						</Text>
@@ -2327,11 +1810,9 @@ export default createRoute((c) => {
 								{ label: "U", value: "underline" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Multiple Selection
 						</Text>
@@ -2345,36 +1826,22 @@ export default createRoute((c) => {
 								{ label: "U", value: "underline" },
 							]}
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Tabs Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Tabs Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic Tabs (Interactive)
 						</Text>
@@ -2387,11 +1854,9 @@ export default createRoute((c) => {
 								{ value: "svelte", label: "Svelte", content: "Svelte Content" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Subtle Variant
 						</Text>
@@ -2403,11 +1868,9 @@ export default createRoute((c) => {
 								{ value: "solid", label: "Solid", content: "Solid Content" },
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Enclosed Variant
 						</Text>
@@ -2419,36 +1882,22 @@ export default createRoute((c) => {
 								{ value: "solid", label: "Solid", content: "Solid Content" },
 							]}
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Splitter Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Splitter Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Horizontal Splitter (Static)
 						</Text>
@@ -2464,11 +1913,9 @@ export default createRoute((c) => {
 								},
 							]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Vertical Splitter (Interactive)
 						</Text>
@@ -2488,11 +1935,9 @@ export default createRoute((c) => {
 								]}
 							/>
 						</div>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Three Panels (Interactive)
 						</Text>
@@ -2518,34 +1963,21 @@ export default createRoute((c) => {
 								{ id: "p3", size: 20 },
 							]}
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Collapsible Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-					pb: "20",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto", pb: "20" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Collapsible Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
 					<Text size="sm" class={css({ color: "fg.muted" })}>
 						Basic Collapsible (String trigger)
 					</Text>
@@ -2645,35 +2077,21 @@ export default createRoute((c) => {
 						})}
 						contentClass={css({ mt: "4" })}
 					/>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 
 			{/* TagsInput Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					TagsInput Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic TagsInput (Static)
 						</Text>
@@ -2681,11 +2099,9 @@ export default createRoute((c) => {
 							label="Frameworks"
 							defaultValue={["React", "Solid", "Vue"]}
 						/>
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Interactive TagsInput
 						</Text>
@@ -2696,53 +2112,36 @@ export default createRoute((c) => {
 								console.log("Tags changed:", details.value)
 							}
 						/>
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			{/* Pagination Examples */}
-			<div
-				class={css({
-					mt: "8",
-					display: "flex",
-					flexDirection: "column",
-					gap: "4",
-					alignItems: "center",
-					maxWidth: "xl",
-					mx: "auto",
-					pb: "20",
-				})}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto", pb: "20" })}
 			>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
 					Pagination Component Examples
 				</Heading>
-				<div
-					class={css({
-						width: "full",
-						display: "flex",
-						flexDirection: "column",
-						gap: "8",
-					})}
-				>
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted" })}>
 							Basic Pagination (Uncontrolled)
 						</Text>
 						<Pagination count={100} pageSize={10} defaultPage={1} />
-					</div>
+					</Stack>
 
-					<div
-						class={css({ display: "flex", flexDirection: "column", gap: "2" })}
-					>
+					<Stack direction="column" gap="2">
 						<Text size="sm" class={css({ color: "fg.muted", mb: "2" })}>
 							Interactive Pagination with Paginated Table
 						</Text>
 						<PaginatedTable />
-					</div>
-				</div>
-			</div>
+					</Stack>
+				</Stack>
+			</Stack>
 		</div>,
 	);
 });
