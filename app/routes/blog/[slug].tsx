@@ -1,7 +1,14 @@
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
 import { css } from "styled-system/css";
-import { Badge, Button, Heading, Stack, Text } from "../../components/ui";
+import {
+	Avatar,
+	Badge,
+	Button,
+	Heading,
+	Stack,
+	Text,
+} from "../../components/ui";
 import { markdownToHtml, parseFrontmatter } from "../../utils/markdown";
 
 // Use Vite's import.meta.glob to import all markdown files at build time
@@ -246,24 +253,12 @@ export default createRoute(
 								>
 									{/* Author */}
 									<Stack gap="3" align="center">
-										<Stack
-											gap="0"
-											align="center"
-											justify="center"
-											class={css({
-												w: "10",
-												h: "10",
-												borderRadius: "full",
-												bgGradient: "to-br",
-												gradientFrom: "blue.9",
-												gradientTo: "purple.9",
-												color: "white",
-												fontSize: "lg",
-												fontWeight: "bold",
-											})}
-										>
-											{(data.author || "A").charAt(0).toUpperCase()}
-										</Stack>
+										<Avatar
+											size="md"
+											variant="solid"
+											colorPalette="blue"
+											name={data.author || "Artefact Team"}
+										/>
 										<div>
 											<Text
 												size="sm"

@@ -1,6 +1,7 @@
 import { createRoute } from "honox/factory";
 import { css } from "styled-system/css";
 import {
+	Avatar,
 	Badge,
 	Button,
 	Card,
@@ -435,23 +436,12 @@ export default createRoute(async (c) => {
 								>
 									<Stack gap="2.5" align="center">
 										{/* Author Avatar */}
-										<Stack
-											gap="0"
-											align="center"
-											justify="center"
-											class={css({
-												w: "9",
-												h: "9",
-												borderRadius: "full",
-												bg: "blue.9",
-												color: "white",
-												fontSize: "sm",
-												fontWeight: "semibold",
-												flexShrink: "0",
-											})}
-										>
-											{post.author?.charAt(0).toUpperCase() || "A"}
-										</Stack>
+										<Avatar
+											size="sm"
+											variant="solid"
+											colorPalette="blue"
+											name={post.author}
+										/>
 										<div>
 											<Text
 												size="sm"

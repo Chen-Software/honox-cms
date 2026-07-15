@@ -2,6 +2,7 @@ import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
 import { css } from "styled-system/css";
 import {
+	Avatar,
 	Badge,
 	Button,
 	Card,
@@ -456,26 +457,13 @@ export default createRoute(
 								>
 									<Stack gap="3" align="center">
 										{/* Author Avatar */}
-										<Stack
-											gap="0"
-											align="center"
-											justify="center"
-											class={css({
-												w: "10",
-												h: "10",
-												borderRadius: "full",
-												bgGradient: "to-r",
-												gradientFrom: "blue.9",
-												gradientTo: "purple.9",
-												color: "white",
-												fontSize: "sm",
-												fontWeight: "bold",
-												flexShrink: "0",
-												shadow: "sm",
-											})}
-										>
-											{post.author?.charAt(0).toUpperCase() || "A"}
-										</Stack>
+										<Avatar
+											size="md"
+											variant="solid"
+											colorPalette="blue"
+											name={post.author}
+											class={css({ shadow: "sm" })}
+										/>
 										<div>
 											<Text
 												size="sm"
