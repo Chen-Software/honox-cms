@@ -5,10 +5,20 @@ import {
 	type DatePickerRootProps,
 	DatePickerStructure,
 	fromJSDate,
-	getMonthWeeks,
+	isValidDateString,
+	parseDate,
 	parseSingleDate,
 	parseValue,
 } from "../components/ui/date-picker-primitive";
+
+const PRESET_DAYS: Record<string, number> = {
+	today: 0,
+	last3Days: 3,
+	last7Days: 7,
+	last14Days: 14,
+	last30Days: 30,
+	last90Days: 90,
+};
 
 export default function DatePickerIsland(props: DatePickerRootProps) {
 	const {
@@ -51,6 +61,9 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 		useState<CalendarDate>(initialFocused);
 	const currentFocusedValue = parseSingleDate(focusedValueProp) ?? focusedValue;
 
+	const minDate = parseSingleDate(props.min);
+	const maxDate = parseSingleDate(props.max);
+
 	// Keep refs for event handlers to avoid closure stale state
 	const stateRef = useRef({
 		open,
@@ -87,6 +100,24 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 	const handleOpenChange = (nextOpen: boolean) => {
 		setIsOpen(nextOpen);
 		onOpenChange?.({ open: nextOpen });
+	};
+
+	const focusTrigger = () => {
+		const root = document.getElementById(rootId);
+		const trigger = root?.querySelector<HTMLElement>('[data-part="trigger"]');
+		trigger?.focus();
+	};
+
+	const closeAndRestoreFocus = () => {
+		handleOpenChange(false);
+		focusTrigger();
+	};
+
+	const isOutOfRange = (date: CalendarDate) => {
+		const time = date.toDate().getTime();
+		if (minDate && time < minDate.toDate().getTime()) return true;
+		if (maxDate && time > maxDate.toDate().getTime()) return true;
+		return false;
 	};
 
 	const handleGoToNext = () => {
@@ -139,7 +170,7 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 			if (mode === "single") {
 				nextValues = [cellVal];
 				if (cos) {
-					handleOpenChange(false);
+					closeAndRestoreFocus();
 				}
 			} else if (mode === "multiple") {
 				const valStr = cellVal.toString();
@@ -160,7 +191,7 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 						nextValues = [end, start];
 					}
 					if (cos) {
-						handleOpenChange(false);
+						closeAndRestoreFocus();
 					}
 				}
 			}
@@ -178,28 +209,73 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 	};
 
 	const handlePresetClick = (presetType: string) => {
-		const today = new Date();
-		const start = new Date();
-		if (presetType === "last3Days") {
-			start.setDate(today.getDate() - 3);
-		} else if (presetType === "last7Days") {
-			start.setDate(today.getDate() - 7);
-		} else if (presetType === "last14Days") {
-			start.setDate(today.getDate() - 14);
-		} else if (presetType === "last30Days") {
-			start.setDate(today.getDate() - 30);
-		} else if (presetType === "last90Days") {
-			start.setDate(today.getDate() - 90);
-		} else {
+		const days = PRESET_DAYS[presetType];
+		if (days === undefined) {
 			return;
 		}
+		const today = new Date();
+		const start = new Date();
+		start.setDate(today.getDate() - days);
 		const startVal = fromJSDate(start);
 		const endVal = fromJSDate(today);
-		updateValue([startVal, endVal]);
+		const nextValues =
+			stateRef.current.selectionMode === "range"
+				? [startVal, endVal]
+				: [days === 0 ? endVal : startVal];
+		updateValue(nextValues);
 		setFocusedValue(endVal);
 		if (closeOnSelect) {
-			handleOpenChange(false);
+			closeAndRestoreFocus();
 		}
+	};
+
+	// Commit a manually typed date. Invalid or out-of-range text reverts to
+	// the last committed value for that input.
+	const handleInputCommit = (input: HTMLInputElement) => {
+		const index = Number(input.getAttribute("data-index") || "0");
+		const raw = input.value.trim();
+		const { value: vals, selectionMode: mode } = stateRef.current;
+		const revert = () => {
+			input.value = vals[index]?.toString() ?? "";
+		};
+
+		if (raw === "") {
+			if (vals.length > 0) {
+				updateValue(
+					mode === "single" ? [] : vals.filter((_, i) => i !== index),
+				);
+			}
+			return;
+		}
+
+		if (!isValidDateString(raw)) {
+			revert();
+			return;
+		}
+
+		const parsed = parseDate(raw);
+		if (isOutOfRange(parsed)) {
+			revert();
+			return;
+		}
+
+		let nextValues: CalendarDate[];
+		if (mode === "single") {
+			nextValues = [parsed];
+		} else {
+			nextValues = [...vals];
+			nextValues[index] = parsed;
+			nextValues = nextValues.filter(Boolean);
+			if (
+				mode === "range" &&
+				nextValues.length === 2 &&
+				nextValues[0].toDate().getTime() > nextValues[1].toDate().getTime()
+			) {
+				nextValues = [nextValues[1], nextValues[0]];
+			}
+		}
+		updateValue(nextValues);
+		setFocusedValue(parsed);
 	};
 
 	// DOM interaction effects
@@ -210,7 +286,7 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 		const handleClick = (e: MouseEvent) => {
 			const target = e.target as HTMLElement;
 
-			// Close trigger
+			// Clear trigger
 			if (target.closest('[data-part="clear-trigger"]')) {
 				updateValue([]);
 				return;
@@ -219,6 +295,14 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 			// Main popover trigger
 			if (target.closest('[data-part="trigger"]')) {
 				handleOpenChange(!stateRef.current.open);
+				return;
+			}
+
+			// Clicking an input opens the calendar
+			if (target.closest('[data-part="input"]')) {
+				if (!stateRef.current.open) {
+					handleOpenChange(true);
+				}
 				return;
 			}
 
@@ -244,72 +328,72 @@ export default function DatePickerIsland(props: DatePickerRootProps) {
 				return;
 			}
 
-			// Cell triggers
+			// Cell triggers carry their value in data-value
 			const cellTrigger = target.closest('[data-part="table-cell-trigger"]');
 			if (cellTrigger && !cellTrigger.hasAttribute("data-disabled")) {
-				const activeView = stateRef.current.view;
-				if (activeView === "day") {
-					const cell = cellTrigger.closest('[data-part="table-cell"]');
-					const dayCellIndex = Array.from(
-						root.querySelectorAll('[data-part="table-cell"]'),
-					).indexOf(cell as any);
-					if (dayCellIndex !== -1) {
-						const flatWeeks = stateRef.current.focusedValue
-							? getMonthWeeks(
-									stateRef.current.focusedValue.year,
-									stateRef.current.focusedValue.month,
-								).flat()
-							: [];
-						const dateValue = flatWeeks[dayCellIndex];
-						if (dateValue) {
-							handleCellClick(dateValue);
-						}
+				const rawValue = cellTrigger.getAttribute("data-value");
+				if (!rawValue) return;
+				if (cellTrigger.getAttribute("data-view") === "day") {
+					if (isValidDateString(rawValue)) {
+						handleCellClick(parseDate(rawValue));
 					}
-				} else if (activeView === "month") {
-					const cells = Array.from(
-						root.querySelectorAll(
-							'[data-part="table-cell-trigger"][data-view="month"]',
-						),
-					);
-					const idx = cells.indexOf(cellTrigger);
-					if (idx !== -1) {
-						handleCellClick(idx + 1); // 1-based month value
+				} else {
+					const numeric = Number(rawValue);
+					if (!Number.isNaN(numeric)) {
+						handleCellClick(numeric);
 					}
-				} else if (activeView === "year") {
-					const yearVal = Number(cellTrigger.textContent?.trim() || "2025");
-					handleCellClick(yearVal);
 				}
 			}
 		};
 
-		const handleSelectChange = (e: Event) => {
-			const target = e.target as HTMLSelectElement;
-			if (target.getAttribute("data-part") === "month-select") {
-				const monthVal = Number(target.value);
+		const handleChange = (e: Event) => {
+			const target = e.target as HTMLElement;
+			const part = target.getAttribute("data-part");
+			if (part === "month-select") {
+				const monthVal = Number((target as HTMLSelectElement).value);
 				setFocusedValue(
 					new CalendarDate(stateRef.current.focusedValue.year, monthVal, 1),
 				);
-			} else if (target.getAttribute("data-part") === "year-select") {
-				const yearVal = Number(target.value);
+			} else if (part === "year-select") {
+				const yearVal = Number((target as HTMLSelectElement).value);
 				setFocusedValue(
 					new CalendarDate(yearVal, stateRef.current.focusedValue.month, 1),
 				);
+			} else if (part === "input") {
+				handleInputCommit(target as HTMLInputElement);
+			}
+		};
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape" && stateRef.current.open) {
+				e.stopPropagation();
+				closeAndRestoreFocus();
+				return;
+			}
+			if (e.key === "Enter") {
+				const target = e.target as HTMLElement;
+				if (target.getAttribute("data-part") === "input") {
+					e.preventDefault();
+					handleInputCommit(target as HTMLInputElement);
+				}
 			}
 		};
 
 		const handleDocumentClick = (e: MouseEvent) => {
-			if (!root.contains(e.target as Node)) {
+			if (stateRef.current.open && !root.contains(e.target as Node)) {
 				handleOpenChange(false);
 			}
 		};
 
 		root.addEventListener("click", handleClick);
-		root.addEventListener("change", handleSelectChange);
+		root.addEventListener("change", handleChange);
+		root.addEventListener("keydown", handleKeyDown);
 		document.addEventListener("click", handleDocumentClick);
 
 		return () => {
 			root.removeEventListener("click", handleClick);
-			root.removeEventListener("change", handleSelectChange);
+			root.removeEventListener("change", handleChange);
+			root.removeEventListener("keydown", handleKeyDown);
 			document.removeEventListener("click", handleDocumentClick);
 		};
 	}, [rootId]);

@@ -27,13 +27,33 @@ export class CalendarDate {
 	}
 }
 
+export function daysInMonth(year: number, month: number): number {
+	return new Date(year, month, 0).getDate();
+}
+
+export function isValidDateString(str: string): boolean {
+	if (typeof str !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(str.trim())) {
+		return false;
+	}
+	const [year, month, day] = str.trim().split("-").map(Number);
+	return (
+		month >= 1 && month <= 12 && day >= 1 && day <= daysInMonth(year, month)
+	);
+}
+
 export function parseDate(str: string): CalendarDate {
 	if (!str || typeof str !== "string") {
-		const d = new Date();
-		return new CalendarDate(d.getFullYear(), d.getMonth() + 1, d.getDate());
+		return fromJSDate(new Date());
 	}
-	const [year, month, day] = str.split("-").map(Number);
-	return new CalendarDate(year || 2025, month || 1, day || 1);
+	const [year, month, day] = str.trim().split("-").map(Number);
+	const today = new Date();
+	const safeYear = year || today.getFullYear();
+	const safeMonth = Math.min(Math.max(month || 1, 1), 12);
+	const safeDay = Math.min(
+		Math.max(day || 1, 1),
+		daysInMonth(safeYear, safeMonth),
+	);
+	return new CalendarDate(safeYear, safeMonth, safeDay);
 }
 
 export function fromJSDate(date: Date): CalendarDate {
@@ -219,7 +239,7 @@ export function DatePickerRoot(props: DatePickerRootProps) {
 
 	const initialValue = parseValue(valueProp ?? defaultValue);
 	const [valState, setValState] = useState<CalendarDate[]>(initialValue);
-	const value = valueProp ? parseValue(valueProp) : valState;
+	const value = valueProp !== undefined ? parseValue(valueProp) : valState;
 
 	const initialFocused =
 		parseSingleDate(focusedValueProp ?? defaultFocusedValue) ??
@@ -433,6 +453,7 @@ export function DatePickerLabel(props: PropsWithChildren<{ class?: string }>) {
 	const context = useDatePickerContext();
 	return (
 		<label
+			for={context ? `${context.rootId}-input-0` : undefined}
 			data-scope="date-picker"
 			data-part="label"
 			data-state={context?.open ? "open" : "closed"}
@@ -482,10 +503,14 @@ export function DatePickerInput(props: {
 	return (
 		<input
 			type="text"
+			id={context ? `${context.rootId}-input-${index}` : undefined}
 			placeholder={placeholder}
 			value={val}
 			disabled={context?.disabled}
 			readOnly={context?.readOnly}
+			autocomplete="off"
+			inputmode="numeric"
+			aria-invalid={context?.invalid ? "true" : undefined}
 			data-scope="date-picker"
 			data-part="input"
 			data-index={String(index)}
@@ -506,6 +531,10 @@ export function DatePickerTrigger(
 		<button
 			type="button"
 			disabled={context?.disabled}
+			aria-label="Open date picker"
+			aria-haspopup="dialog"
+			aria-expanded={context?.open ? "true" : "false"}
+			aria-controls={context ? `${context.rootId}-content` : undefined}
 			data-scope="date-picker"
 			data-part="trigger"
 			data-state={context?.open ? "open" : "closed"}
@@ -544,6 +573,7 @@ export function DatePickerClearTrigger(
 		<button
 			type="button"
 			disabled={context?.disabled}
+			aria-label="Clear selected dates"
 			data-scope="date-picker"
 			data-part="clear-trigger"
 			class={cx(context?.styles.clearTrigger, classProp)}
@@ -605,6 +635,9 @@ export function DatePickerContent(
 	const context = useDatePickerContext();
 	return (
 		<div
+			id={context ? `${context.rootId}-content` : undefined}
+			role="dialog"
+			aria-label="Calendar"
 			data-scope="date-picker"
 			data-part="content"
 			data-state={context?.open ? "open" : "closed"}
@@ -671,6 +704,7 @@ export function DatePickerPrevTrigger(
 	return (
 		<button
 			type="button"
+			aria-label="Previous"
 			data-scope="date-picker"
 			data-part="prev-trigger"
 			disabled={context?.disabled}
@@ -705,6 +739,7 @@ export function DatePickerNextTrigger(
 	return (
 		<button
 			type="button"
+			aria-label="Next"
 			data-scope="date-picker"
 			data-part="next-trigger"
 			disabled={context?.disabled}
@@ -739,6 +774,7 @@ export function DatePickerViewTrigger(
 	return (
 		<button
 			type="button"
+			aria-label="Switch calendar view"
 			data-scope="date-picker"
 			data-part="view-trigger"
 			data-view={context?.view}
@@ -950,13 +986,33 @@ export function DatePickerTableCellTrigger(
 		}
 	}
 
+	let cellLabel: string | undefined;
+	if (value instanceof CalendarDate) {
+		try {
+			cellLabel = value.toDate().toLocaleDateString(context.locale, {
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric",
+			});
+		} catch {
+			cellLabel = value.toString();
+		}
+	}
+
 	return (
 		<button
 			type="button"
 			disabled={isDisabled}
+			aria-label={cellLabel}
+			aria-selected={isSelected ? "true" : undefined}
+			aria-current={isToday ? "date" : undefined}
 			data-scope="date-picker"
 			data-part="table-cell-trigger"
 			data-view={context.view}
+			data-value={
+				value instanceof CalendarDate ? value.toString() : String(value)
+			}
 			data-selected={isSelected ? "" : undefined}
 			data-today={isToday ? "" : undefined}
 			data-in-range={inRange ? "" : undefined}
@@ -992,6 +1048,7 @@ export function DatePickerMonthSelect(
 
 	return (
 		<select
+			aria-label="Select month"
 			data-scope="date-picker"
 			data-part="month-select"
 			value={String(context?.focusedValue.month ?? 1)}
@@ -1013,8 +1070,9 @@ export function DatePickerYearSelect(
 ) {
 	const { children, class: classProp, ...rest } = props;
 	const context = useDatePickerContext();
-	const startYear = (context?.focusedValue.year ?? 2025) - 50;
-	const endYear = (context?.focusedValue.year ?? 2025) + 50;
+	const currentYear = context?.focusedValue.year ?? new Date().getFullYear();
+	const startYear = currentYear - 50;
+	const endYear = currentYear + 50;
 	const years: number[] = [];
 	for (let y = startYear; y <= endYear; y++) {
 		years.push(y);
@@ -1022,9 +1080,10 @@ export function DatePickerYearSelect(
 
 	return (
 		<select
+			aria-label="Select year"
 			data-scope="date-picker"
 			data-part="year-select"
-			value={String(context?.focusedValue.year ?? 2025)}
+			value={String(currentYear)}
 			class={cx(context?.styles.yearSelect, classProp)}
 			disabled={context?.disabled}
 			{...rest}
@@ -1125,6 +1184,7 @@ export function DatePickerStructure(props: DatePickerFlattenedProps) {
 					<DatePickerInput placeholder={placeholder} />
 				)}
 				<DatePickerTrigger />
+				<DatePickerClearTrigger />
 			</DatePickerControl>
 			<DatePickerPositioner>
 				<DatePickerContent>
