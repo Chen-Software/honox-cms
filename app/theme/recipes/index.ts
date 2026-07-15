@@ -1,5 +1,6 @@
 import { absoluteCenter } from "./absolute-center";
 import { alert } from "./alert";
+import { anchor } from "./anchor";
 import { avatar } from "./avatar";
 import { badge } from "./badge";
 import { breadcrumb } from "./breadcrumb";
@@ -13,6 +14,7 @@ import { combobox } from "./combobox";
 import { datePicker } from "./date-picker";
 import { dialog } from "./dialog";
 import { drawer } from "./drawer";
+import { dropdown } from "./dropdown";
 import { field } from "./field";
 import { fieldset } from "./fieldset";
 import { fileUpload } from "./file-upload";
@@ -22,8 +24,6 @@ import { group } from "./group";
 import { heading } from "./heading";
 import { hoverCard } from "./hover-card";
 import { input } from "./input";
-import { link } from "./link";
-import { dropdown } from "./dropdown";
 import { pagination } from "./pagination";
 import { popover } from "./popover";
 import { progress } from "./progress";
@@ -58,7 +58,7 @@ export const recipes = {
 	input,
 	gridCol,
 	gridRow,
-	link,
+	anchor,
 };
 
 export const slotRecipes = {

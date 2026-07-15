@@ -3,6 +3,7 @@ export {
 	type AbsoluteCenterProps,
 } from "./absolute-center";
 export { Alert, AlertIcon, type AlertProps } from "./alert";
+export { Anchor, type AnchorProps } from "./anchor";
 export { Avatar, type AvatarProps } from "./avatar";
 export { Badge, type BadgeProps } from "./badge";
 export {
@@ -27,6 +28,8 @@ export { Combobox, type ComboboxProps } from "./combobox";
 export { DatePicker, type DatePickerProps } from "./date-picker";
 export { Dialog, type DialogProps } from "./dialog";
 export { Drawer, type DrawerProps } from "./drawer";
+export { Dropdown, type DropdownItem, type DropdownProps } from "./dropdown";
+export * as DropdownPrimitive from "./dropdown-primitive";
 export { Field, type FieldProps } from "./field";
 export { Fieldset, type FieldsetProps } from "./fieldset";
 export { FileUpload, type FileUploadProps } from "./file-upload";
@@ -35,10 +38,7 @@ export { Grid, type GridProps } from "./grid";
 export { Group, type GroupProps } from "./group";
 export { Heading, type HeadingProps } from "./heading";
 export { HoverCard, type HoverCardProps } from "./hover-card";
-export { Link, type LinkProps } from "./link";
 export { Loader, type LoaderProps } from "./loader";
-export { Dropdown, type DropdownItem, type DropdownProps } from "./dropdown";
-export * as DropdownPrimitive from "./dropdown-primitive";
 export { PaginatedTable } from "./paginated-table";
 export { Pagination, type PaginationProps } from "./pagination";
 export { Popover, type PopoverProps } from "./popover";

@@ -1,7 +1,7 @@
 import { defineRecipe } from "@pandacss/dev";
 
-export const link = defineRecipe({
-	className: "link",
+export const anchor = defineRecipe({
+	className: "anchor",
 	base: {
 		alignItems: "center",
 		borderRadius: "l1",

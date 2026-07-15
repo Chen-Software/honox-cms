@@ -3,6 +3,7 @@ import { type ComponentBlock, propsOf } from "./block-types";
 import {
 	Alert,
 	AlertIcon,
+	Anchor,
 	Badge,
 	Button,
 	Card,
@@ -12,6 +13,7 @@ import {
 	Combobox,
 	Dialog,
 	Drawer,
+	Dropdown,
 	Field,
 	Fieldset,
 	FileUpload,
@@ -19,8 +21,6 @@ import {
 	Group,
 	Heading,
 	HoverCard,
-	Link,
-	Dropdown,
 	PaginatedTable,
 	Pagination,
 	Popover,
@@ -50,6 +50,7 @@ const TYPE_ALIASES: Record<string, string> = {
 	"grid-row": "grid",
 	"color-picker": "colorPicker",
 	menu: "dropdown",
+	link: "anchor",
 };
 
 function resolveType(type: string): string {
@@ -145,9 +146,9 @@ const registry: Record<string, BlockRenderer> = {
 		return <Text {...rest}>{content}</Text>;
 	},
 
-	link: (b) => {
+	anchor: (b) => {
 		const { text, ...rest } = propsOf(b);
-		return <Link {...rest}>{text}</Link>;
+		return <Anchor {...rest}>{text}</Anchor>;
 	},
 
 	card: (b) => {

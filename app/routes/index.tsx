@@ -4,6 +4,7 @@ import {
 	AbsoluteCenter,
 	Alert,
 	AlertIcon,
+	Anchor,
 	Avatar,
 	Badge,
 	Breadcrumb,
@@ -19,6 +20,7 @@ import {
 	DatePicker,
 	Dialog,
 	Drawer,
+	Dropdown,
 	Field,
 	Fieldset,
 	FileUpload,
@@ -27,9 +29,7 @@ import {
 	Heading,
 	HoverCard,
 	IconButton,
-	Link,
 	Loader,
-	Dropdown,
 	PaginatedTable,
 	Pagination,
 	Popover,
@@ -187,10 +187,10 @@ export default createRoute((c) => {
 				</ButtonGroup>
 			</Stack>
 
-			{/* Link Examples */}
+			{/* Anchor Examples */}
 			<Stack direction="column" gap="4" align="center" class={css({ mt: "8" })}>
 				<Heading as="h2" class={css({ fontSize: "xl", mb: "2" })}>
-					Link Component Examples
+					Anchor Component Examples
 				</Heading>
 
 				{/* Variants */}
@@ -206,15 +206,15 @@ export default createRoute((c) => {
 					Variants
 				</Text>
 				<Stack gap="4" justify="center" wrap="wrap">
-					<Link href="#" variant="underline" colorPalette="blue">
+					<Anchor href="#" variant="underline" colorPalette="blue">
 						Underline (Blue)
-					</Link>
-					<Link href="#" variant="plain" colorPalette="green">
+					</Anchor>
+					<Anchor href="#" variant="plain" colorPalette="green">
 						Plain (Green)
-					</Link>
-					<Link href="#" variant="underline" colorPalette="red">
+					</Anchor>
+					<Anchor href="#" variant="underline" colorPalette="red">
 						Underline (Red)
-					</Link>
+					</Anchor>
 				</Stack>
 
 				{/* Color Palettes */}
@@ -230,30 +230,30 @@ export default createRoute((c) => {
 					Color Palettes
 				</Text>
 				<Stack gap="4" justify="center" wrap="wrap">
-					<Link href="#" colorPalette="blue">
+					<Anchor href="#" colorPalette="blue">
 						Blue
-					</Link>
-					<Link href="#" colorPalette="green">
+					</Anchor>
+					<Anchor href="#" colorPalette="green">
 						Green
-					</Link>
-					<Link href="#" colorPalette="red">
+					</Anchor>
+					<Anchor href="#" colorPalette="red">
 						Red
-					</Link>
-					<Link href="#" colorPalette="orange">
+					</Anchor>
+					<Anchor href="#" colorPalette="orange">
 						Orange
-					</Link>
-					<Link href="#" colorPalette="amber">
+					</Anchor>
+					<Anchor href="#" colorPalette="amber">
 						Amber
-					</Link>
-					<Link href="#" colorPalette="purple">
+					</Anchor>
+					<Anchor href="#" colorPalette="purple">
 						Purple
-					</Link>
-					<Link href="#" colorPalette="cyan">
+					</Anchor>
+					<Anchor href="#" colorPalette="cyan">
 						Cyan
-					</Link>
-					<Link href="#" colorPalette="slate">
+					</Anchor>
+					<Anchor href="#" colorPalette="slate">
 						Slate
-					</Link>
+					</Anchor>
 				</Stack>
 
 				{/* External link safety */}
@@ -266,12 +266,12 @@ export default createRoute((c) => {
 						textAlign: "left",
 					})}
 				>
-					External Link (target="_blank" gets rel="noopener noreferrer")
+					External Anchor (target="_blank" gets rel="noopener noreferrer")
 				</Text>
 				<Stack gap="4" justify="center" wrap="wrap">
-					<Link href="https://hono.dev" target="_blank">
+					<Anchor href="https://hono.dev" target="_blank">
 						Hono (opens in new tab)
-					</Link>
+					</Anchor>
 				</Stack>
 			</Stack>
 

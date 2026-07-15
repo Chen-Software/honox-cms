@@ -1,14 +1,14 @@
 import { cx } from "design-system/css";
-import type { LinkVariantProps } from "design-system/recipes";
-import { link } from "design-system/recipes";
+import type { AnchorVariantProps } from "design-system/recipes";
+import { anchor } from "design-system/recipes";
 import type { Child, ElementType } from "hono/jsx";
 import { cloneElement } from "hono/jsx";
 
-export interface LinkProps extends LinkVariantProps {
+export interface AnchorProps extends AnchorVariantProps {
 	/** Render as a different element/component (e.g. "span", or a router Link). */
 	as?: ElementType;
 	/**
-	 * Merge the link styles onto a single child element instead of rendering an
+	 * Merge the anchor styles onto a single child element instead of rendering an
 	 * `<a>`. Enables routing composition (e.g. wrap a framework's `<Link />`).
 	 */
 	asChild?: boolean;
@@ -17,8 +17,8 @@ export interface LinkProps extends LinkVariantProps {
 	[key: string]: unknown;
 }
 
-export function Link(props: LinkProps) {
-	const [variantProps, localProps] = link.splitVariantProps(props);
+export function Anchor(props: AnchorProps) {
+	const [variantProps, localProps] = anchor.splitVariantProps(props);
 	const {
 		as: Component = "a",
 		asChild,
@@ -41,7 +41,7 @@ export function Link(props: LinkProps) {
 		...(target === "_blank" || rel !== undefined ? { rel: resolvedRel } : {}),
 	};
 
-	const className = cx(link(variantProps), classProp);
+	const className = cx(anchor(variantProps), classProp);
 
 	if (asChild && typeof children === "object" && children !== null) {
 		const child = children as JSX.Element;
