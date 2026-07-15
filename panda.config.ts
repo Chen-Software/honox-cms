@@ -48,6 +48,7 @@ export default defineConfig({
 			drawer: ["*"],
 			field: ["*"],
 			fieldset: ["*"],
+			fileUpload: ["*"],
 			group: ["*"],
 			heading: ["*"],
 			hoverCard: ["*"],

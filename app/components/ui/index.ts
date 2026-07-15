@@ -28,6 +28,8 @@ export { Dialog, type DialogProps } from "./dialog";
 export { Drawer, type DrawerProps } from "./drawer";
 export { Field, type FieldProps } from "./field";
 export { Fieldset, type FieldsetProps } from "./fieldset";
+export { FileUpload, type FileUploadProps } from "./file-upload";
+export * as FileUploadPrimitive from "./file-upload-primitive";
 export { Grid, type GridProps } from "./grid";
 export { Group, type GroupProps } from "./group";
 export { Heading, type HeadingProps } from "./heading";

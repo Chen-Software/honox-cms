@@ -13,6 +13,7 @@ import {
 	Drawer,
 	Field,
 	Fieldset,
+	FileUpload,
 	Grid,
 	Group,
 	Heading,
@@ -39,6 +40,7 @@ type BlockRenderer = (block: ComponentBlock) => JSX.Element;
 // same renderer. Aliases are declared once here — renderers are registered
 // only under their canonical (camelCase) key.
 const TYPE_ALIASES: Record<string, string> = {
+	"file-upload": "fileUpload",
 	"hover-card": "hoverCard",
 	"paginated-table": "paginatedTable",
 	"radio-group": "radioGroup",
@@ -518,6 +520,22 @@ const registry: Record<string, BlockRenderer> = {
 				placeholder={placeholder}
 				items={items || []}
 				multiple={multiple}
+				{...rest}
+			/>
+		);
+	},
+
+	fileUpload: (b) => {
+		const { maxFiles, maxFileSize, ...rest } = propsOf(b);
+		return (
+			<FileUpload
+				interactive
+				maxFiles={maxFiles !== undefined ? Number(maxFiles) : undefined}
+				maxFileSize={
+					maxFileSize !== undefined && maxFileSize !== ""
+						? Number(maxFileSize)
+						: undefined
+				}
 				{...rest}
 			/>
 		);

@@ -433,6 +433,27 @@ collections:
                                 widget: select
                                 options: [blue, green, red, purple, orange, amber, cyan, slate]
                                 required: false
+                          - label: File Upload
+                            name: fileUpload
+                            widget: object
+                            fields: &fileupload_fields
+                              - { label: Label, name: label, widget: string, required: false }
+                              - { label: Name, name: name, widget: string, required: false, hint: "Form field name used on submission" }
+                              - { label: Accept, name: accept, widget: string, required: false, hint: "e.g. image/* or .pdf,.docx" }
+                              - { label: Max Files, name: maxFiles, widget: number, default: 1, required: false }
+                              - { label: Max File Size, name: maxFileSize, widget: number, required: false, hint: "In bytes, e.g. 5242880 = 5MB" }
+                              - { label: Dropzone Text, name: dropzoneText, widget: string, required: false, default: "Drag your file(s) here" }
+                              - { label: Trigger Text, name: triggerText, widget: string, required: false, default: "Open file picker" }
+                              - { label: Show Size, name: showSize, widget: boolean, default: true }
+                              - { label: Clearable, name: clearable, widget: boolean, default: true }
+                              - { label: Disabled, name: disabled, widget: boolean, default: false }
+                              - { label: Required, name: required, widget: boolean, default: false }
+                              - { label: Invalid, name: invalid, widget: boolean, default: false }
+                              - label: Size
+                                name: size
+                                widget: select
+                                options: [sm, md, lg]
+                                default: md
 
                   - label: Card
                     name: card
@@ -674,6 +695,10 @@ collections:
                     name: switch
                     widget: object
                     fields: *switch_fields
+                  - label: File Upload
+                    name: fileUpload
+                    widget: object
+                    fields: *fileupload_fields
 
                   - label: Grid
                     name: grid
@@ -978,3 +1003,7 @@ collections:
             name: switch
             widget: object
             fields: *switch_fields
+          - label: File Upload
+            name: fileUpload
+            widget: object
+            fields: *fileupload_fields

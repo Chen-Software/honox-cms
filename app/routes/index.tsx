@@ -20,6 +20,7 @@ import {
 	Drawer,
 	Field,
 	Fieldset,
+	FileUpload,
 	Grid,
 	Group,
 	Heading,
@@ -2495,6 +2496,55 @@ export default createRoute((c) => {
 							onValueChange={(details) =>
 								console.log("Tags changed:", details.value)
 							}
+						/>
+					</Stack>
+				</Stack>
+			</Stack>
+
+			{/* FileUpload Examples */}
+			<Stack
+				direction="column"
+				gap="4"
+				align="center"
+				class={css({ mt: "8", maxWidth: "xl", mx: "auto" })}
+			>
+				<Heading as="h2" class={css({ fontSize: "xl", mb: "4" })}>
+					FileUpload Component Examples
+				</Heading>
+				<Stack direction="column" gap="8" class={css({ width: "full" })}>
+					<Stack direction="column" gap="2">
+						<Text size="sm" class={css({ color: "fg.muted" })}>
+							Basic FileUpload (single file)
+						</Text>
+						<FileUpload label="Attachment" name="attachment" />
+					</Stack>
+
+					<Stack direction="column" gap="2">
+						<Text size="sm" class={css({ color: "fg.muted" })}>
+							Multiple images with validation (max 3 files, 5MB each)
+						</Text>
+						<FileUpload
+							label="Photos"
+							name="photos"
+							accept="image/*"
+							maxFiles={3}
+							maxFileSize={5 * 1024 * 1024}
+							dropzoneText="Drag your image(s) here"
+							onFileChange={(details) =>
+								console.log("Files changed:", details)
+							}
+						/>
+					</Stack>
+
+					<Stack direction="column" gap="2">
+						<Text size="sm" class={css({ color: "fg.muted" })}>
+							Static FileUpload (no JS, native form control)
+						</Text>
+						<FileUpload
+							interactive={false}
+							label="Resume"
+							name="resume"
+							size="sm"
 						/>
 					</Stack>
 				</Stack>

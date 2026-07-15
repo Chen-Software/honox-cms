@@ -64,6 +64,41 @@ test("link block renders an anchor with text, href and external rel safety", () 
   ).toString();
   expect(themed).toContain("Go");
 });
+
+test("fileUpload block renders a hydrated FileUpload with coerced numeric props", () => {
+  const html = (
+    <PageRenderer
+      content={[
+        {
+          type: "fileUpload",
+          label: "Attachments",
+          name: "attachments",
+          accept: "image/*",
+          // CMS payloads may deliver numbers as strings; the renderer coerces.
+          maxFiles: "3",
+          showSize: true,
+          clearable: true,
+        },
+      ]}
+    />
+  ).toString();
+
+  expect(html).toContain('data-scope="file-upload"');
+  expect(html).toContain('data-interactive="true"');
+  expect(html).toContain("Attachments");
+  expect(html).toContain('name="attachments"');
+  expect(html).toContain('accept="image/*"');
+  // maxFiles=3 → the hidden input allows multiple selection.
+  expect(html).toMatch(/<input[^>]*type="file"[^>]*multiple/);
+
+  // Kebab-case alias resolves to the same renderer.
+  const aliased = (
+    <PageRenderer content={[{ type: "file-upload", label: "Docs" }]} />
+  ).toString();
+  expect(aliased).toContain('data-scope="file-upload"');
+  expect(aliased).toContain("Docs");
+});
+
 test("registry exposes a renderer for every canonical block type", () => {
   const types = [
     "stack",
@@ -94,6 +129,7 @@ test("registry exposes a renderer for every canonical block type", () => {
     "select",
     "slider",
     "switch",
+    "fileUpload",
   ];
   for (const type of types) {
     expect(typeof registry[type], `registry missing entry for "${type}"`).toBe(

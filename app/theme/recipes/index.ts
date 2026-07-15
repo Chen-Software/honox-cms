@@ -1,4 +1,3 @@
-import { link } from "./link";
 import { absoluteCenter } from "./absolute-center";
 import { alert } from "./alert";
 import { avatar } from "./avatar";
@@ -15,12 +14,14 @@ import { dialog } from "./dialog";
 import { drawer } from "./drawer";
 import { field } from "./field";
 import { fieldset } from "./fieldset";
+import { fileUpload } from "./file-upload";
 import { gridCol } from "./grid-col";
 import { gridRow } from "./grid-row";
 import { group } from "./group";
 import { heading } from "./heading";
 import { hoverCard } from "./hover-card";
 import { input } from "./input";
+import { link } from "./link";
 import { menu } from "./menu";
 import { pagination } from "./pagination";
 import { popover } from "./popover";
@@ -61,6 +62,7 @@ export const recipes = {
 };
 
 export const slotRecipes = {
+	fileUpload,
 	tagsInput,
 	pagination,
 	radioGroup,
