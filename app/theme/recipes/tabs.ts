@@ -114,14 +114,14 @@ export const tabs = defineSlotRecipe({
 
 	variants: {
 		colorPalette: {
-			blue: { colorPalette: "blue" },
-			green: { colorPalette: "green" },
-			red: { colorPalette: "red" },
-			orange: { colorPalette: "orange" },
-			gray: { colorPalette: "gray" },
-			cyan: { colorPalette: "cyan" },
-			amber: { colorPalette: "amber" },
-			purple: { colorPalette: "purple" },
+			blue: { root: { colorPalette: "blue" } },
+			green: { root: { colorPalette: "green" } },
+			red: { root: { colorPalette: "red" } },
+			orange: { root: { colorPalette: "orange" } },
+			gray: { root: { colorPalette: "gray" } },
+			cyan: { root: { colorPalette: "cyan" } },
+			amber: { root: { colorPalette: "amber" } },
+			purple: { root: { colorPalette: "purple" } },
 		},
 		size: {
 			xs: {

@@ -11,6 +11,44 @@ import {
 
 type TabsStyles = ReturnType<typeof tabs>;
 
+const CloseIcon = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="14"
+		height="14"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<title>Close</title>
+		<path d="M18 6 6 18" />
+		<path d="m6 6 12 12" />
+	</svg>
+);
+
+const PlusIcon = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="14"
+		height="14"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<title>Add tab</title>
+		<path d="M5 12h14" />
+		<path d="M12 5v14" />
+	</svg>
+);
+
 interface TabsContextValue {
 	styles: TabsStyles;
 	value?: string;
@@ -107,48 +145,6 @@ export function List(props: ListProps) {
 		>
 			{props.children}
 		</div>
-	);
-}
-
-function CloseIcon() {
-	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="14"
-			height="14"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			aria-hidden="true"
-		>
-			<title>Close</title>
-			<path d="M18 6 6 18" />
-			<path d="m6 6 12 12" />
-		</svg>
-	);
-}
-
-function PlusIcon() {
-	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="14"
-			height="14"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			aria-hidden="true"
-		>
-			<title>Add tab</title>
-			<path d="M5 12h14" />
-			<path d="M12 5v14" />
-		</svg>
 	);
 }
 
@@ -360,9 +356,7 @@ export const TabsStructure = (props: TabsStructureProps) => {
 	const extraStart = isSplitExtra
 		? (extra as { start?: JSX.Element }).start
 		: undefined;
-	const extraEnd = isSplitExtra
-		? (extra as { end?: JSX.Element }).end
-		: extra;
+	const extraEnd = isSplitExtra ? (extra as { end?: JSX.Element }).end : extra;
 
 	const list = (
 		<List>

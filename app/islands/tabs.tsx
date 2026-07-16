@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "hono/jsx";
 import {
 	InteractiveRoot,
 	type RootProps,
-	TabsStructure,
 	type TabsItem,
+	TabsStructure,
 	type TabsStructureProps,
 } from "../components/ui/tabs-primitive";
 
