@@ -347,8 +347,8 @@ export default createRoute((c) => {
 						Featured Carousel Implementation
 					</Heading>
 					<Text size="md" class={css({ color: "fg.muted", mt: "2" })}>
-						Demonstrating our robust Hono/JSX implementation of Ark UI's Slider Carousel.
-						Swipeable, autoplay-ready, and fully accessible.
+						Demonstrating our robust Hono/JSX implementation of Ark UI's Slider
+						Carousel. Swipeable, autoplay-ready, and fully accessible.
 					</Text>
 				</div>
 
@@ -546,6 +546,7 @@ export default createRoute((c) => {
 									<Card
 										title="Date Picker"
 										description="Advanced date and range pickers"
+										class={css({ overflow: "visible" })}
 									>
 										<Stack gap="4" class={css({ mt: "2", width: "full" })}>
 											<DatePicker
@@ -566,6 +567,7 @@ export default createRoute((c) => {
 									<Card
 										title="Dropdown Selection"
 										description="Accessible selects & autocomplete comboboxes"
+										class={css({ overflow: "visible" })}
 									>
 										<Stack gap="4" class={css({ mt: "2", width: "full" })}>
 											<Select
@@ -587,6 +589,7 @@ export default createRoute((c) => {
 									<Card
 										title="Color Picker"
 										description="Full color spectrum selector"
+										class={css({ overflow: "visible" })}
 									>
 										<div
 											class={css({
