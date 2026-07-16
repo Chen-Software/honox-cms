@@ -7,6 +7,7 @@ tags:
   - ui
   - best-practices
 draft: false
+cover: https://picsum.photos/seed/building-accessible-ui-components/1200/675
 ---
 
 # Building Accessible UI Components

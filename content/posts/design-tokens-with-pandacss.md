@@ -4,6 +4,7 @@ date: "2026-06-22"
 description: "A deep dive into using PandaCSS design tokens to create consistent, maintainable design systems. Learn how to leverage the power of type-safe CSS-in-JS."
 tags: ["design", "pandacss", "css"]
 draft: false
+cover: https://picsum.photos/seed/design-tokens-with-pandacss/1200/675
 ---
 
 # Design Tokens with PandaCSS

@@ -4,6 +4,7 @@ date: "2026-06-28"
 description: "Learn how to build full-stack applications with HonoX, the meta-framework built on top of Hono. This comprehensive guide covers routing, middleware, and deployment strategies."
 tags: ["tutorial", "honox", "getting-started"]
 draft: false
+cover: https://picsum.photos/seed/getting-started-with-honox/1200/675
 ---
 
 # Getting Started with HonoX
