@@ -1,7 +1,7 @@
 import { defineSlotRecipe } from "@pandacss/dev";
 
 /**
- * Park UI → hono/jsx ColorPicker slot recipe.
+ * ColorPicker slot recipe.
  *
  * data-scope="colorPicker" on every part; data-part values match the keys below.
  */
