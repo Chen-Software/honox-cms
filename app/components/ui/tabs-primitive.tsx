@@ -76,7 +76,9 @@ export function Root(props: RootProps) {
 		<TabsContext.Provider value={contextValue}>
 			<div
 				id={id}
-				ref={rootRef}
+				ref={(el: HTMLDivElement | null) => {
+					if (rootRef) rootRef.current = el;
+				}}
 				class={cx(styles.root, localProps.class)}
 				data-orientation={orientation}
 				data-scope="tabs"

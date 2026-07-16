@@ -128,7 +128,7 @@ Applies to:
 | `button` | `onClick` / `onPointerDown` / `onSubmit` | ✅ `button.tsx` |
 | `card` | `onClick` / `onPointerDown` | ✅ `card.tsx` |
 | `table` | any `row.onClick` | ✅ `table.tsx` |
-| `tabs` | `value` / `defaultValue` / `onValueChange` | ✅ `tabs.tsx` |
+| `tabs` | `value` / `defaultValue` / `onValueChange` / `closable` / `editable` / `onTabClose` / `onTabAdd` | ✅ `tabs.tsx` |
 | `segment-group` | `value` / `defaultValue` / `onValueChange` | ✅ `segment-group.tsx` |
 | `toggle-group` | `value` / `defaultValue` / `onValueChange` | ✅ `toggle-group.tsx` |
 | `slider` | `value` / `defaultValue` / `onChange` / `onDraggingChange` | ✅ `slider.tsx` |

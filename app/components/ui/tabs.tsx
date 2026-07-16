@@ -19,33 +19,59 @@ interface TabsProps extends InteractiveRootProps, TabsStructureProps {
 }
 
 const TabsRoot = (props: TabsProps) => {
-	const { interactive, ...rest } = props;
+	const {
+		interactive,
+		children,
+		items,
+		indicator,
+		closable,
+		editable,
+		onTabClose,
+		onTabAdd,
+		addAriaLabel,
+		extra,
+		...rootProps
+	} = props;
 
 	const hasSignal =
-		rest.value !== undefined ||
-		rest.defaultValue !== undefined ||
-		rest.onValueChange !== undefined ||
-		rest.closable !== undefined ||
-		rest.editable !== undefined ||
-		rest.onTabClose !== undefined ||
-		rest.onTabAdd !== undefined;
+		rootProps.value !== undefined ||
+		rootProps.defaultValue !== undefined ||
+		rootProps.onValueChange !== undefined ||
+		closable !== undefined ||
+		editable !== undefined ||
+		onTabClose !== undefined ||
+		onTabAdd !== undefined;
 
 	if (shouldHydrate(interactive, hasSignal)) {
-		return <InteractiveTabsIsland {...rest} />;
+		return (
+			<InteractiveTabsIsland
+				{...rootProps}
+				items={items}
+				indicator={indicator}
+				closable={closable}
+				editable={editable}
+				onTabClose={onTabClose}
+				onTabAdd={onTabAdd}
+				addAriaLabel={addAriaLabel}
+				extra={extra}
+			>
+				{children}
+			</InteractiveTabsIsland>
+		);
 	}
 
 	return (
-		<Root {...rest}>
-			{props.children || (
+		<Root {...rootProps}>
+			{children || (
 				<TabsStructure
-					items={rest.items}
-					indicator={rest.indicator}
-					closable={rest.closable}
-					editable={rest.editable}
-					onTabClose={rest.onTabClose}
-					onTabAdd={rest.onTabAdd}
-					addAriaLabel={rest.addAriaLabel}
-					extra={rest.extra}
+					items={items ?? []}
+					indicator={indicator}
+					closable={closable}
+					editable={editable}
+					onTabClose={onTabClose}
+					onTabAdd={onTabAdd}
+					addAriaLabel={addAriaLabel}
+					extra={extra}
 				/>
 			)}
 		</Root>
