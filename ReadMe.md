@@ -28,13 +28,15 @@ Live demo: [https://honox.chen.so](https://honox.chen.so), [https://honox-ts.ver
 |---|---|---|
 | `/` | `app/routes/index.tsx` | Homepage |
 | `/blog` | `app/routes/blog.tsx` | Post list with tag filtering |
-| `/blog/tag/:tag` | `app/routes/blog/tag/[tag].tsx` | Tag-filtered post list (static) |
+| `/blog/by-tag/:tag` | `app/routes/blog/by-tag/[tag].tsx` | Tag-filtered post list (static) |
+| `/blog/by-author/:author` | `app/routes/blog/by-author/[author].tsx` | Author-filtered post list (static) |
 | `/blog/:slug` | `app/routes/blog/[slug].tsx` | Individual post |
 | `/admin/` | `public/admin/index.html` | Sveltia CMS UI |
 | `/pages/:slug` | `app/routes/pages/[slug].tsx` | Dynamic CMS-built pages |
 | `/api/posts/index.json` | `app/routes/api/posts/index.json.ts` | Post collection (JSON) |
 | `/api/posts/:slug.json` | `app/routes/api/posts/[slug].json.ts` | Single post detail (JSON) |
 | `/api/posts/search.json` | `app/routes/api/posts/search.json.ts` | Search index (JSON) |
+| `/api/posts/by-author/:author.json` | `app/routes/api/posts/by-author/[author].json.ts` | Posts by author (JSON) |
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for UI components architecture details.
 
@@ -65,9 +67,10 @@ A read-only JSON REST API over the same `content/posts/*.md` files that back `/b
 |---|---|
 | `GET /api/posts/index.json` | All published posts (drafts excluded in production), newest first. Shape: `{ generated, total, tags, posts: BlogPost[] }`. |
 | `GET /api/posts/:slug.json` | One post's full detail: frontmatter fields + rendered `html` + up to 3 `relatedPosts` sharing a tag. `404` with `{ "error": "Not found" }` for a missing or (in production) draft slug. |
-| `GET /api/posts/search.json` | The same search index the `Search` island fetches client-side. Shape: `{ generated, entries: SearchIndexEntry[] }`. |
+| `GET /api/posts/search.json` | The search index the `Search` island fetches client-side. Shape: `{ generated, entries: SearchIndexEntry[] }`. |
+| `GET /api/posts/by-author/:author.json` | All posts by a given author, newest first. Shape: `{ generated, author, total, posts: BlogPost[] }`. Returns empty array if no posts match. |
 
-Implementation: `app/lib/posts.ts` (`loadPosts`, `loadPostBySlug`) backs all three routes. `app/routes/api/posts/_404.tsx` scopes a JSON not-found handler to this namespace so API errors don't fall back to the site's HTML 404 page.
+Implementation: `app/lib/posts.ts` (`loadPosts`, `loadPostBySlug`, `loadPostsByAuthor`) backs all routes. `app/routes/api/posts/_404.tsx` scopes a JSON not-found handler to this namespace so API errors don't fall back to the site's HTML 404 page.
 
 ---
 
@@ -130,15 +133,17 @@ app/
   components/ui/    # Public component API
   islands/          # Client-side interactive islands
   routes/           # File-based routing
-    blog.tsx         # Post list
-    blog/[slug].tsx  # Individual post
-    blog/tag/[tag].tsx  # Tag-filtered post list
-    pages/[slug].tsx # Page builder SSG route
-    api/posts/       # Read-only posts REST API
-      index.json.ts    # GET /api/posts/index.json — post collection
-      [slug].json.ts   # GET /api/posts/:slug.json — single post detail
-      search.json.ts   # GET /api/posts/search.json — search index
-      _404.tsx          # JSON 404s scoped to /api/posts/*
+    blog.tsx                     # Post list
+    blog/[slug].tsx              # Individual post
+    blog/by-tag/[tag].tsx        # Tag-filtered post list
+    blog/by-author/[author].tsx  # Author-filtered post list
+    pages/[slug].tsx             # Page builder SSG route
+    api/posts/                   # Read-only posts REST API
+      index.json.ts              # GET /api/posts/index.json — collection
+      [slug].json.ts             # GET /api/posts/:slug.json — single post
+      search.json.ts             # GET /api/posts/search.json — search index
+      by-author/[author].json.ts # GET /api/posts/by-author/:author.json
+      _404.tsx                   # JSON 404s scoped to /api/posts/*
   lib/posts.ts      # Post loading/parsing shared by blog pages + API
 utils/
   markdown.ts        # Frontmatter parser + MD→HTML
