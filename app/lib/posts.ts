@@ -150,3 +150,16 @@ export async function loadPostBySlug(
 
 	return { ...post, html: markdownToHtml(content), relatedPosts };
 }
+
+/**
+ * Loads all posts by a given author, newest first.
+ * Returns an empty array if no posts match (including if the author doesn't exist).
+ */
+export async function loadPostsByAuthor(author: string): Promise<BlogPost[]> {
+	const { posts } = await loadPosts();
+	return posts.filter(
+		(post) =>
+			(post.author || "Artefact Team").toLowerCase() ===
+			author.toLowerCase(),
+	);
+}

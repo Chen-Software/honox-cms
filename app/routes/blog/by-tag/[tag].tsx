@@ -236,7 +236,7 @@ export default createRoute(
 							{tags.map((tag) => (
 								<a
 									key={tag}
-									href={`/blog/tag/${tag}`}
+									href={`/blog/by-tag/${tag}`}
 									style={{ textDecoration: "none" }}
 								>
 									<Badge
@@ -563,7 +563,7 @@ export default createRoute(
 										{post.tags.slice(0, 3).map((tag) => (
 											<Anchor
 												key={tag}
-												href={`/blog/tag/${tag}`}
+												href={`/blog/by-tag/${tag}`}
 												variant="plain"
 												class={css({
 													textDecoration: "none",

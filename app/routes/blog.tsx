@@ -289,7 +289,7 @@ export default createRoute(async (c) => {
 									</Text>
 									<Stack direction="column" gap="1">
 										{["All", ...tags].map((tag) => {
-											const href = tag === "All" ? "/blog" : `/blog/tag/${tag}`;
+											const href = tag === "All" ? "/blog" : `/blog/by-tag/${tag}`;
 
 											return (
 												<a
@@ -574,7 +574,7 @@ export default createRoute(async (c) => {
 										{post.tags.slice(0, 3).map((tag) => (
 											<Anchor
 												key={tag}
-												href={`/blog/tag/${tag}`}
+												href={`/blog/by-tag/${tag}`}
 												variant="plain"
 												class={css({
 													textDecoration: "none",
