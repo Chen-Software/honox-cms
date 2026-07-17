@@ -785,10 +785,36 @@ export default createRoute((c) => {
 												}
 												title="Project Settings"
 												description="Configure workspace properties"
-												body="Manage your database connections, member access levels, and billing preferences directly here."
+												body={
+													<div class={css({ display: "flex", flexDirection: "column", gap: "4" })}>
+														<Text size="sm" class={css({ color: "fg.muted" })}>
+															Manage your database connections, member access levels, and billing preferences directly here.
+														</Text>
+														<PaginatedTable
+															url="/api/posts/index.json"
+															dataKey="posts"
+															columns={[
+																{ header: "Title", key: "title" },
+																{ header: "Author", key: "author" },
+																{ header: "Date", key: "date" }
+															]}
+															pageSize={3}
+														/>
+													</div>
+												}
 												cancel={<Button variant="outline">Dismiss</Button>}
 												confirm={
 													<Button colorPalette="blue">Save Changes</Button>
+												}
+												footer={
+													<Button
+														variant="outline"
+														colorPalette="blue"
+														interactive
+														onclick="window.dispatchEvent(new CustomEvent('paginated-table:reload'))"
+													>
+														Reload Table
+													</Button>
 												}
 											/>
 										</Stack>

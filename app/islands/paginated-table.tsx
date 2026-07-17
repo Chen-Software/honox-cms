@@ -1,5 +1,5 @@
 import { css } from "design-system/css";
-import { useState } from "hono/jsx";
+import { useState, useEffect } from "hono/jsx";
 import { Badge } from "../components/ui/badge";
 import {
 	NextTrigger,
@@ -8,6 +8,7 @@ import {
 	PrevTrigger,
 } from "../components/ui/pagination-primitive";
 import { TableBase } from "../components/ui/table-primitive";
+import { Skeleton } from "../components/ui/skeleton";
 
 interface User {
 	id: number;
@@ -221,16 +222,80 @@ const USERS: User[] = [
 	},
 ];
 
-export default function PaginatedTable() {
-	const [page, setPage] = useState(1);
-	const pageSize = 5;
+interface PaginatedTableProps {
+	url?: string;
+	dataKey?: string;
+	columns?: any[];
+	pageSize?: number;
+	initialPage?: number;
+}
 
-	const totalItems = USERS.length;
-	const startIndex = (page - 1) * pageSize;
-	const endIndex = page * pageSize;
-	const currentData = USERS.slice(startIndex, endIndex);
+export default function PaginatedTable(props: PaginatedTableProps) {
+	const { url, dataKey, columns: columnsProp, pageSize: pageSizeProp, initialPage } = props;
+	const limit = pageSizeProp ?? 5;
 
-	const columns = [
+	const [data, setData] = useState<any[]>(url ? [] : USERS);
+	const [isLoading, setIsLoading] = useState(Boolean(url));
+	const [page, setPage] = useState(initialPage ?? 1);
+
+	const fetchData = async () => {
+		if (!url) return;
+		setIsLoading(true);
+		try {
+			const res = await fetch(url);
+			const json = await res.json();
+
+			// Simulate a small loading delay for a visible and satisfying skeleton pulse/re-flash
+			await new Promise((resolve) => setTimeout(resolve, 800));
+
+			let list: any[] = [];
+			if (dataKey && json[dataKey] && Array.isArray(json[dataKey])) {
+				list = json[dataKey];
+			} else {
+				// Auto-detect array in response object
+				const firstArrayKey = Object.keys(json).find((key) => Array.isArray(json[key]));
+				if (firstArrayKey) {
+					list = json[firstArrayKey];
+				} else if (Array.isArray(json)) {
+					list = json;
+				}
+			}
+			setData(list);
+			setPage(1); // Reset page on reload/refetch
+		} catch (error) {
+			console.error("Error fetching paginated table data:", error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		if (url) {
+			fetchData();
+		}
+	}, [url]);
+
+	// Register window listener for re-fetching on the reload event
+	useEffect(() => {
+		const handleReload = () => {
+			fetchData();
+		};
+		window.addEventListener("paginated-table:reload", handleReload);
+		return () => {
+			window.removeEventListener("paginated-table:reload", handleReload);
+		};
+	}, [url, dataKey]);
+
+	const totalItems = data.length;
+	const startIndex = (page - 1) * limit;
+	const endIndex = page * limit;
+
+	// Use empty dummy objects if loading to render standard-sized skeleton rows
+	const displayRows = isLoading
+		? Array.from({ length: limit }).map(() => ({}))
+		: data.slice(startIndex, endIndex);
+
+	const defaultColumns = [
 		{ header: "ID", key: "id", class: css({ width: "12" }) },
 		{ header: "Name", key: "name" },
 		{ header: "Email", key: "email" },
@@ -238,11 +303,49 @@ export default function PaginatedTable() {
 		{
 			header: "Status",
 			key: "status",
-			render: (row: User) => (
-				<Badge colorPalette={row.statusColor}>{row.status}</Badge>
+			render: (row: any) => (
+				<Badge colorPalette={row.statusColor || "blue"}>{row.status}</Badge>
 			),
 		},
 	];
+
+	const activeColumns = columnsProp || defaultColumns;
+
+	// Map columns to inject skeletons when loading and handle generic cell styling/rendering
+	const mappedColumns = activeColumns.map((col, colIndex) => ({
+		...col,
+		render: (row: any, rowIndex: number) => {
+			if (isLoading) {
+				return <Skeleton height="4" shape="text" noOfLines={1} />;
+			}
+
+			// Custom render function provided in the prop
+			if (col.render && typeof col.render === "function") {
+				return col.render(row, rowIndex);
+			}
+
+			const val = row[col.key];
+
+			// Handle generic column types
+			if (col.type === "badge") {
+				return <Badge colorPalette={col.colorPalette || "blue"}>{val}</Badge>;
+			}
+
+			if (col.type === "badge-list" && Array.isArray(val)) {
+				return (
+					<div class={css({ display: "flex", gap: "1", flexWrap: "wrap" })}>
+						{val.map((item: any) => (
+							<Badge key={item} size="sm" colorPalette={col.colorPalette || "blue"} variant="subtle">
+								{item}
+							</Badge>
+						))}
+					</div>
+				);
+			}
+
+			return val;
+		},
+	}));
 
 	return (
 		<div
@@ -259,22 +362,24 @@ export default function PaginatedTable() {
 			<TableBase
 				variant="surface"
 				striped
-				columns={columns}
-				rows={currentData}
+				columns={mappedColumns}
+				rows={displayRows}
 			/>
 
-			<div class={css({ display: "flex", justifyContent: "center", mt: "4" })}>
-				<PaginationRoot
-					count={totalItems}
-					pageSize={pageSize}
-					page={page}
-					onPageChange={(details) => setPage(details.page)}
-				>
-					<PrevTrigger />
-					<PaginationItems />
-					<NextTrigger />
-				</PaginationRoot>
-			</div>
+			{!isLoading && totalItems > limit && (
+				<div class={css({ display: "flex", justifyContent: "center", mt: "4" })}>
+					<PaginationRoot
+						count={totalItems}
+						pageSize={limit}
+						page={page}
+						onPageChange={(details) => setPage(details.page)}
+					>
+						<PrevTrigger />
+						<PaginationItems />
+						<NextTrigger />
+					</PaginationRoot>
+				</div>
+			)}
 		</div>
 	);
 }
