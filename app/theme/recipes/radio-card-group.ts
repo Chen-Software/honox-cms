@@ -162,5 +162,20 @@ export const radioCardGroup = defineSlotRecipe({
 				itemText: { textStyle: "sm" },
 			},
 		},
+		// Slot-keyed like tabs/date-picker (a bare style object would be
+		// silently dropped by Panda's slot-recipe compiler, as in carousel).
+		// The theme has no top-level `slate` palette — it's registered as
+		// `gray` — so the CMS's `slate` option maps to the gray tokens.
+		colorPalette: {
+			blue: { root: { colorPalette: "blue" } },
+			green: { root: { colorPalette: "green" } },
+			red: { root: { colorPalette: "red" } },
+			purple: { root: { colorPalette: "purple" } },
+			orange: { root: { colorPalette: "orange" } },
+			amber: { root: { colorPalette: "amber" } },
+			cyan: { root: { colorPalette: "cyan" } },
+			slate: { root: { colorPalette: "gray" } },
+			gray: { root: { colorPalette: "gray" } },
+		},
 	},
 });

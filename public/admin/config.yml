@@ -404,6 +404,29 @@ collections:
                                 widget: select
                                 options: [blue, green, red, purple, orange, amber, cyan, slate]
                                 required: false
+                          - label: Radio Card Group
+                            name: radioCardGroup
+                            widget: object
+                            fields: &radiocardgroup_fields
+                              - { label: Label, name: label, widget: string, required: false }
+                              - { label: Default Value, name: defaultValue, widget: string, required: false }
+                              - label: Items
+                                name: items
+                                widget: list
+                                fields:
+                                  - { label: Label, name: label, widget: string }
+                                  - { label: Value, name: value, widget: string }
+                                  - { label: Disabled, name: disabled, widget: boolean, default: false }
+                              - label: Variant
+                                name: variant
+                                widget: select
+                                options: [outline, subtle, surface, solid]
+                                default: outline
+                              - label: Color Palette
+                                name: colorPalette
+                                widget: select
+                                options: [blue, green, red, purple, orange, amber, cyan, slate]
+                                required: false
                           - label: Segment Group
                             name: segmentGroup
                             widget: object
@@ -734,6 +757,10 @@ collections:
                     name: radioGroup
                     widget: object
                     fields: *radiogroup_fields
+                  - label: Radio Card Group
+                    name: radioCardGroup
+                    widget: object
+                    fields: *radiocardgroup_fields
                   - label: Segment Group
                     name: segmentGroup
                     widget: object
@@ -1050,6 +1077,10 @@ collections:
             name: radioGroup
             widget: object
             fields: *radiogroup_fields
+          - label: Radio Card Group
+            name: radioCardGroup
+            widget: object
+            fields: *radiocardgroup_fields
           - label: Segment Group
             name: segmentGroup
             widget: object

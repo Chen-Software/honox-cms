@@ -217,6 +217,30 @@
       ],
       "colorPalette": "",
       "size": "md"
+    },
+    {
+      "type": "radioCardGroup",
+      "label": "Plan",
+      "defaultValue": "pro",
+      "variant": "surface",
+      "colorPalette": "blue",
+      "items": [
+        {
+          "label": "Hobby",
+          "value": "hobby",
+          "disabled": false
+        },
+        {
+          "label": "Pro",
+          "value": "pro",
+          "disabled": false
+        },
+        {
+          "label": "Enterprise",
+          "value": "enterprise",
+          "disabled": true
+        }
+      ]
     }
   ]
 }

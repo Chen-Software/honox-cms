@@ -23,6 +23,7 @@ test("unknown component type renders a safe marker and never dumps JSON", () => 
 test("resolveType normalises kebab aliases to canonical camelCase keys", () => {
   expect(resolveType("hover-card")).toBe("hoverCard");
   expect(resolveType("paginated-table")).toBe("paginatedTable");
+  expect(resolveType("radio-card-group")).toBe("radioCardGroup");
   expect(resolveType("radio-group")).toBe("radioGroup");
   expect(resolveType("segment-group")).toBe("segmentGroup");
   // Already-canonical and unknown types pass through unchanged.
@@ -34,6 +35,7 @@ test("every alias target resolves to a registered renderer", () => {
   const aliases: Record<string, string> = {
     "hover-card": "hoverCard",
     "paginated-table": "paginatedTable",
+    "radio-card-group": "radioCardGroup",
     "radio-group": "radioGroup",
     "segment-group": "segmentGroup",
   };
@@ -142,6 +144,46 @@ test("carousel block with no slides renders an empty, non-throwing carousel", ()
   expect(html).not.toContain('data-part="item"');
 });
 
+test("radioCardGroup block renders hydrated variant-styled cards and scrubs empty CMS fields", () => {
+  const html = (
+    <PageRenderer
+      content={[
+        {
+          type: "radioCardGroup",
+          label: "Plan",
+          defaultValue: "pro",
+          variant: "surface",
+          // Sveltia serializes untouched optional fields as empty strings —
+          // they must not override the recipe's defaults.
+          colorPalette: "",
+          items: [
+            { label: "Hobby", value: "hobby", disabled: false },
+            { label: "Pro", value: "pro", disabled: false },
+          ],
+        },
+      ]}
+    />
+  ).toString();
+
+  expect(html).toContain('data-scope="radio-card-group"');
+  expect(html).toContain('data-hydrated="true"');
+  expect(html).toContain("Plan");
+  expect(html).toContain("radio-card-group__item--variant_surface");
+  expect(html).not.toContain("--variant_outline");
+  expect(html).not.toContain('colorPalette=""');
+  // defaultValue=pro → that card is checked.
+  expect(html).toMatch(/data-value="pro"[^>]*data-state="checked"/);
+
+  // Kebab-case alias resolves to the same renderer.
+  const aliased = (
+    <PageRenderer
+      content={[{ type: "radio-card-group", items: ["one"], colorPalette: "purple" }]}
+    />
+  ).toString();
+  expect(aliased).toContain('data-scope="radio-card-group"');
+  expect(aliased).toContain("radio-card-group__root--colorPalette_purple");
+});
+
 test("registry exposes a renderer for every canonical block type", () => {
   const types = [
     "stack",
@@ -169,6 +211,7 @@ test("registry exposes a renderer for every canonical block type", () => {
     "pagination",
     "progress",
     "radioGroup",
+    "radioCardGroup",
     "segmentGroup",
     "select",
     "slider",

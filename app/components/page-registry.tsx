@@ -27,6 +27,7 @@ import {
 	Pagination,
 	Popover,
 	Progress,
+	RadioCardGroup,
 	RadioGroup,
 	SegmentGroup,
 	Select,
@@ -46,6 +47,7 @@ const TYPE_ALIASES: Record<string, string> = {
 	"file-upload": "fileUpload",
 	"hover-card": "hoverCard",
 	"paginated-table": "paginatedTable",
+	"radio-card-group": "radioCardGroup",
 	"radio-group": "radioGroup",
 	"segment-group": "segmentGroup",
 	"grid-col": "gridCol",
@@ -600,6 +602,17 @@ const registry: Record<string, BlockRenderer> = {
 	pagination: (b) => <Pagination interactive {...propsOf(b)} />,
 	progress: (b) => <Progress {...propsOf(b)} />,
 	radioGroup: (b) => <RadioGroup interactive {...propsOf(b)} />,
+
+	radioCardGroup: (b) => {
+		// Untouched optional CMS fields arrive as "" (see radioGroup payloads in
+		// content/pages); an empty variant/colorPalette would override the
+		// recipe's defaults with a nonexistent value, so drop them.
+		const props = propsOf(b);
+		for (const key of Object.keys(props)) {
+			if (props[key] === "") delete props[key];
+		}
+		return <RadioCardGroup interactive {...props} />;
+	},
 	segmentGroup: (b) => <SegmentGroup interactive {...propsOf(b)} />,
 
 	select: (b) => {
