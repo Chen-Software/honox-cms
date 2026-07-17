@@ -1,14 +1,24 @@
 import { stack } from "design-system/patterns";
-import { useEffect, useState } from "hono/jsx";
+import { useEffect, useRef, useState } from "hono/jsx";
 import { CloseButton } from "../components/ui/button";
+import { whenAnimationEnds } from "../components/ui/overlay-a11y";
 import {
 	ActionTrigger,
 	CloseTrigger,
 	Description,
 	Indicator,
 	Root,
+	type SwipeDirection,
 	Title,
 } from "../components/ui/toast-primitive";
+
+type Placement =
+	| "top-start"
+	| "top"
+	| "top-end"
+	| "bottom-start"
+	| "bottom"
+	| "bottom-end";
 
 const getPlacementStyles = (placement: string): Record<string, string> => {
 	switch (placement) {
@@ -34,6 +44,25 @@ const getPlacementStyles = (placement: string): Record<string, string> => {
 			};
 		default:
 			return { bottom: "1rem", right: "1rem", flexDirection: "column" };
+	}
+};
+
+/** Which entrance/exit keyframe pair (top vs bottom) a placement should use. */
+const getPlacementGroup = (placement: string): "top" | "bottom" =>
+	placement.startsWith("top") ? "top" : "bottom";
+
+/** Default swipe-to-dismiss direction for a placement — toward the screen edge the toast anchors to. */
+const getSwipeDirection = (placement: string): SwipeDirection => {
+	switch (placement) {
+		case "top-start":
+		case "bottom-start":
+			return "left";
+		case "top":
+			return "up";
+		case "bottom":
+			return "down";
+		default:
+			return "right";
 	}
 };
 
@@ -71,13 +100,7 @@ interface ToasterProps {
 
 function createToaster(
 	config: {
-		placement?:
-			| "top-start"
-			| "top"
-			| "top-end"
-			| "bottom-start"
-			| "bottom"
-			| "bottom-end";
+		placement?: Placement;
 		overlap?: boolean;
 		max?: number;
 		duration?: number;
@@ -95,17 +118,72 @@ function createToaster(
 	let toasts: ToastOptions[] = [];
 	const listeners = new Set<(toasts: ToastOptions[]) => void>();
 
+	// Auto-dismiss timer bookkeeping, kept separate from `toasts` so a toast's
+	// remaining time can be paused (e.g. while the user is hovering or has
+	// focus inside the toaster) and resumed without losing track of it.
+	const timers = new Map<
+		string,
+		{
+			remaining: number;
+			startedAt: number;
+			handle: ReturnType<typeof setTimeout> | null;
+		}
+	>();
+	let paused = false;
+
 	const notify = () => {
 		for (const listener of listeners) {
 			listener([...toasts]);
 		}
 	};
 
+	const clearTimer = (id: string) => {
+		const timer = timers.get(id);
+		if (timer?.handle != null) clearTimeout(timer.handle);
+		timers.delete(id);
+	};
+
+	const scheduleTimer = (id: string, duration: number) => {
+		clearTimer(id);
+		if (!duration || duration === Infinity) return;
+		timers.set(id, {
+			remaining: duration,
+			startedAt: Date.now(),
+			handle: paused ? null : setTimeout(() => dismiss(id), duration),
+		});
+	};
+
+	const pause = () => {
+		if (paused) return;
+		paused = true;
+		for (const timer of timers.values()) {
+			if (timer.handle == null) continue;
+			clearTimeout(timer.handle);
+			timer.remaining = Math.max(
+				0,
+				timer.remaining - (Date.now() - timer.startedAt),
+			);
+			timer.handle = null;
+		}
+	};
+
+	const resume = () => {
+		if (!paused) return;
+		paused = false;
+		for (const [id, timer] of timers) {
+			if (timer.handle != null || timer.remaining <= 0) continue;
+			timer.startedAt = Date.now();
+			timer.handle = setTimeout(() => dismiss(id), timer.remaining);
+		}
+	};
+
 	const dismiss = (id?: string) => {
 		if (id) {
 			toasts = toasts.filter((t) => t.id !== id);
+			clearTimer(id);
 		} else {
 			toasts = [];
+			for (const timerId of [...timers.keys()]) clearTimer(timerId);
 		}
 		notify();
 
@@ -129,17 +207,14 @@ function createToaster(
 		};
 
 		if (toasts.length >= max) {
+			const [oldest] = toasts;
 			toasts.shift();
+			if (oldest) clearTimer(oldest.id);
 		}
 
 		toasts.push(toast);
 		notify();
-
-		if (duration !== 0 && duration !== Infinity) {
-			setTimeout(() => {
-				dismiss(id);
-			}, duration);
-		}
+		scheduleTimer(id, duration);
 
 		return id;
 	};
@@ -152,6 +227,7 @@ function createToaster(
 			return t;
 		});
 		notify();
+		if (options.duration !== undefined) scheduleTimer(id, options.duration);
 	};
 
 	const success = (
@@ -226,11 +302,6 @@ function createToaster(
 					type: "success",
 					duration: defaultDuration,
 				});
-				if (defaultDuration !== 0 && defaultDuration !== Infinity) {
-					setTimeout(() => {
-						dismiss(id);
-					}, defaultDuration);
-				}
 			})
 			.catch((err) => {
 				const errorOptions =
@@ -242,11 +313,6 @@ function createToaster(
 					type: "error",
 					duration: defaultDuration,
 				});
-				if (defaultDuration !== 0 && defaultDuration !== Infinity) {
-					setTimeout(() => {
-						dismiss(id);
-					}, defaultDuration);
-				}
 			});
 
 		return prom;
@@ -275,6 +341,8 @@ function createToaster(
 		promise,
 		dismiss,
 		update,
+		pause,
+		resume,
 		subscribe,
 		getToasts: () => [...toasts],
 		getCount: () => toasts.length,
@@ -306,31 +374,98 @@ if (typeof window !== "undefined") {
 
 export default function Toaster(props: ToasterProps) {
 	const activeToaster = props.toaster || toaster;
-	const [toasts, setToasts] = useState<ToastOptions[]>(() =>
+	const [renderList, setRenderList] = useState<ToastOptions[]>(() =>
 		activeToaster.getToasts(),
 	);
+	// ids whose toast has left the store but is still playing its exit
+	// animation, so the DOM node stays mounted long enough to animate out.
+	const exitingRef = useRef<Set<string>>(new Set());
+	const sectionRef = useRef<HTMLElement | null>(null);
 
 	useEffect(() => {
 		return activeToaster.subscribe((newToasts) => {
-			setToasts(newToasts);
+			setRenderList((prev) => {
+				const nextById = new Map(newToasts.map((t) => [t.id, t]));
+				const prevIds = new Set(prev.map((t) => t.id));
+				const merged: ToastOptions[] = [];
+				for (const t of prev) {
+					const next = nextById.get(t.id);
+					if (next) {
+						merged.push(next);
+					} else {
+						exitingRef.current.add(t.id);
+						merged.push(t);
+					}
+				}
+				for (const t of newToasts) {
+					if (!prevIds.has(t.id)) merged.push(t);
+				}
+				return merged;
+			});
 		});
 	}, [activeToaster]);
 
+	// Viewport-level pause: hovering or focusing *any* toast pauses every
+	// active auto-dismiss timer so a toast being read never disappears
+	// mid-interaction; leaving the whole toaster resumes them.
+	useEffect(() => {
+		const section = sectionRef.current;
+		if (!section) return;
+
+		const pause = () => activeToaster.pause();
+		const resume = () => activeToaster.resume();
+		const onFocusOut = (e: FocusEvent) => {
+			if (!section.contains(e.relatedTarget as Node | null)) resume();
+		};
+
+		section.addEventListener("pointerenter", pause);
+		section.addEventListener("pointerleave", resume);
+		section.addEventListener("focusin", pause);
+		section.addEventListener("focusout", onFocusOut);
+		return () => {
+			section.removeEventListener("pointerenter", pause);
+			section.removeEventListener("pointerleave", resume);
+			section.removeEventListener("focusin", pause);
+			section.removeEventListener("focusout", onFocusOut);
+		};
+	}, [activeToaster]);
+
+	const placementGroup = getPlacementGroup(activeToaster.placement);
+	const swipeDirection = getSwipeDirection(activeToaster.placement);
+
 	return (
 		<section
-			role="region"
-			aria-live="polite"
+			ref={(el: HTMLElement | null) => {
+				sectionRef.current = el;
+			}}
+			aria-label="Notifications"
 			style={{
 				position: "fixed",
 				display: "flex",
 				gap: "0.5rem",
 				zIndex: 9999,
-				pointerEvents: "none",
+				pointerEvents: renderList.length ? undefined : "none",
 				maxWidth: "calc(100vw - 2rem)",
 				...getPlacementStyles(activeToaster.placement),
 			}}
 		>
-			{toasts.map((toast) => {
+			{renderList.map((toast) => {
+				const isExiting = exitingRef.current.has(toast.id);
+
+				const handleRootRef = (el: HTMLDivElement | null) => {
+					if (!el || !isExiting || el.dataset.exitScheduled === "true") return;
+					el.dataset.exitScheduled = "true";
+					if (el.dataset.swipeDismissed === "true") {
+						exitingRef.current.delete(toast.id);
+						setRenderList((list) => list.filter((t) => t.id !== toast.id));
+						return;
+					}
+					whenAnimationEnds(el, () => {
+						exitingRef.current.delete(toast.id);
+						setRenderList((list) => list.filter((t) => t.id !== toast.id));
+					});
+				};
+
 				if (props.children) {
 					return props.children(toast);
 				}
@@ -338,9 +473,13 @@ export default function Toaster(props: ToasterProps) {
 				return (
 					<Root
 						key={toast.id}
+						rootRef={handleRootRef}
 						type={toast.type}
 						toast={toast}
 						dismiss={activeToaster.dismiss}
+						data-state={isExiting ? "closed" : "open"}
+						placement={placementGroup}
+						swipeDirection={swipeDirection}
 						style={{ pointerEvents: "auto" }}
 					>
 						<Indicator />

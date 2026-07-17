@@ -196,4 +196,58 @@ describe("Toast component and createToaster store", () => {
 		expect(html).toContain("Action");
 		expect(html).toContain("Close");
 	});
+
+	test("Toast.Indicator should receive its own recipe-generated styles", () => {
+		const html = (
+			<Toast.Root type="success">
+				<Toast.Indicator />
+			</Toast.Root>
+		).toString();
+
+		expect(html).toContain("toast__indicator");
+	});
+
+	test("Toast.Root should expose an accessible status/alert role and live region per type", () => {
+		const infoHtml = (<Toast.Root type="info" />).toString();
+		expect(infoHtml).toContain('role="status"');
+		expect(infoHtml).toContain('aria-live="polite"');
+
+		const errorHtml = (<Toast.Root type="error" />).toString();
+		expect(errorHtml).toContain('role="alert"');
+		expect(errorHtml).toContain('aria-live="assertive"');
+	});
+
+	test("toaster.pause should freeze the auto-dismiss timer and toaster.resume should continue it", async () => {
+		const toasterInstance = createToaster({ duration: 60 });
+		const id = toasterInstance.create({ title: "Pausable" });
+		expect(id).toBeDefined();
+
+		toasterInstance.pause();
+		await new Promise((resolve) => setTimeout(resolve, 100));
+		// Still present: the timer was paused before it could fire.
+		expect(toasterInstance.getCount()).toBe(1);
+
+		toasterInstance.resume();
+		await new Promise((resolve) => setTimeout(resolve, 100));
+		expect(toasterInstance.getCount()).toBe(0);
+	});
+
+	test("toaster.pause should be a no-op for toasts with no auto-dismiss duration", async () => {
+		const toasterInstance = createToaster();
+		toasterInstance.create({ title: "Sticky", duration: 0 });
+
+		toasterInstance.pause();
+		toasterInstance.resume();
+		await new Promise((resolve) => setTimeout(resolve, 30));
+		expect(toasterInstance.getCount()).toBe(1);
+	});
+
+	test("toaster.update should reschedule the auto-dismiss timer when duration changes", async () => {
+		const toasterInstance = createToaster({ duration: 5000 });
+		const id = toasterInstance.create({ title: "Reschedule me" });
+
+		toasterInstance.update(id, { duration: 30 });
+		await new Promise((resolve) => setTimeout(resolve, 80));
+		expect(toasterInstance.getCount()).toBe(0);
+	});
 });

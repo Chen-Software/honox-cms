@@ -2,29 +2,49 @@ import { defineSlotRecipe } from "@pandacss/dev";
 
 export const toast = defineSlotRecipe({
 	className: "toast",
-	slots: ["root", "title", "description", "actionTrigger", "closeTrigger"],
+	jsx: ["Toast"],
+	slots: [
+		"root",
+		"title",
+		"description",
+		"actionTrigger",
+		"closeTrigger",
+		"indicator",
+	],
 	base: {
 		root: {
 			alignItems: "start",
 			background: "gray.surface.bg",
+			borderInlineStartColor: "colorPalette.solid.bg",
+			borderInlineStartStyle: "solid",
+			borderInlineStartWidth: "3px",
 			borderRadius: "l3",
 			boxShadow: "lg",
 			display: "flex",
-			gap: "4",
-			height: "var(--height)",
+			gap: "3",
+			maxWidth: "sm",
 			minWidth: "sm",
-			opacity: "var(--opacity)",
 			overflowWrap: "anywhere",
 			p: "4",
 			position: "relative",
-			scale: "var(--scale)",
-			transitionDuration: "slow",
-			transitionProperty: "translate, scale, opacity, height",
-			transitionTimingFunction: "default",
-			translate: "var(--x) var(--y)",
 			width: "full",
-			willChange: "translate, opacity, scale",
-			zIndex: "var(--z-index)",
+			"--x": "0",
+			"--y": "0",
+			translate: "var(--x) var(--y)",
+			transitionProperty: "translate, opacity",
+			transitionDuration: "normal",
+			transitionTimingFunction: "default",
+			willChange: "translate, opacity",
+			_open: {
+				animationDuration: "slow",
+			},
+			_closed: {
+				animationDuration: "normal",
+				pointerEvents: "none",
+			},
+			"&[data-swipe=move]": {
+				transitionDuration: "0s",
+			},
 		},
 		title: {
 			color: "fg.default",
@@ -45,6 +65,41 @@ export const toast = defineSlotRecipe({
 			position: "absolute",
 			top: "2",
 			insetEnd: "2",
+		},
+		indicator: {
+			alignItems: "center",
+			color: "colorPalette.solid.bg",
+			display: "inline-flex",
+			flexShrink: "0",
+			justifyContent: "center",
+			_icon: { boxSize: "5" },
+		},
+	},
+	defaultVariants: {
+		type: "info",
+		placement: "bottom",
+	},
+	variants: {
+		type: {
+			info: { root: { colorPalette: "blue" } },
+			success: { root: { colorPalette: "green" } },
+			warning: { root: { colorPalette: "orange" } },
+			error: { root: { colorPalette: "red" } },
+			loading: { root: { colorPalette: "gray" } },
+		},
+		placement: {
+			top: {
+				root: {
+					_open: { animationName: "slide-from-top-full, fade-in" },
+					_closed: { animationName: "slide-to-top-full, fade-out" },
+				},
+			},
+			bottom: {
+				root: {
+					_open: { animationName: "slide-from-bottom-full, fade-in" },
+					_closed: { animationName: "slide-to-bottom-full, fade-out" },
+				},
+			},
 		},
 	},
 });
