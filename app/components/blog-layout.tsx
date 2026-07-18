@@ -13,7 +13,7 @@ import {
 	Text,
 } from "./ui";
 
-export interface BlogArchiveLayoutProps {
+export interface BlogLayoutProps {
 	documentTitle: string;
 	/** Small badge above the heading, e.g. "🏷️ Tagged Posts" or "✍️ Author Archive". */
 	eyebrow: string;
@@ -29,7 +29,7 @@ export interface BlogArchiveLayoutProps {
 	posts: BlogPost[];
 }
 
-export function BlogArchiveLayout({
+export function BlogLayout({
 	documentTitle,
 	eyebrow,
 	iconTitle,
@@ -39,7 +39,7 @@ export function BlogArchiveLayout({
 	emptyDescription,
 	filters,
 	posts,
-}: BlogArchiveLayoutProps) {
+}: BlogLayoutProps) {
 	return (
 		<div
 			class={css({

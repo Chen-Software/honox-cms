@@ -1,7 +1,7 @@
 import { css } from "design-system/css";
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
-import { BlogArchiveLayout } from "../../../components/blog-archive-layout";
+import { BlogLayout } from "../../../components/blog-layout";
 import { Badge, Stack, Text } from "../../../components/ui";
 import { loadPosts } from "../../../lib/posts";
 
@@ -20,7 +20,7 @@ export default createRoute(
 		const blogPosts = posts.filter((post) => post.tags.includes(tagFilter));
 
 		return c.render(
-			<BlogArchiveLayout
+			<BlogLayout
 				documentTitle={`Posts tagged: ${tagFilter} - Artefact Blog`}
 				eyebrow="🏷️ Tagged Posts"
 				iconTitle="Tag"

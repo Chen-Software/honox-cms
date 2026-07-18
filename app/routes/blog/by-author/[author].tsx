@@ -1,6 +1,6 @@
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
-import { BlogArchiveLayout } from "../../../components/blog-archive-layout";
+import { BlogLayout } from "../../../components/blog-layout";
 import { loadPosts } from "../../../lib/posts";
 
 export default createRoute(
@@ -28,7 +28,7 @@ export default createRoute(
 		const authorName = blogPosts[0]?.author || authorParam;
 
 		return c.render(
-			<BlogArchiveLayout
+			<BlogLayout
 				documentTitle={`Posts by ${authorName} - Artefact Blog`}
 				eyebrow="✍️ Author Archive"
 				iconTitle="Author"
