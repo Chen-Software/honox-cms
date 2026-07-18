@@ -1,24 +1,13 @@
 ---
-title: "UI Components Architecture"
+title: "Hydration"
 ---
 
-# UI Components Architecture
+# Hydration
 
-This project is built on **HonoX + SSG** (static site generation). Pages emit **static HTML**
-by default; only components that genuinely need client-side interactivity are "promoted"
-to islands (client JS snippets).
-
-> Every component's hydration behaviour funnels through the `shouldHydrate` predicate
-> in `app/components/ui/island-utils.ts`. Any decision about *when to render static HTML*
-> versus *when to mount a client-side island* is resolved here.
-
-1. **Zero redundant JS** — components with no interaction need never ship a hydration script.
-2. **Zero silent breakage** — components that *do* need interaction should hydrate automatically,
-   even if the caller forgets to pass `interactive`.
-3. **Single source of truth** — every "should this hydrate?" decision goes through one shared
-   `shouldHydrate` function, eliminating per-component ad-hoc `if (interactive)` branches.
-
----
+This project is built on **HonoX + SSG**: pages emit **static HTML** by default, and only
+components that genuinely need client-side interactivity are "promoted" to islands (client JS
+snippets). This is the full reference for that system — see
+[UI Components Architecture](/docs/ARCHITECTURE) for the project-level overview.
 
 ## The Core Predicate
 
@@ -245,8 +234,9 @@ Walk the list in order; stop at the first match:
 
 - No component may write a bare `if (interactive) { … }` branch; always go through `shouldHydrate`.
 - `interactive` is only a "knob": `true` forces, `false` forbids, `undefined` defers to `hasSignal`.
-- Every Tier-1 / Tier-2 component should add a `# Hydration` section to its `docs/<Component>.md`
-  and cross-reference this file.
+- Every Tier-1 / Tier-2 component should add a `# Hydration` section to its
+  `content/components/<Component>.mdx` and cross-reference this file, and set
+  its frontmatter `hydration-tier` to match.
 
 ---
 
@@ -271,7 +261,7 @@ The following divergences were resolved during convention rollout; kept here for
 
 ## Related Documentation
 
+- [UI Components Architecture](/docs/ARCHITECTURE) — the project-level overview
 - `app/components/ui/island-utils.ts` — the single decision entry point
-- `docs/<Component>.md` (each Tier-1 / Tier-2 component) — its own `# Hydration` section
-
----
+- `content/components/<Component>.mdx` (each Tier-1 / Tier-2 component) — its
+  own `# Hydration` section, plus `hydration-tier`/`category` frontmatter

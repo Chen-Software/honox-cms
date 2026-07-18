@@ -52,7 +52,7 @@ export default createRoute(async (c) => {
 							bodyClass={css({ p: "5" })}
 						>
 							<Text size="sm" class={css({ color: "fg.muted" })}>
-								{doc.category}
+								{doc.category ?? doc.section}
 							</Text>
 						</Card>
 					</Anchor>

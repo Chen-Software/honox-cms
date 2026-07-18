@@ -70,12 +70,44 @@ collections:
     label: Docs
     label_singular: Doc
     folder: /content/docs
+    extension: md
+    format: frontmatter
     create: true
     slug: "{{slug}}"
     summary: "{{title}}"
     sortable_fields: [title]
     fields:
       - { label: Title, name: title, widget: string }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: components
+    label: Components
+    label_singular: Component
+    folder: /content/components
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{category}}"
+    sortable_fields: [title, category, hydration-tier]
+    view_groups:
+      - label: Category
+        field: category
+      - label: Hydration Tier
+        field: hydration-tier
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Hydration Tier
+        name: hydration-tier
+        widget: select
+        options: ["Tier 1", "Tier 2", "Tier 3"]
+        hint: "Tier 1 = auto-interactive, Tier 2 = smart auto-detect, Tier 3 = presentational (never hydrates). See /docs/Hydration."
+        required: false
+      - label: Category
+        name: category
+        widget: select
+        options: [Layout, Typography, Navigation, Feedback, "Data Display", Forms, Overlays]
+        required: false
       - { label: Body, name: body, widget: markdown }
 
   - name: pages

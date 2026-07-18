@@ -8,7 +8,17 @@ interface DocsLayoutProps {
 	children?: unknown;
 }
 
-const CATEGORY_ORDER: DocSummary["category"][] = ["Guides", "Components"];
+// Sidebar order for component categories; anything uncategorized (or a
+// future category not listed here) falls into a trailing "Other" group.
+const CATEGORY_ORDER = [
+	"Layout",
+	"Typography",
+	"Navigation",
+	"Feedback",
+	"Data Display",
+	"Forms",
+	"Overlays",
+];
 
 function DocsHeader() {
 	return (
@@ -103,11 +113,35 @@ function DocsHeader() {
 	);
 }
 
-export function DocsLayout({ docs, activeSlug, children }: DocsLayoutProps) {
-	const groups = CATEGORY_ORDER.map((category) => ({
-		category,
-		items: docs.filter((doc) => doc.category === category),
+interface DocGroup {
+	label: string;
+	items: DocSummary[];
+}
+
+function buildGroups(docs: DocSummary[]): DocGroup[] {
+	const guides = docs.filter((doc) => doc.section === "Guides");
+	const components = docs.filter((doc) => doc.section === "Components");
+
+	const categoryGroups = CATEGORY_ORDER.map((category) => ({
+		label: category,
+		items: components.filter((doc) => doc.category === category),
 	})).filter((group) => group.items.length > 0);
+
+	const uncategorized = components.filter(
+		(doc) => !doc.category || !CATEGORY_ORDER.includes(doc.category),
+	);
+
+	return [
+		...(guides.length > 0 ? [{ label: "Guides", items: guides }] : []),
+		...categoryGroups,
+		...(uncategorized.length > 0
+			? [{ label: "Other", items: uncategorized }]
+			: []),
+	];
+}
+
+export function DocsLayout({ docs, activeSlug, children }: DocsLayoutProps) {
+	const groups = buildGroups(docs);
 
 	return (
 		<div class={css({ bg: "bg.canvas", minH: "screen" })}>
@@ -143,7 +177,7 @@ export function DocsLayout({ docs, activeSlug, children }: DocsLayoutProps) {
 						})}
 					>
 						{groups.map((group) => (
-							<div key={group.category}>
+							<div key={group.label}>
 								<Text
 									size="xs"
 									class={css({
@@ -155,7 +189,7 @@ export function DocsLayout({ docs, activeSlug, children }: DocsLayoutProps) {
 										display: "block",
 									})}
 								>
-									{group.category}
+									{group.label}
 								</Text>
 								<div
 									class={css({
