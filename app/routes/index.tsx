@@ -786,9 +786,16 @@ export default createRoute((c) => {
 												title="Project Settings"
 												description="Configure workspace properties"
 												body={
-													<div class={css({ display: "flex", flexDirection: "column", gap: "4" })}>
+													<div
+														class={css({
+															display: "flex",
+															flexDirection: "column",
+															gap: "4",
+														})}
+													>
 														<Text size="sm" class={css({ color: "fg.muted" })}>
-															Manage your database connections, member access levels, and billing preferences directly here.
+															Manage your database connections, member access
+															levels, and billing preferences directly here.
 														</Text>
 														<PaginatedTable
 															url="/api/posts/index.json"
@@ -796,7 +803,7 @@ export default createRoute((c) => {
 															columns={[
 																{ header: "Title", key: "title" },
 																{ header: "Author", key: "author" },
-																{ header: "Date", key: "date" }
+																{ header: "Date", key: "date" },
 															]}
 															pageSize={3}
 														/>

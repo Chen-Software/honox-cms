@@ -231,7 +231,13 @@ interface PaginatedTableProps {
 }
 
 export default function PaginatedTable(props: PaginatedTableProps) {
-	const { url, dataKey, columns: columnsProp, pageSize: pageSizeProp, initialPage } = props;
+	const {
+		url,
+		dataKey,
+		columns: columnsProp,
+		pageSize: pageSizeProp,
+		initialPage,
+	} = props;
 	const limit = pageSizeProp ?? 5;
 
 	const [data, setData] = useState<any[]>(url ? [] : USERS);
@@ -253,7 +259,9 @@ export default function PaginatedTable(props: PaginatedTableProps) {
 				list = json[dataKey];
 			} else {
 				// Auto-detect array in response object
-				const firstArrayKey = Object.keys(json).find((key) => Array.isArray(json[key]));
+				const firstArrayKey = Object.keys(json).find((key) =>
+					Array.isArray(json[key]),
+				);
 				if (firstArrayKey) {
 					list = json[firstArrayKey];
 				} else if (Array.isArray(json)) {
@@ -335,7 +343,12 @@ export default function PaginatedTable(props: PaginatedTableProps) {
 				return (
 					<div class={css({ display: "flex", gap: "1", flexWrap: "wrap" })}>
 						{val.map((item: any) => (
-							<Badge key={item} size="sm" colorPalette={col.colorPalette || "blue"} variant="subtle">
+							<Badge
+								key={item}
+								size="sm"
+								colorPalette={col.colorPalette || "blue"}
+								variant="subtle"
+							>
 								{item}
 							</Badge>
 						))}
@@ -367,7 +380,9 @@ export default function PaginatedTable(props: PaginatedTableProps) {
 			/>
 
 			{!isLoading && totalItems > limit && (
-				<div class={css({ display: "flex", justifyContent: "center", mt: "4" })}>
+				<div
+					class={css({ display: "flex", justifyContent: "center", mt: "4" })}
+				>
 					<PaginationRoot
 						count={totalItems}
 						pageSize={limit}

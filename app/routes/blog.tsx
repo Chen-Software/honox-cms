@@ -334,7 +334,8 @@ export default createRoute(async (c) => {
 									</Text>
 									<Stack direction="column" gap="1">
 										{["All", ...tags].map((tag) => {
-											const href = tag === "All" ? "/blog" : `/blog/by-tag/${tag}`;
+											const href =
+												tag === "All" ? "/blog" : `/blog/by-tag/${tag}`;
 
 											return (
 												<a

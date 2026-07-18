@@ -159,7 +159,6 @@ export async function loadPostsByAuthor(author: string): Promise<BlogPost[]> {
 	const { posts } = await loadPosts();
 	return posts.filter(
 		(post) =>
-			(post.author || "Artefact Team").toLowerCase() ===
-			author.toLowerCase(),
+			(post.author || "Artefact Team").toLowerCase() === author.toLowerCase(),
 	);
 }
