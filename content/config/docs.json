@@ -1,24 +1,72 @@
 {
-	"collections": [
-		{ "folder": "docs", "label": "Guides" },
-		{ "folder": "components", "label": "Components" }
-	],
-	"groups": [
-		{ "label": "Guides", "section": "Guides" },
-		{ "label": "Layout", "category": "Layout" },
-		{ "label": "Typography", "category": "Typography" },
-		{ "label": "Navigation", "category": "Navigation" },
-		{ "label": "Feedback", "category": "Feedback" },
-		{ "label": "Data Display", "category": "Data Display" },
-		{ "label": "Forms", "category": "Forms" },
-		{ "label": "Overlays", "category": "Overlays" }
-	],
-	"fallbackLabel": "Other",
-	"links": [
-		{ "label": "GitHub", "href": "https://github.com/Chen-Software/honox-cms" }
-	],
-	"headerLinks": [
-		{ "label": "Blog", "href": "/blog" },
-		{ "label": "Home", "href": "/" }
-	]
+  "collections": [
+    {
+      "folder": "docs",
+      "label": "Guides",
+      "cmsCollection": ""
+    },
+    {
+      "folder": "components",
+      "label": "Components",
+      "cmsCollection": ""
+    }
+  ],
+  "groups": [
+    {
+      "label": "Guides",
+      "section": "Guides"
+    },
+    {
+      "label": "Layout",
+      "section": "",
+      "category": "Layout"
+    },
+    {
+      "label": "Typography",
+      "section": "",
+      "category": "Typography"
+    },
+    {
+      "label": "Navigation",
+      "section": "",
+      "category": "Navigation"
+    },
+    {
+      "label": "Feedback",
+      "section": "",
+      "category": "Feedback"
+    },
+    {
+      "label": "Data Display",
+      "section": "",
+      "category": "Data Display"
+    },
+    {
+      "label": "Forms",
+      "section": "",
+      "category": "Forms"
+    },
+    {
+      "label": "Overlays",
+      "section": "",
+      "category": "Overlays"
+    }
+  ],
+  "fallbackLabel": "Other",
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/Chen-Software/honox-cms"
+    }
+  ],
+  "headerLinks": [
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "Docs",
+      "href": "/docs"
+    }
+  ]
 }
