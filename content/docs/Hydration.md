@@ -6,7 +6,7 @@ title: Hydration
 
 This project use **@hono/ssg** for Static Site Generation of pages, emitting **static HTML** by default, and only
 components that genuinely need client-side interactivity are "promoted" to islands (client JS
-snippets). This is the full reference for that system — see [UI Components Architecture](/docs/ARCHITECTURE) for the project-level overview.
+snippets). This is the full reference for that system — see [UI Components Architecture](/docs/Architecture) for the project-level overview.
 
 ## The Core Predicate
 
@@ -262,7 +262,7 @@ The following divergences were resolved during convention rollout; kept here for
 
 ## Related Documentation
 
-- [UI Components Architecture](/docs/ARCHITECTURE) — the project-level overview
+- [UI Components Architecture](/docs/Architecture) — the project-level overview
 - `app/components/ui/island-utils.ts` — the single decision entry point
 - `content/components/<Component>.mdx` (each Tier-1 / Tier-2 component) — its
   own `# Hydration` section, plus `hydration-tier`/`category` frontmatter
