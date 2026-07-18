@@ -1,5 +1,5 @@
-import { expect, test, describe } from "bun:test";
-import { Toast, Toaster, createToaster } from "./toast";
+import { describe, expect, test } from "bun:test";
+import { createToaster, Toast, Toaster } from "./toast";
 
 describe("Toast component and createToaster store", () => {
 	test("createToaster should initialize with default configuration", () => {

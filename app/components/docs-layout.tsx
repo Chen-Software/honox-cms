@@ -1,6 +1,6 @@
 import { css, cx } from "design-system/css";
 import { button } from "design-system/recipes";
-import type { DocsConfig, DocsNavLinkConfig, DocSummary } from "../lib/docs";
+import type { DocSummary, DocsConfig, DocsNavLinkConfig } from "../lib/docs";
 import { Anchor, Drawer, Heading, IconButton, Search, Stack, Text } from "./ui";
 
 interface DocsLayoutProps {

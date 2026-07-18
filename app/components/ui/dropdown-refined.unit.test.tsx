@@ -1,4 +1,4 @@
-import { expect, test, describe } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { Dropdown } from "./dropdown";
 
 describe("Dropdown Refined Unit Tests", () => {

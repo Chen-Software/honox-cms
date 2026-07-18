@@ -1,6 +1,6 @@
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
-import { loadPostsByAuthor, loadPosts } from "../../../../lib/posts";
+import { loadPosts, loadPostsByAuthor } from "../../../../lib/posts";
 
 // GET /api/posts/by-author/:author.json — all posts by a given author,
 // newest first. Returns an empty array if no posts match.

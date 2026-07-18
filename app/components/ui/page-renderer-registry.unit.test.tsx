@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
-import { PageRenderer } from "../page-renderer";
 import { registry, resolveType } from "../page-registry";
+import { PageRenderer } from "../page-renderer";
 
 test("unknown component type renders a safe marker and never dumps JSON", () => {
 	const content = [

@@ -1,4 +1,4 @@
-import { expect, test, describe } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { ToggleGroup } from "./toggle-group";
 
 describe("ToggleGroup Unit Tests", () => {

@@ -1,5 +1,4 @@
 import { css, cx } from "design-system/css";
-import { type SearchVariantProps, search } from "design-system/recipes";
 import { useEffect, useId, useMemo, useRef, useState } from "hono/jsx";
 import {
 	filterEntries,
@@ -355,7 +354,7 @@ export function InteractiveSearch(props: SearchBaseProps) {
 							right: "0",
 							bg: "gray.surface.bg",
 							borderWidth: "1px",
-							borderColor: "border",
+							borderColor: "gray.outline.border",
 							borderRadius: "lg",
 							shadow: "lg",
 							zIndex: "50",

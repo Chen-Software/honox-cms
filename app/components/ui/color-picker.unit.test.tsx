@@ -2,8 +2,8 @@ import { describe, expect, it } from "bun:test";
 import { ColorPicker } from "./color-picker";
 import {
 	hslToHsv,
-	hsvToHsl,
 	hsvaToHslaString,
+	hsvToHsl,
 	parseColor,
 } from "./color-picker-primitive";
 

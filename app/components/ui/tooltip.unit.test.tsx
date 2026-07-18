@@ -1,4 +1,4 @@
-import { expect, test, describe } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { Tooltip } from "./tooltip";
 
 describe("Tooltip Unit Tests", () => {
@@ -94,7 +94,7 @@ describe("Tooltip Unit Tests", () => {
 		let focusCalledCount = 0;
 		if (typeof document !== "undefined") {
 			const originalFocus = HTMLElement.prototype.focus;
-			HTMLElement.prototype.focus = function () {
+			HTMLElement.prototype.focus = () => {
 				focusCalledCount++;
 			};
 

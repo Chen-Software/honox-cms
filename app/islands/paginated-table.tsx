@@ -1,5 +1,5 @@
 import { css } from "design-system/css";
-import { useState, useEffect } from "hono/jsx";
+import { useEffect, useState } from "hono/jsx";
 import { Badge } from "../components/ui/badge";
 import {
 	NextTrigger,
@@ -7,8 +7,8 @@ import {
 	Root as PaginationRoot,
 	PrevTrigger,
 } from "../components/ui/pagination-primitive";
-import { TableBase } from "../components/ui/table-primitive";
 import { Skeleton } from "../components/ui/skeleton";
+import { TableBase } from "../components/ui/table-primitive";
 
 interface User {
 	id: number;
