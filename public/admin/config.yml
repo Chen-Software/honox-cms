@@ -1468,7 +1468,7 @@ collections:
 # Docs: https://sveltiacms.app/en/docs/collections/singletons
 singletons:
   - name: docsConfig
-    label: Docs Sidenav
+    label: Docs Configuration
     file: content/config/docs.json
     fields:
       - label: Groups
