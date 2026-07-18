@@ -868,6 +868,7 @@ export default createRoute((c) => {
 									<Card
 										title="Hover Card"
 										description="Information popup on hover"
+										class={css({ overflow: "visible" })}
 									>
 										<div class={css({ mt: "2", position: "relative" })}>
 											<HoverCard
