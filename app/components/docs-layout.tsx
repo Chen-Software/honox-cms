@@ -1,7 +1,7 @@
 import { css, cx } from "design-system/css";
 import { button } from "design-system/recipes";
 import type { DocSummary, DocsConfig, DocsNavLinkConfig } from "../lib/docs";
-import { Anchor, Drawer, Heading, IconButton, Search, Stack, Text } from "./ui";
+import { Anchor, Heading, Search, Stack, Text } from "./ui";
 
 interface DocsLayoutProps {
 	docs: DocSummary[];
@@ -35,12 +35,12 @@ function GitHubIcon() {
 	);
 }
 
-function HamburgerIcon() {
+function ChevronDownIcon() {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="20"
-			height="20"
+			width="16"
+			height="16"
 			viewBox="0 0 24 24"
 			fill="none"
 			stroke="currentColor"
@@ -48,10 +48,8 @@ function HamburgerIcon() {
 			stroke-linecap="round"
 			stroke-linejoin="round"
 		>
-			<title>Open menu</title>
-			<path d="M4 6h16" />
-			<path d="M4 12h16" />
-			<path d="M4 18h16" />
+			<title>Toggle menu</title>
+			<path d="m6 9 6 6 6-6" />
 		</svg>
 	);
 }
@@ -76,26 +74,6 @@ function ExternalLinkIcon() {
 		</svg>
 	);
 }
-
-// Workaround: HonoX's client hydration snapshots a Drawer island's `children`
-// outside of the DrawerContext.Provider that supplies its variant styles, so
-// the `placement="start"` prop resets to the "end" default the moment
-// hydration runs (verified via SSR vs. post-hydration DOM diff). Force the
-// left-docked layout and matching slide direction directly so the sidenav
-// drawer keeps opening from the left regardless of that upstream bug.
-const sidenavDrawerOverride = css({
-	"& [data-part='positioner']": {
-		justifyContent: "flex-start",
-	},
-	"& [data-part='content']": {
-		_open: {
-			animationName: "slide-from-left-full, fade-in",
-		},
-		_closed: {
-			animationName: "slide-to-left-full, fade-out",
-		},
-	},
-});
 
 interface DocGroup {
 	label: string;
@@ -184,7 +162,8 @@ function Sidenav({ groups, activeSlug, links }: SidenavProps) {
 									class={css({
 										display: "block",
 										px: "3",
-										py: "1.5",
+										// ~44px touch target on mobile; compact on desktop
+										py: { base: "2.5", md: "1.5" },
 										borderRadius: "md",
 										fontSize: "sm",
 										textDecoration: "none",
@@ -227,7 +206,7 @@ function Sidenav({ groups, activeSlug, links }: SidenavProps) {
 								alignItems: "center",
 								gap: "2",
 								px: "3",
-								py: "1.5",
+								py: { base: "2.5", md: "1.5" },
 								borderRadius: "md",
 								fontSize: "sm",
 								textDecoration: "none",
@@ -245,6 +224,63 @@ function Sidenav({ groups, activeSlug, links }: SidenavProps) {
 				</div>
 			)}
 		</nav>
+	);
+}
+
+// Mobile sidenav: a native <details> disclosure bar attached under the header
+// row instead of a Drawer overlay. Zero JS / no island, so it works before
+// hydration and without JS at all — and since every doc link is a full-page
+// MPA navigation, the collapsed-after-navigation state of an in-flow
+// disclosure is the natural resting position rather than a bug to fight.
+function MobileNav({ groups, activeSlug, links }: SidenavProps) {
+	return (
+		<details
+			class={css({
+				display: { base: "block", md: "none" },
+				borderTopWidth: "1px",
+				borderColor: { _light: "white.a4", _dark: "black.a4" },
+				"& summary svg": {
+					transition: "transform 0.2s",
+				},
+				// Explicit [open] selector: Panda's _open condition targets
+				// data-state attrs, not the native <details> open attribute.
+				"&[open] summary svg": {
+					transform: "rotate(180deg)",
+				},
+			})}
+		>
+			<summary
+				class={css({
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "space-between",
+					gap: "2",
+					px: "4",
+					py: "3",
+					fontSize: "sm",
+					fontWeight: "medium",
+					cursor: "pointer",
+					userSelect: "none",
+					listStyle: "none",
+					"&::-webkit-details-marker": {
+						display: "none",
+					},
+				})}
+			>
+				Menu
+				<ChevronDownIcon />
+			</summary>
+			<div
+				class={css({
+					maxH: "60vh",
+					overflowY: "auto",
+					px: "4",
+					pb: "4",
+				})}
+			>
+				<Sidenav groups={groups} activeSlug={activeSlug} links={links} />
+			</div>
+		</details>
 	);
 }
 
@@ -291,26 +327,6 @@ function DocsHeader({
 					gap: { base: "4", md: "8" },
 				})}
 			>
-				<div class={sidenavDrawerOverride}>
-					<Drawer
-						placement="start"
-						aria-label="Docs navigation"
-						trigger={
-							<IconButton
-								variant="plain"
-								size="sm"
-								aria-label="Open menu"
-								class={css({ display: { base: "flex", md: "none" } })}
-							>
-								<HamburgerIcon />
-							</IconButton>
-						}
-						body={
-							<Sidenav groups={groups} activeSlug={activeSlug} links={links} />
-						}
-					/>
-				</div>
-
 				<Anchor
 					href="/"
 					variant="plain"
@@ -323,7 +339,6 @@ function DocsHeader({
 								fontSize: "lg",
 								fontWeight: "bold",
 								tracking: "tight",
-								display: { base: "none", sm: "block" },
 							})}
 						>
 							Artefact UI
@@ -402,6 +417,8 @@ function DocsHeader({
 					)}
 				</nav>
 			</div>
+
+			<MobileNav groups={groups} activeSlug={activeSlug} links={links} />
 		</header>
 	);
 }
@@ -452,8 +469,10 @@ export function DocsLayout({
 						width: "64",
 						flexShrink: "0",
 						position: "sticky",
-						top: "6",
-						maxH: "calc(100vh - 3rem)",
+						// Clears the sticky glass header (~4.5rem tall) plus a gap so the
+						// first nav group isn't blurred behind it while scrolling.
+						top: "24",
+						maxH: "calc(100vh - 7rem)",
 						overflowY: "auto",
 					})}
 				>

@@ -115,6 +115,10 @@ export const markdownContentClass = css({
 		width: "full",
 		mb: "6",
 		borderCollapse: "collapse",
+		// Wide tables scroll within themselves instead of stretching the page
+		// horizontally on narrow viewports.
+		display: "block",
+		overflowX: "auto",
 		"& th, & td": {
 			borderWidth: "1px",
 			borderColor: "border",
