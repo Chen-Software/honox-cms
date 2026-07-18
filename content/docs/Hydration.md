@@ -2,7 +2,7 @@
 title: Hydration
 ---
 
-This project uses [HonoX](https://github.com/honojs/honox)'s Islands Hydration architecture and [**@hono/vite-ssg**](https://github.com/honojs/vite-plugins/tree/main/packages/ssg) for Static Site Generation of pages, emitting **static HTML** by default, and only components that genuinely need client-side interactivity are "promoted" to islands (client JS snippets). 
+This project uses [HonoX](https://github.com/honojs/honox)'s **Islands Hydration** architecture and [**@hono/vite-ssg**](https://github.com/honojs/vite-plugins/tree/main/packages/ssg) for Static Site Generation of pages, emitting **static HTML** by default, and only components that genuinely need client-side interactivity are "promoted" to islands (client JS snippets). 
 
 ## The Core Predicate
 
