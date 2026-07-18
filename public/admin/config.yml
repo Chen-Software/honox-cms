@@ -584,6 +584,109 @@ collections:
                                 options: [blue, green, red, purple, orange, amber, cyan, slate]
                                 required: false
 
+                          - label: Breadcrumb
+                            name: breadcrumb
+                            widget: object
+                            fields: &breadcrumb_fields
+                              - label: Items
+                                name: items
+                                widget: list
+                                fields:
+                                  - { label: Label, name: label, widget: string }
+                                  - { label: Href, name: href, widget: string, required: false }
+                              - label: Variant
+                                name: variant
+                                widget: select
+                                options: [underline, plain]
+                                default: underline
+                              - label: Size
+                                name: size
+                                widget: select
+                                options: [xs, sm, md, lg]
+                                default: md
+                          - label: DatePicker
+                            name: datePicker
+                            widget: object
+                            fields: &datepicker_fields
+                              - { label: Label, name: label, widget: string, required: false }
+                              - label: Selection Mode
+                                name: selectionMode
+                                widget: select
+                                options: [single, multiple, range]
+                                default: single
+                              - { label: Placeholder, name: placeholder, widget: string, required: false }
+                              - label: Color Palette
+                                name: colorPalette
+                                widget: select
+                                options: [blue, green, red, orange, gray, cyan, amber, purple]
+                                required: false
+                          - label: Loader
+                            name: loader
+                            widget: object
+                            fields: &loader_fields
+                              - { label: Text, name: text, widget: string, required: false }
+                              - label: Spinner Placement
+                                name: spinnerPlacement
+                                widget: select
+                                options: [start, end]
+                                default: start
+                          - label: Spinner
+                            name: spinner
+                            widget: object
+                            fields: &spinner_fields
+                              - label: Size
+                                name: size
+                                widget: select
+                                options: [xs, sm, md, lg, xl, "2xl"]
+                                default: md
+                              - { label: Accessible Label, name: label, widget: string, required: false }
+                          - label: TagsInput
+                            name: tagsInput
+                            widget: object
+                            fields: &tagsinput_fields
+                              - { label: Label, name: label, widget: string, required: false }
+                              - label: Default Tags
+                                name: defaultValue
+                                widget: list
+                                required: false
+                          - label: Table
+                            name: table
+                            widget: object
+                            fields: &table_fields
+                              - label: Columns
+                                name: columns
+                                widget: list
+                                fields:
+                                  - { label: Header, name: header, widget: string }
+                                  - { label: Key, name: key, widget: string }
+                                  - label: Align
+                                    name: align
+                                    widget: select
+                                    options: [start, center, end]
+                                    required: false
+                              - label: Rows (JSON array)
+                                name: rows
+                                widget: text
+                                required: false
+                                hint: 'e.g. [{"name": "Laptop", "price": "$999"}]'
+                              - label: Variant
+                                name: variant
+                                widget: select
+                                options: [plain, surface]
+                                default: plain
+                              - { label: Striped, name: striped, widget: boolean, default: false }
+                          - label: Tooltip
+                            name: tooltip
+                            widget: object
+                            fields: &tooltip_fields
+                              - { label: Content, name: content, widget: string }
+                              - { label: Trigger Text, name: triggerText, widget: string, default: "Hover me" }
+                              - label: Placement
+                                name: placement
+                                widget: select
+                                options: [top, bottom, left, right]
+                                default: top
+                              - { label: Show Arrow, name: showArrow, widget: boolean, default: false }
                   - label: Card
                     name: card
                     widget: object
@@ -779,6 +882,67 @@ collections:
                     widget: object
                     fields: *menu_fields
 
+                  - label: Breadcrumb
+                    name: breadcrumb
+                    widget: object
+                    fields: *breadcrumb_fields
+                  - label: DatePicker
+                    name: datePicker
+                    widget: object
+                    fields: *datepicker_fields
+                  - label: Loader
+                    name: loader
+                    widget: object
+                    fields: *loader_fields
+                  - label: Spinner
+                    name: spinner
+                    widget: object
+                    fields: *spinner_fields
+                  - label: TagsInput
+                    name: tagsInput
+                    widget: object
+                    fields: *tagsinput_fields
+                  - label: Table
+                    name: table
+                    widget: object
+                    fields: *table_fields
+                  - label: Tooltip
+                    name: tooltip
+                    widget: object
+                    fields: *tooltip_fields
+                  - label: AbsoluteCenter
+                    name: absoluteCenter
+                    widget: object
+                    fields:
+                      - label: Axis
+                        name: axis
+                        widget: select
+                        options: [horizontal, vertical, both]
+                        default: both
+                      - label: Children
+                        name: children
+                        widget: list
+                        types: *leaf_components
+                        required: false
+                  - label: Splitter
+                    name: splitter
+                    widget: object
+                    fields:
+                      - label: Orientation
+                        name: orientation
+                        widget: select
+                        options: [horizontal, vertical]
+                        default: horizontal
+                      - label: Panels
+                        name: panels
+                        widget: list
+                        fields:
+                          - { label: ID, name: id, widget: string }
+                          - label: Content
+                            name: content
+                            widget: list
+                            types: *leaf_components
+                            required: false
                   - label: Button
                     name: button
                     widget: object
@@ -1126,6 +1290,67 @@ collections:
           # ==========================================
           # LEAVES AND OTHER COMPONENTS AT ROOT
           # ==========================================
+          - label: Breadcrumb
+            name: breadcrumb
+            widget: object
+            fields: *breadcrumb_fields
+          - label: DatePicker
+            name: datePicker
+            widget: object
+            fields: *datepicker_fields
+          - label: Loader
+            name: loader
+            widget: object
+            fields: *loader_fields
+          - label: Spinner
+            name: spinner
+            widget: object
+            fields: *spinner_fields
+          - label: TagsInput
+            name: tagsInput
+            widget: object
+            fields: *tagsinput_fields
+          - label: Table
+            name: table
+            widget: object
+            fields: *table_fields
+          - label: Tooltip
+            name: tooltip
+            widget: object
+            fields: *tooltip_fields
+          - label: AbsoluteCenter
+            name: absoluteCenter
+            widget: object
+            fields:
+              - label: Axis
+                name: axis
+                widget: select
+                options: [horizontal, vertical, both]
+                default: both
+              - label: Children
+                name: children
+                widget: list
+                types: *nestable_components
+                required: false
+          - label: Splitter
+            name: splitter
+            widget: object
+            fields:
+              - label: Orientation
+                name: orientation
+                widget: select
+                options: [horizontal, vertical]
+                default: horizontal
+              - label: Panels
+                name: panels
+                widget: list
+                fields:
+                  - { label: ID, name: id, widget: string }
+                  - label: Content
+                    name: content
+                    widget: list
+                    types: *nestable_components
+                    required: false
           - label: Button
             name: button
             widget: object

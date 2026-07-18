@@ -5,6 +5,7 @@ import {
 	AlertIcon,
 	Anchor,
 	Badge,
+	Breadcrumb,
 	Button,
 	Card,
 	Carousel,
@@ -698,6 +699,8 @@ const registry: Record<string, BlockRenderer> = {
 	slider: (b) => <Slider interactive {...propsOf(b)} />,
 	switch: (b) => <Switch interactive {...propsOf(b)} />,
 	colorPicker: (b) => <ColorPicker interactive {...propsOf(b)} />,
+
+	breadcrumb: (b) => <Breadcrumb {...propsOf(b)} />,
 };
 
 // Safe fallback for an unrecognized block type. Previously this dumped the
