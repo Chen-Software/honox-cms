@@ -221,7 +221,7 @@ export function FieldRoot(props: FieldProps) {
 					? (otherRestProps as Record<string, unknown>)
 					: {})}
 			>
-				{label && <FieldLabel>{label}</FieldLabel>}
+				{label && <FieldLabel for={id}>{label}</FieldLabel>}
 				{!isChildrenEmpty ? (
 					children
 				) : (

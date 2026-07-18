@@ -70,6 +70,7 @@ export function Checkbox(props: CheckboxProps) {
 	return (
 		<label
 			class={cx(styles.root, classProp)}
+			for={id}
 			data-disabled={disabled ? "" : undefined}
 			data-invalid={invalid ? "" : undefined}
 			data-readonly={readOnly ? "" : undefined}
