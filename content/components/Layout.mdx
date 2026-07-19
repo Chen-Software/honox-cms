@@ -1,0 +1,207 @@
+---
+title: Layout
+hydration: 3
+category: Layout
+---
+
+import { Layout, Heading, Text, Stack } from "../../app/components/ui";
+import { DemoPreview } from "../../app/components/demo-preview";
+
+# Introduction
+
+Nest a `<Layout>` inside another `<Layout>`'s `content` to build composite
+shells, e.g. an outer Layout with a page header/footer and an inner Layout
+holding a sidenav rail.
+
+# Usage
+
+## Header + Content + Footer
+
+With no `sider`, the parts stack in a single column.
+
+<DemoPreview>
+  <div style={{ width: "100%", border: "1px solid var(--colors-border)", borderRadius: "12px", overflow: "hidden" }}>
+    <Layout
+      header={
+        <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Heading as="h4" size="sm">Header</Heading>
+        </div>
+      }
+      content={<div style={{ padding: "16px" }}><Text size="sm">Content</Text></div>}
+      footer={
+        <div style={{ padding: "12px 16px", borderTop: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Text size="xs">Footer</Text>
+        </div>
+      }
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Layout
+      header={<SiteHeader />}
+      content={<Article />}
+      footer={<SiteFooter />}
+    />
+  );
+}
+```
+
+## Header + Sider + Content
+
+Passing `sider` wraps it and `content` in a row. `siderWidth` picks a rail
+width (`sm` 14rem, `md` 16rem default, `lg` 18rem); `siderHideBelow` hides
+the rail under a breakpoint for small screens (pair it with an in-flow
+disclosure nav there, e.g. a `<details>` menu).
+
+<DemoPreview>
+  <div style={{ width: "100%", border: "1px solid var(--colors-border)", borderRadius: "12px", overflow: "hidden" }}>
+    <Layout
+      siderWidth="sm"
+      header={
+        <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Heading as="h4" size="sm">Dashboard</Heading>
+        </div>
+      }
+      sider={
+        <div style={{ padding: "16px", borderRight: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Stack direction="vertical" gap="2">
+            <Text size="sm">Overview</Text>
+            <Text size="sm">Reports</Text>
+            <Text size="sm">Settings</Text>
+          </Stack>
+        </div>
+      }
+      content={<div style={{ padding: "16px" }}><Text size="sm">Content next to the sider</Text></div>}
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Layout
+      header={<SiteHeader />}
+      sider={<Sidenav />}
+      siderWidth="sm"
+      siderHideBelow="md"
+      content={<Article />}
+    />
+  );
+}
+```
+
+## Sticky header and sider
+
+`stickyHeader` pins the header to the top of the page scroll. `stickySider`
+pins the sider below it and scrolls its own overflow — useful for a long
+nav next to short content, or vice versa. `fullHeight` fills the viewport
+for the outermost page shell.
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function DocsPage() {
+  return (
+    <Layout
+      fullHeight
+      stickyHeader
+      stickySider
+      header={<SiteHeader />}
+      sider={<DocsSidenav />}
+      siderHideBelow="md"
+      content={<Article />}
+    />
+  );
+}
+```
+
+## Nested Layout
+
+Nest a `<Layout>` inside `content` when the header/footer span the full
+width but only part of the body needs a sider rail:
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Layout
+      header={<SiteHeader />}
+      content={
+        <Layout sider={<Sidenav />} content={<Article />} />
+      }
+      footer={<SiteFooter />}
+    />
+  );
+}
+```
+
+## CMS Page Builder
+
+This component is available as a `layout` block in the
+[Page Builder](/docs/PageBuilder) (`content/pages/*.json`). `header`,
+`sider`, `content`, and `footer` are each a list of component blocks — any
+block type works, including another `layout` for nested shells:
+
+```json
+{
+  "type": "layout",
+  "siderWidth": "sm",
+  "siderHideBelow": "md",
+  "header": [
+    { "type": "heading", "text": "Dashboard", "as": "h3", "size": "lg" }
+  ],
+  "sider": [
+    {
+      "type": "stack",
+      "direction": "vertical",
+      "gap": "2",
+      "children": [
+        { "type": "link", "text": "Overview", "href": "#" },
+        { "type": "link", "text": "Reports", "href": "#" }
+      ]
+    }
+  ],
+  "content": [
+    { "type": "text", "content": "Pick a page from the rail on the left." }
+  ],
+  "footer": [
+    { "type": "text", "size": "sm", "content": "© 2026 Acme" }
+  ]
+}
+```
+
+Leaving a part's list empty (or omitting it) skips that part's wrapper
+element entirely — an untouched optional field like `siderWidth`/`siderHideBelow`
+arrives as `""` from the CMS and is treated as unset, falling back to the
+component default.
+
+# Props
+
+## Layout
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `header` | \`string \| JSX.Element\` | Rendered inside a semantic `<header>` above the body. |
+| `sider` | \`string \| JSX.Element\` | Rendered inside a semantic `<aside>` rail. Its presence switches the body to a row of sider + content. |
+| `content` | \`string \| JSX.Element\` | Rendered inside a semantic `<main>`. `children` are appended after it, so either (or both) can carry the page content. |
+| `footer` | \`string \| JSX.Element\` | Rendered inside a semantic `<footer>` below the body. |
+| `fullHeight` | `boolean` | Fill the viewport height — for the outermost page shell. |
+| `stickyHeader` | `boolean` | Pin the header to the top of the page scroll. |
+| `stickySider` | `boolean` | Pin the sider below a sticky header; it scrolls internally. |
+| `siderWidth` | \`"sm" \| "md" \| "lg"\` | Sider rail width: sm (14rem), md (16rem, default), lg (18rem). |
+| `siderHideBelow` | \`"sm" \| "md" \| "lg"\` | Hide the sider under this breakpoint. Pair with an in-flow disclosure (e.g. a `<details>` menu) so small screens keep a nav. |
+| `headerClass` | `string` | Extra class for the `<header>` part. |
+| `siderClass` | `string` | Extra class for the `<aside>` part. |
+| `contentClass` | `string` | Extra class for the `<main>` part. |
+| `footerClass` | `string` | Extra class for the `<footer>` part. |
+| `bodyClass` | `string` | Extra class for the row wrapper around sider + content (only rendered when `sider` is set). |
+| `children` | `any` | Appended inside `<main>`, after `content`. |
+| `class` | `string` | Custom CSS classes for the root element. |
