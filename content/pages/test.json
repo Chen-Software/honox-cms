@@ -291,6 +291,14 @@
       ]
     },
     {
+      "type": "search",
+      "src": "/api/posts/search.json",
+      "placeholder": "Search posts...",
+      "itemLabel": "posts",
+      "maxSuggestions": 5,
+      "debounceMs": 150
+    },
+    {
       "type": "stack",
       "direction": "horizontal",
       "gap": "4",

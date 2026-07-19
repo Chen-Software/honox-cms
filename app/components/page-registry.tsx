@@ -35,6 +35,7 @@ import {
 	Progress,
 	RadioCardGroup,
 	RadioGroup,
+	Search,
 	SegmentGroup,
 	Select,
 	Skeleton,
@@ -684,6 +685,29 @@ const registry: Record<string, BlockRenderer> = {
 				placeholder={placeholder}
 				items={items || []}
 				multiple={multiple}
+				{...rest}
+			/>
+		);
+	},
+
+	search: (b) => {
+		const { debounceMs, maxSuggestions, total, ...rest } = propsOf(b);
+		return (
+			<Search
+				interactive
+				debounceMs={
+					debounceMs !== undefined && debounceMs !== ""
+						? Number(debounceMs)
+						: undefined
+				}
+				maxSuggestions={
+					maxSuggestions !== undefined && maxSuggestions !== ""
+						? Number(maxSuggestions)
+						: undefined
+				}
+				total={
+					total !== undefined && total !== "" ? Number(total) : undefined
+				}
 				{...rest}
 			/>
 		);

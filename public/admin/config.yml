@@ -681,6 +681,22 @@ collections:
                                 name: defaultValue
                                 widget: list
                                 required: false
+                          - label: Search
+                            name: search
+                            widget: object
+                            fields: &search_fields
+                              - { label: Index URL, name: src, widget: string, required: false, default: "/api/posts/search.json", hint: "URL of the SSG-generated JSON search index" }
+                              - { label: Placeholder, name: placeholder, widget: string, required: false, default: "Search..." }
+                              - { label: Initial Query, name: initialQuery, widget: string, required: false }
+                              - { label: Debounce (ms), name: debounceMs, widget: number, required: false, default: 150 }
+                              - { label: Max Suggestions, name: maxSuggestions, widget: number, required: false, default: 8 }
+                              - { label: Filter Attribute, name: filterAttribute, widget: string, required: false, hint: "Data attribute (e.g. data-post-slug) used to show/hide matching server-rendered elements" }
+                              - { label: Empty State Element ID, name: emptyStateId, widget: string, required: false, hint: "id of an element to reveal when the filtered list has zero matches" }
+                              - { label: Result Count Before Load, name: total, widget: number, required: false, hint: "Result count shown before the index has loaded" }
+                              - { label: Item Label, name: itemLabel, widget: string, required: false, default: results, hint: "Noun used in the result count, e.g. articles" }
+                              - { label: Show Count, name: showCount, widget: boolean, default: true }
+                              - { label: No-JS Fallback Action, name: action, widget: string, required: false, hint: "Path to submit ?q= to via a plain GET form when JS is unavailable" }
+                              - { label: Sync URL, name: syncUrl, widget: boolean, default: true, hint: "Mirror the active query into the address bar as ?q=" }
                           - label: Table
                             name: table
                             widget: object
@@ -934,6 +950,10 @@ collections:
                     name: tagsInput
                     widget: object
                     fields: *tagsinput_fields
+                  - label: Search
+                    name: search
+                    widget: object
+                    fields: *search_fields
                   - label: Table
                     name: table
                     widget: object
@@ -1389,6 +1409,10 @@ collections:
             name: tagsInput
             widget: object
             fields: *tagsinput_fields
+          - label: Search
+            name: search
+            widget: object
+            fields: *search_fields
           - label: Table
             name: table
             widget: object

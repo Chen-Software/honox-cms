@@ -114,6 +114,29 @@ test("fileUpload block renders a hydrated FileUpload with coerced numeric props"
 	expect(aliased).toContain("Docs");
 });
 
+test("search block renders a hydrated Search with coerced numeric props", () => {
+	const html = (
+		<PageRenderer
+			content={[
+				{
+					type: "search",
+					placeholder: "Find posts",
+					src: "/api/posts/search.json",
+					// CMS payloads may deliver numbers as strings; the renderer coerces.
+					debounceMs: "200",
+					maxSuggestions: "5",
+				},
+			]}
+		/>
+	).toString();
+
+	expect(html).toContain('placeholder="Find posts"');
+	expect(html).toContain('type="search"');
+	expect(html).toContain('name="q"');
+	// Hydrated (interactive) variant renders the combobox affordances.
+	expect(html).toContain('role="combobox"');
+});
+
 test("carousel block renders slides with captions/links and coerces numeric props", () => {
 	const html = (
 		<PageRenderer
@@ -228,6 +251,7 @@ test("registry exposes a renderer for every canonical block type", () => {
 		"radioCardGroup",
 		"segmentGroup",
 		"select",
+		"search",
 		"slider",
 		"switch",
 		"fileUpload",
