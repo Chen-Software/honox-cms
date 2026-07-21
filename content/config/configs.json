@@ -68,5 +68,11 @@
       "label": "Docs",
       "href": "/docs"
     }
-  ]
+  ],
+  "blog": {
+    "title": "Blog - Artefact",
+    "description": "Insights, updates, and stories from our team.",
+    "newsletterHeading": "Stay Updated",
+    "newsletterDescription": "Get the latest articles and insights delivered straight to your inbox. No spam, just good content."
+  }
 }

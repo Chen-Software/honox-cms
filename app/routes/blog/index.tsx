@@ -118,7 +118,7 @@ export default createRoute(async (c) => {
 
 	return c.render(
 		<>
-			<title>Blog - Artefact</title>
+			<title>{config.blog?.title ?? "Blog - Artefact"}</title>
 
 			<BlogHeader headerLinks={config.headerLinks} />
 
@@ -130,6 +130,12 @@ export default createRoute(async (c) => {
 					mx: "auto",
 				})}
 			>
+				{config.blog?.description && (
+					<Text class={css({ color: "fg.muted", mb: "8", maxWidth: "2xl" })}>
+						{config.blog.description}
+					</Text>
+				)}
+
 				{/* Featured Posts (latest posts with a cover image) */}
 				{featuredPosts.length > 0 && (
 					<section class={css({ mb: "10" })}>
@@ -824,7 +830,7 @@ export default createRoute(async (c) => {
 						</Badge>
 
 						<Heading as="h2" size="xl" class={css({ mb: "3" })}>
-							Stay Updated
+							{config.blog?.newsletterHeading ?? "Stay Updated"}
 						</Heading>
 
 						<Text
@@ -836,8 +842,8 @@ export default createRoute(async (c) => {
 								lineHeight: "relaxed",
 							})}
 						>
-							Get the latest articles and insights delivered straight to your
-							inbox. No spam, just good content.
+							{config.blog?.newsletterDescription ??
+								"Get the latest articles and insights delivered straight to your inbox. No spam, just good content."}
 						</Text>
 
 						<form

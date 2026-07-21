@@ -72,7 +72,15 @@ export interface DocsCollectionConfig {
 	cmsCollection?: string;
 }
 
-/** Shape of the `DocsConfig` singleton (content/config/docs.json) — drives
+/** Site copy for the /blog section (configs singleton's `blog` field). */
+export interface BlogSiteConfig {
+	title?: string;
+	description?: string;
+	newsletterHeading?: string;
+	newsletterDescription?: string;
+}
+
+/** Shape of the `DocsConfig` singleton (content/config/configs.json) — drives
  * collection labeling plus the docs sidenav's grouping/ordering, so none of
  * it is hardcoded to any one collection. */
 export interface DocsConfig {
@@ -85,17 +93,19 @@ export interface DocsConfig {
 	/** Plain links shown in the header nav (e.g. Blog, Home), before the
 	 * per-doc Edit link and the GitHub icon. */
 	headerLinks?: DocsNavLinkConfig[];
+	/** Site copy for the /blog section. */
+	blog?: BlogSiteConfig;
 }
 
 const EMPTY_DOCS_CONFIG: DocsConfig = { groups: [] };
 
-const docsConfigModule = import.meta.glob("/content/config/docs.json", {
+const docsConfigModule = import.meta.glob("/content/config/configs.json", {
 	import: "default",
 }) as Record<string, () => Promise<DocsConfig>>;
 
 /** Loads the DocsConfig singleton that drives the docs sidenav's grouping. */
 export async function loadDocsConfig(): Promise<DocsConfig> {
-	const loader = docsConfigModule["/content/config/docs.json"];
+	const loader = docsConfigModule["/content/config/configs.json"];
 	if (!loader) return EMPTY_DOCS_CONFIG;
 	return loader();
 }

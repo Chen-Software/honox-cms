@@ -1636,7 +1636,7 @@ collections:
 singletons:
   - name: configs
     label: Configs
-    file: content/config/docs.json
+    file: content/config/configs.json
     fields:
       - label: Collections
         name: collections
@@ -1693,7 +1693,7 @@ singletons:
         name: headerLinks
         widget: list
         required: false
-        hint: "Plain links shown in the header nav, e.g. Blog and Home."
+        hint: "Plain links shown in the header nav on both the docs and blog sections, e.g. Blog and Docs."
         fields:
           - { label: Label, name: label, widget: string }
           - { label: URL, name: href, widget: string }
