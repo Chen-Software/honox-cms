@@ -48,7 +48,7 @@ export default createRoute(
 			const relatedPosts = post.relatedPosts;
 			const postUrl = `${c.req.url}`;
 
-			const localizeLink = (href: string) => {
+			const localiseLink = (href: string) => {
 				if (
 					currentLocale !== "en" &&
 					!href.startsWith(`/${currentLocale}`) &&
@@ -88,7 +88,7 @@ export default createRoute(
 						>
 							{/* Back Button */}
 							<a
-								href={localizeLink("/blog")}
+								href={localiseLink("/blog")}
 								class={css({
 									display: "inline-flex",
 									alignItems: "center",
@@ -250,7 +250,7 @@ export default createRoute(
 									{/* Author */}
 									<Stack gap="3" align="center">
 										<Anchor
-											href={localizeLink(
+											href={localiseLink(
 												`/blog/by-author/${post.author || "Artefact Team"}`,
 											)}
 											class={css({
@@ -268,7 +268,7 @@ export default createRoute(
 										</Anchor>
 										<div>
 											<Anchor
-												href={localizeLink(
+												href={localiseLink(
 													`/blog/by-author/${post.author || "Artefact Team"}`,
 												)}
 												class={css({
@@ -418,7 +418,7 @@ export default createRoute(
 								>
 									{relatedPosts.map((relatedPost) => (
 										<a
-											href={localizeLink(`/blog/${relatedPost.slug}`)}
+											href={localiseLink(`/blog/${relatedPost.slug}`)}
 											class={css({
 												textDecoration: "none",
 												display: "block",
@@ -478,7 +478,7 @@ export default createRoute(
 							textAlign: "center",
 						})}
 					>
-						<a href={localizeLink("/blog")} style={{ textDecoration: "none" }}>
+						<a href={localiseLink("/blog")} style={{ textDecoration: "none" }}>
 							<Button
 								variant="solid"
 								colorPalette="blue"

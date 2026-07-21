@@ -47,7 +47,7 @@ export interface DocSummary {
 	/** Folder name under content/ this doc came from, e.g. "docs", "components". */
 	collection: string;
 	/** Display label for `collection` — DocsConfig.collections[].label, or the
-	 * capitalized folder name if no config entry exists for it. */
+	 * capitalised folder name if no config entry exists for it. */
 	section: string;
 	/** Fine-grained grouping, set only if present in frontmatter (e.g. "Layout", "Forms"). */
 	category?: string;
@@ -62,13 +62,13 @@ export interface DocDetail extends DocSummary {
 	Component?: FC;
 }
 
-function capitalize(value: string): string {
+function capitalise(value: string): string {
 	return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 function sectionLabel(folder: string, config: DocsConfig): string {
 	const entry = config.collections?.find((c) => c.folder === folder);
-	return entry?.label ?? capitalize(folder);
+	return entry?.label ?? capitalise(folder);
 }
 
 /**

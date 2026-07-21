@@ -299,7 +299,7 @@ describe("DatePicker Unit Tests", () => {
 			</DatePicker>
 		).toString();
 
-		// `value` must be a real HTML attribute (defaultValue would serialize
+		// `value` must be a real HTML attribute (defaultValue would serialise
 		// as a dead attribute and leave the input empty in static output)
 		expect(html).toMatch(/<input[^>]*value="2026-07-15"/);
 		expect(html).not.toContain("defaultValue");

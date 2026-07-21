@@ -179,7 +179,7 @@ export function Input(props: InputProps) {
 			type="text"
 			readOnly
 			// A controlled `value` (not `defaultValue`) — hono/jsx's SSR renderer
-			// serializes `defaultValue` as a dead attribute that never reaches the
+			// serialises `defaultValue` as a dead attribute that never reaches the
 			// live DOM property, so the field would render empty on first paint.
 			value={context?.value ?? ""}
 			class={cx(styles.input, classProp)}
@@ -247,7 +247,7 @@ export interface IndicatorProps extends PropsWithChildren {
 // Renders *both* the default and copied content as sibling nodes (toggled via
 // `hidden`) instead of conditionally rendering one or the other. Indicator is
 // composed as a child of the interactive island's `<Root>`, and HonoX
-// rehydrates an island's children from a serialized HTML snapshot rather than
+// rehydrates an island's children from a serialised HTML snapshot rather than
 // by re-invoking this component — so post-hydration copy clicks can only
 // flip a `hidden` attribute the island's own listener already knows how to
 // find (`data-copied-variant`), they can't re-run this function to pick a

@@ -734,7 +734,7 @@ export interface InteractiveDropdownRootProps extends DropdownRootProps {
 	submenu?: boolean;
 }
 
-function normalizeTriggerModes(
+function normaliseTriggerModes(
 	mode: InteractiveDropdownRootProps["trigger"],
 ): ("click" | "hover" | "contextDropdown")[] {
 	if (!mode) return ["click"];
@@ -805,7 +805,7 @@ export function InteractiveDropdownRoot(props: InteractiveDropdownRootProps) {
 	const closeOnEscapeRef = useRef(closeOnEscape);
 	closeOnEscapeRef.current = closeOnEscape;
 
-	const triggerActions = disabled ? [] : normalizeTriggerModes(triggerMode);
+	const triggerActions = disabled ? [] : normaliseTriggerModes(triggerMode);
 	// Structural inputs to the mount effect below (which trigger modes are
 	// wired up, hover delays, placement math) — changing any of these
 	// re-registers the DOM listeners with fresh values. Plain callback props

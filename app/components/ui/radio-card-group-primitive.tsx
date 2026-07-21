@@ -260,7 +260,7 @@ interface GroupContentProps extends PropsWithChildren {
  *
  * Lives in the primitive so both the static wrapper and the island render
  * items inside Root's context provider. Islands must not receive items as
- * JSX children: HonoX serializes island children into a data-hono-template
+ * JSX children: HonoX serialises island children into a data-hono-template
  * rendered outside the provider, so non-default variant classes would be
  * lost on hydration.
  */

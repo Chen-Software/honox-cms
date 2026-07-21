@@ -63,7 +63,7 @@ const defaultTranslations: FileUploadTranslations = {
 	clearFiles: "clear files",
 };
 
-/** Normalize the `accept` prop into the native `accept` attribute string. */
+/** Normalise the `accept` prop into the native `accept` attribute string. */
 export function getAcceptAttr(accept: FileAccept | undefined) {
 	if (accept === undefined) return undefined;
 	if (typeof accept === "string") return accept;

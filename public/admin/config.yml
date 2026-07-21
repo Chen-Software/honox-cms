@@ -1742,7 +1742,7 @@ singletons:
             name: label
             widget: string
             required: false
-            hint: "Sidenav/section label. Defaults to the capitalized folder name."
+            hint: "Sidenav/section label. Defaults to the capitalised folder name."
           - label: CMS Collection
             name: cmsCollection
             widget: string

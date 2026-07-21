@@ -94,7 +94,7 @@ export async function loadNotes(locale = "en"): Promise<LoadedNotes> {
 
 	for (const slug of uniqueSlugs) {
 		try {
-			// Find the best path: prefer localized if locale !== "en", fallback to en
+			// Find the best path: prefer localised if locale !== "en", fallback to en
 			let targetPath = `/content/notes/${slug}.md`;
 			if (locale !== "en") {
 				const langPath = `/content/notes/${slug}.${locale}.md`;

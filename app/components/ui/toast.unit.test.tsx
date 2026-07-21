@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { createToaster, Toast, Toaster } from "./toast";
 
 describe("Toast component and createToaster store", () => {
-	test("createToaster should initialize with default configuration", () => {
+	test("createToaster should initialise with default configuration", () => {
 		const toasterInstance = createToaster();
 		expect(toasterInstance.placement).toBe("bottom-end");
 		expect(toasterInstance.overlap).toBe(false);

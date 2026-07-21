@@ -1403,9 +1403,9 @@ export function InteractiveColorPicker(props: InteractiveColorPickerProps) {
 			if (channel === "hex") {
 				// Validate before parsing — parseColor falls back to white for
 				// garbage input, which must not be committed as a colour change.
-				const normalized = raw.startsWith("#") ? raw : `#${raw}`;
-				if (/^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(normalized)) {
-					emit(parseColor(normalized));
+				const normalised = raw.startsWith("#") ? raw : `#${raw}`;
+				if (/^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(normalised)) {
+					emit(parseColor(normalised));
 				}
 				return;
 			}

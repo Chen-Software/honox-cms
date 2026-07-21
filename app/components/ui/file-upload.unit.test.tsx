@@ -111,7 +111,7 @@ test("custom composition renders all parts", () => {
 	expect(html).toContain("Browse");
 });
 
-test("getAcceptAttr normalizes all accept shapes", () => {
+test("getAcceptAttr normalises all accept shapes", () => {
 	expect(getAcceptAttr(undefined)).toBeUndefined();
 	expect(getAcceptAttr("image/*")).toBe("image/*");
 	expect(getAcceptAttr(["image/png", ".pdf"])).toBe("image/png,.pdf");

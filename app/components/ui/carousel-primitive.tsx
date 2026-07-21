@@ -290,7 +290,7 @@ export function Root(props: RootProps) {
 				data-disabled={disabled ? "" : undefined}
 				style={
 					{
-						// Numeric style values are serialized with a `px` suffix (even
+						// Numeric style values are serialised with a `px` suffix (even
 						// for custom properties), so this must stay a string — the
 						// `--slide-item-size` calc() below needs it unitless.
 						"--slides-per-page": String(slidesPerPage),
@@ -993,7 +993,7 @@ export function InteractiveCarouselRoot(props: InteractiveCarouselRootProps) {
 	// Trigger/indicator clicks, delegated from the root rather than bound via
 	// JSX `onClick` on the individual buttons. `PrevTrigger`/`NextTrigger`/
 	// `Indicator`/`AutoplayTrigger` are composed as children of this island's
-	// `<Root>`, and HonoX hydrates an island's children from a serialized HTML
+	// `<Root>`, and HonoX hydrates an island's children from a serialised HTML
 	// snapshot rather than by reconciling hono/jsx/dom's own synthetic props
 	// onto those already-mounted nodes — so a JSX `onClick` on them never
 	// actually attaches. Delegation from the root (which *is* the live,

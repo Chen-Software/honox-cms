@@ -868,9 +868,9 @@ const registry: Record<string, BlockRenderer> = {
 				}))
 			: [];
 		// Forced static: panel content is arbitrary nested JSX, which can't cross
-		// the island's prop-serialization boundary (unlike `children`, which
+		// the island's prop-serialisation boundary (unlike `children`, which
 		// HonoX snapshots to HTML for hydration, `panels` is a plain prop and
-		// would otherwise get JSON-serialized as a raw JSX element).
+		// would otherwise get JSON-serialised as a raw JSX element).
 		return <Splitter interactive={false} panels={resolvedPanels} {...rest} />;
 	},
 };

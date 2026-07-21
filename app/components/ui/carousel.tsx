@@ -70,7 +70,7 @@ function Carousel(props: CarouselProps) {
 	} = props;
 
 	// Computed from props rather than read from context: an island's
-	// `children` gets serialized into a `<template data-hono-template>`
+	// `children` gets serialised into a `<template data-hono-template>`
 	// snapshot and re-rendered outside any `CarouselContext.Provider` for
 	// hydration, so anything that changes the *number* of indicator dots
 	// based on context would silently collapse to a single fallback dot in

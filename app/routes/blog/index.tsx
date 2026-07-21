@@ -55,7 +55,7 @@ function BlogHeader({
 	currentPath: string;
 	currentLocale: string;
 }) {
-	const localizeLink = (href: string) => {
+	const localiseLink = (href: string) => {
 		if (
 			currentLocale !== "en" &&
 			!href.startsWith(`/${currentLocale}`) &&
@@ -91,7 +91,7 @@ function BlogHeader({
 				})}
 			>
 				<Anchor
-					href={localizeLink("/")}
+					href={localiseLink("/")}
 					variant="plain"
 					class={css({ textDecoration: "none", flexShrink: "0" })}
 				>
@@ -117,7 +117,7 @@ function BlogHeader({
 					{headerLinks?.map((link) => (
 						<Anchor
 							key={link.href}
-							href={localizeLink(link.href)}
+							href={localiseLink(link.href)}
 							variant="plain"
 							class={css({ textStyle: "sm", fontWeight: "medium" })}
 						>
@@ -192,7 +192,7 @@ export default createRoute(async (c) => {
 		[loadPosts(currentLocale), loadDocsConfig()],
 	);
 
-	const localizeLink = (href: string) => {
+	const localiseLink = (href: string) => {
 		if (
 			currentLocale !== "en" &&
 			!href.startsWith(`/${currentLocale}`) &&
@@ -275,7 +275,7 @@ export default createRoute(async (c) => {
 												})}
 											>
 												<a
-													href={localizeLink(`/blog/${post.slug}`)}
+													href={localiseLink(`/blog/${post.slug}`)}
 													class={css({
 														position: "absolute",
 														inset: "0",
@@ -337,7 +337,7 @@ export default createRoute(async (c) => {
 														})}
 													>
 														<a
-															href={localizeLink(`/blog/${post.slug}`)}
+															href={localiseLink(`/blog/${post.slug}`)}
 															class={css({
 																color: "white",
 																textDecoration: "none",
@@ -357,7 +357,7 @@ export default createRoute(async (c) => {
 														})}
 													>
 														<a
-															href={localizeLink(`/blog/${post.slug}`)}
+															href={localiseLink(`/blog/${post.slug}`)}
 															class={css({
 																color: "inherit",
 																textDecoration: "none",
@@ -373,7 +373,7 @@ export default createRoute(async (c) => {
 													>
 														{post.author && (
 															<Anchor
-																href={localizeLink(
+																href={localiseLink(
 																	`/blog/by-author/${post.author}`,
 																)}
 																class={css({
@@ -477,7 +477,7 @@ export default createRoute(async (c) => {
 						<div class={css({ flex: "1", minWidth: "260px" })}>
 							<Search
 								src="/api/posts/search.json"
-								action={localizeLink("/blog")}
+								action={localiseLink("/blog")}
 								initialQuery={searchQuery}
 								placeholder={
 									currentLocale === "zh" ? "搜索文章..." : "Search articles..."
@@ -541,8 +541,8 @@ export default createRoute(async (c) => {
 														tag === "全部" || tag === "All" ? "All" : tag;
 													const href =
 														realTag === "All"
-															? localizeLink("/blog")
-															: localizeLink(`/blog/by-tag/${realTag}`);
+															? localiseLink("/blog")
+															: localiseLink(`/blog/by-tag/${realTag}`);
 
 													return (
 														<a
@@ -701,7 +701,7 @@ export default createRoute(async (c) => {
 								}
 								title={
 									<a
-										href={localizeLink(`/blog/${post.slug}`)}
+										href={localiseLink(`/blog/${post.slug}`)}
 										class={css({
 											color: "fg",
 											textDecoration: "none",
@@ -731,7 +731,7 @@ export default createRoute(async (c) => {
 										<Stack gap="2.5" align="center">
 											{/* Author Avatar */}
 											<Anchor
-												href={localizeLink(`/blog/by-author/${post.author}`)}
+												href={localiseLink(`/blog/by-author/${post.author}`)}
 												class={css({
 													display: "inline-flex",
 													alignItems: "center",
@@ -747,7 +747,7 @@ export default createRoute(async (c) => {
 											</Anchor>
 											<div>
 												<Anchor
-													href={localizeLink(`/blog/by-author/${post.author}`)}
+													href={localiseLink(`/blog/by-author/${post.author}`)}
 													class={css({
 														textDecoration: "none",
 														color: "fg",
@@ -790,7 +790,7 @@ export default createRoute(async (c) => {
 
 										{/* Read More Button */}
 										<a
-											href={localizeLink(`/blog/${post.slug}`)}
+											href={localiseLink(`/blog/${post.slug}`)}
 											class={css({
 												textDecoration: "none",
 												display: "inline-flex",
@@ -839,7 +839,7 @@ export default createRoute(async (c) => {
 											{post.tags.slice(0, 3).map((tag) => (
 												<Anchor
 													key={tag}
-													href={localizeLink(`/blog/by-tag/${tag}`)}
+													href={localiseLink(`/blog/by-tag/${tag}`)}
 													variant="plain"
 													class={css({
 														textDecoration: "none",

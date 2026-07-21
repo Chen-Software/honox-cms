@@ -65,7 +65,7 @@ function NotesHeader({
 	currentPath: string;
 	currentLocale: string;
 }) {
-	const localizeLink = (href: string) => {
+	const localiseLink = (href: string) => {
 		if (
 			currentLocale !== "en" &&
 			!href.startsWith(`/${currentLocale}`) &&
@@ -101,7 +101,7 @@ function NotesHeader({
 				})}
 			>
 				<Anchor
-					href={localizeLink("/")}
+					href={localiseLink("/")}
 					variant="plain"
 					class={css({ textDecoration: "none", flexShrink: "0" })}
 				>
@@ -127,7 +127,7 @@ function NotesHeader({
 					{headerLinks?.map((link) => (
 						<Anchor
 							key={link.href}
-							href={localizeLink(link.href)}
+							href={localiseLink(link.href)}
 							variant="plain"
 							class={css({ textStyle: "sm", fontWeight: "medium" })}
 						>
@@ -356,7 +356,7 @@ export default createRoute(async (c) => {
 		loadDocsConfig(),
 	]);
 
-	const localizeLink = (href: string) => {
+	const localiseLink = (href: string) => {
 		if (
 			currentLocale !== "en" &&
 			!href.startsWith(`/${currentLocale}`) &&

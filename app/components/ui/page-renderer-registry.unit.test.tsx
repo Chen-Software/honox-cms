@@ -187,7 +187,7 @@ test("radioCardGroup block renders hydrated variant-styled cards and scrubs empt
 					label: "Plan",
 					defaultValue: "pro",
 					variant: "surface",
-					// Sveltia serializes untouched optional fields as empty strings —
+					// Sveltia serialises untouched optional fields as empty strings —
 					// they must not override the recipe's defaults.
 					colorPalette: "",
 					items: [

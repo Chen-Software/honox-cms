@@ -43,7 +43,7 @@ function writeToClipboard(value: string): Promise<void> {
 
 // Reflects `copied` onto the already-mounted DOM by hand. `Label`/`Control`/
 // `Input`/`Trigger`/`Indicator` are composed as children of this island's
-// `<Root>`, and HonoX rebuilds an island's children from a serialized HTML
+// `<Root>`, and HonoX rebuilds an island's children from a serialised HTML
 // snapshot on hydration (attributes only — event handlers and closures don't
 // survive that round-trip), so they never re-render when this island's own
 // state changes. Root itself isn't affected — the island renders it directly,

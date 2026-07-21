@@ -28,7 +28,7 @@ const RadioCardGroupRoot = (props: RadioCardGroupProps) => {
 		rest.defaultValue !== undefined ||
 		rest.onValueChange !== undefined;
 
-	// Items and label go to the island as serializable props, not JSX
+	// Items and label go to the island as serialisable props, not JSX
 	// children: HonoX renders island children into a data-hono-template
 	// outside Root's provider, which would strip variant classes after
 	// hydration. GroupContent renders them inside the provider on both paths.

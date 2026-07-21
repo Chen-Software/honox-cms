@@ -28,7 +28,7 @@ function Root(props: EditableProps) {
 
 	// `Content` is built fresh inside each render path (island or static)
 	// rather than here: HonoX rebuilds an island's `children` from a
-	// serialized HTML snapshot on hydration instead of by re-invoking JSX, so
+	// serialised HTML snapshot on hydration instead of by re-invoking JSX, so
 	// passing an already-built composition through as `children` breaks
 	// reactivity on later state updates (see the doc comment on `Content` in
 	// editable-primitive.tsx).

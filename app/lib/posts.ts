@@ -56,7 +56,7 @@ export async function loadPosts(locale = "en"): Promise<LoadedPosts> {
 
 	for (const slug of uniqueSlugs) {
 		try {
-			// Find the best path: prefer localized if locale !== "en", fallback to en
+			// Find the best path: prefer localised if locale !== "en", fallback to en
 			let targetPath = `/content/posts/${slug}.md`;
 			if (locale !== "en") {
 				const langPath = `/content/posts/${slug}.${locale}.md`;

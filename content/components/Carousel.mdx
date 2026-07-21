@@ -145,7 +145,7 @@ and the exported parts directly (see [Manual composition](#manual-composition)).
 | `colorPalette` | \`"gray" \ | "blue" \ | "cyan" \ | "green" \ | "orange" \ | "purple" \ | "red" \ | "teal" \ | "indigo" \ | "pink" \ | "yellow" \ | "success" \ | "error" \ | "warning"\` | Accent color for the active indicator/pressed autoplay trigger. | `"green"` |
 
 | `inline` | `boolean` | Overlays `Control` on top of the item group instead of stacking below it. | `false` |
-| `translations` | `CarouselTranslations` | Localized strings (aria-labels, progress text). | - |
+| `translations` | `CarouselTranslations` | Localised strings (aria-labels, progress text). | - |
 | `onPageChange` | `(details: { page: number; pageSnapPoint: number }) => void` | Called when the active page settles. | - |
 | `onAutoplayStatusChange` | `(details: { type: string; isPlaying: boolean; page: number }) => void` | Called when autoplay starts/ticks/stops. | - |
 | `onDragStatusChange` | `(details: { type: string; isDragging: boolean; page: number }) => void` | Called on drag start/move/end. | - |
@@ -186,7 +186,7 @@ and the exported parts directly (see [Manual composition](#manual-composition)).
   `disabled`, `data-inview`, and `aria-hidden` on the already-rendered DOM
   directly (see `applyPageState` in `carousel-primitive.tsx`) rather than
   regenerating `Item`/`Indicator` children — HonoX rehydrates an island's
-  children from a serialized HTML snapshot, not by re-invoking the
+  children from a serialised HTML snapshot, not by re-invoking the
   component that produced them.
 - **Never rely on a JSX `onClick` for a trigger/indicator button.** For the
   same reason: `PrevTrigger`/`NextTrigger`/`Indicator`/`AutoplayTrigger` are

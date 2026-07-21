@@ -379,7 +379,7 @@ export function Input(props: InputProps) {
 			data-invalid={context?.invalid ? "" : undefined}
 			data-autoresize={autoResize ? "" : undefined}
 			// Controlled `value` (not `defaultValue`) — hono/jsx's SSR renderer
-			// serializes `defaultValue` as a dead attribute that never reaches the
+			// serialises `defaultValue` as a dead attribute that never reaches the
 			// live DOM property, so the field would render empty on first paint.
 			value={context?.value ?? ""}
 			size={autoResize ? 1 : undefined}
@@ -596,7 +596,7 @@ export interface ContentProps extends PropsWithChildren {
  *
  * Lives in the primitive — rather than being built once by the smart wrapper
  * and threaded through as the interactive island's `children` — because
- * HonoX rebuilds an island's `children` from a serialized HTML snapshot on
+ * HonoX rebuilds an island's `children` from a serialised HTML snapshot on
  * hydration instead of by re-invoking JSX, and reconciling that reconstructed
  * tree against a freshly re-rendered one on a later state update overflows
  * hono/jsx's diff (`RangeError: Maximum call stack size exceeded`). Calling

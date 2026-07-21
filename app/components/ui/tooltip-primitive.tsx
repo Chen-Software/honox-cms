@@ -298,7 +298,7 @@ export interface InteractiveTooltipProps extends TooltipRootProps {
  * touches them beyond reading `data-part` attributes off the live DOM.
  *
  * This split matters: `TooltipTrigger`'s `asChild` path calls `cloneElement`
- * on its `children`. HonoX serializes an island's `children` prop across the
+ * on its `children`. HonoX serialises an island's `children` prop across the
  * server/client boundary via a `<template>` tag that the client reconstructs
  * for hydration — but that reconstruction isn't a full hono/jsx vnode (it
  * has no `.props`), so calling `cloneElement` on it during a *client-side*

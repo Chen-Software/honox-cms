@@ -45,7 +45,7 @@ export default createRoute(
 
 		const accentPalette = note.color === "default" ? "gray" : note.color;
 
-		const localizeLink = (href: string) => {
+		const localiseLink = (href: string) => {
 			if (
 				currentLocale !== "en" &&
 				!href.startsWith(`/${currentLocale}`) &&
@@ -77,7 +77,7 @@ export default createRoute(
 						class={css({ mb: "8" })}
 					>
 						<a
-							href={localizeLink("/notes")}
+							href={localiseLink("/notes")}
 							class={css({
 								display: "inline-flex",
 								alignItems: "center",

@@ -109,7 +109,7 @@ function DocsSidenav({
 	links,
 	currentLocale = "en",
 }: DocsSidenavProps) {
-	const localizeLink = (href: string) => {
+	const localiseLink = (href: string) => {
 		if (
 			currentLocale === "zh" &&
 			!href.startsWith("/zh") &&
@@ -155,7 +155,7 @@ function DocsSidenav({
 							return (
 								<a
 									key={doc.slug}
-									href={localizeLink(`/docs/${doc.slug}`)}
+									href={localiseLink(`/docs/${doc.slug}`)}
 									aria-current={isActive ? "page" : undefined}
 									class={css({
 										display: "block",
@@ -320,7 +320,7 @@ function DocsHeader({
 	currentLocale,
 }: DocsHeaderProps) {
 	const githubLink = links?.find(isGithubLink);
-	const localizeLink = (href: string) => {
+	const localiseLink = (href: string) => {
 		if (
 			currentLocale === "zh" &&
 			!href.startsWith("/zh") &&
@@ -345,7 +345,7 @@ function DocsHeader({
 				})}
 			>
 				<Anchor
-					href={localizeLink("/")}
+					href={localiseLink("/")}
 					variant="plain"
 					class={css({ textDecoration: "none", flexShrink: "0" })}
 				>
@@ -392,7 +392,7 @@ function DocsHeader({
 					{headerLinks?.map((link) => (
 						<Anchor
 							key={link.href}
-							href={localizeLink(link.href)}
+							href={localiseLink(link.href)}
 							variant="plain"
 							class={css({ textStyle: "sm", fontWeight: "medium" })}
 						>

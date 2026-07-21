@@ -217,7 +217,7 @@ export default createRoute((c) => {
 	}
 	const name = c.req.query("name") ?? "Design System";
 
-	const localizeLink = (href: string) => {
+	const localiseLink = (href: string) => {
 		if (
 			currentLocale === "zh" &&
 			!href.startsWith("/zh") &&
@@ -288,7 +288,7 @@ export default createRoute((c) => {
 						})}
 					>
 						<Anchor
-							href={localizeLink("/blog")}
+							href={localiseLink("/blog")}
 							variant="plain"
 							class={css({
 								display: { base: "none", md: "block" },
@@ -299,7 +299,7 @@ export default createRoute((c) => {
 							{currentLocale === "zh" ? "博客" : "Blog"}
 						</Anchor>
 						<Anchor
-							href={localizeLink("/docs")}
+							href={localiseLink("/docs")}
 							variant="plain"
 							class={css({
 								display: { base: "none", md: "block" },
@@ -310,7 +310,7 @@ export default createRoute((c) => {
 							{currentLocale === "zh" ? "文档" : "Docs"}
 						</Anchor>
 						<Anchor
-							href={localizeLink("/pages/product-landing")}
+							href={localiseLink("/pages/product-landing")}
 							variant="plain"
 							class={css({
 								display: { base: "none", md: "block" },
