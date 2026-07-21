@@ -91,6 +91,33 @@ The layout engine imports all public component modules from `app/components/ui/`
 
 ***
 
+## Content Build Pipelines
+
+Page Builder layouts are one of three content types under `content/`, each discovered with Vite's `import.meta.glob` and rendered by its own route. All three are static-generated the same way: a route's `ssgParams` middleware enumerates every file in its collection at build time, and `bun run build` (via `@hono/vite-ssg`) crawls those params to pre-render one static HTML file per slug into `dist/`.
+
+### 1. JSON page layouts (`content/pages/*.json`)
+
+* Loaded with `import.meta.glob("/content/pages/*.json", { import: "default" })` in `app/routes/pages/[slug].tsx`.
+* Each file is parsed as plain JSON — no markdown involved — and its `content` array is handed directly to `<PageRenderer />` (see Architecture above), which recursively compiles it into the matching UI components.
+* This is the only pipeline of the three with no separate parse/compile step: the JSON *is* the render tree.
+
+### 2. Plain markdown (`content/posts/*.md`, `content/docs/*.md`)
+
+* Loaded with `import.meta.glob(..., { query: "?raw", import: "default" })`, which hands back the raw markdown source as a string rather than a compiled module.
+* Parsed at request/build time by `app/utils/markdown.ts`, a `remark`/`rehype` pipeline (`remark-parse` → `remark-gfm` → `remark-rehype` → `rehype-stringify`): `parseFrontmatter()` splits the YAML frontmatter block from the body, and `markdownToHtml()` turns the body into an HTML string.
+* The resulting string is injected via `dangerouslySetInnerHTML` (see `app/lib/posts.ts` and `app/lib/docs.ts`) — there's no JSX involved, so this pipeline can't embed live components.
+* Blog posts also run their body through `stripMarkdown()` to build a plain-text search haystack for `/api/*/search.json`.
+
+### 3. MDX docs (`content/docs/*.mdx`)
+
+* Compiled ahead of time by the `@mdx-js/rollup` Vite plugin (configured in `vite.config.ts`, restricted to `.mdx` so it never intercepts the raw `.md` imports above), using `remark-frontmatter` + `remark-mdx-frontmatter` + `remark-gfm`.
+* Each `.mdx` file becomes a real, importable component (plus a separate `frontmatter` export), loaded in `app/lib/docs.ts` via a plain (non-`?raw`) `import.meta.glob`.
+* Because the output is a component rather than an HTML string, `.mdx` docs can embed actually-rendered, interactive examples (e.g. a live `<Button>` demo) directly in the prose — the tradeoff for that is the build-time compile step plain `.md` doesn't need.
+
+`app/lib/docs.ts` loads both `.md` and `.mdx` collections side by side and merges them into one sidenav, so which pipeline a given doc uses is an implementation detail invisible to readers — pick `.md` for plain prose and `.mdx` only when a page needs a live component embedded in it.
+
+***
+
 ## Example JSON Structure
 
 Here is a sample layout file representing a complex dashboard page (`content/pages/dashboard.json`):
