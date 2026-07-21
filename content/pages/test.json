@@ -563,6 +563,268 @@
           ]
         }
       ]
+    },
+    {
+      "type": "heading",
+      "size": "2xl",
+      "text": "8. Remaining Component Bindings",
+      "as": "h2"
+    },
+    {
+      "type": "text",
+      "content": "Every remaining CMS-bound leaf component gets a live example here, so each renderer is exercised at least once."
+    },
+    {
+      "type": "group",
+      "attached": true,
+      "orientation": "horizontal",
+      "children": [
+        {
+          "type": "button",
+          "text": "Weekday",
+          "variant": "outline"
+        },
+        {
+          "type": "button",
+          "text": "Weekend",
+          "variant": "outline"
+        },
+        {
+          "type": "button",
+          "text": "Holiday",
+          "variant": "outline"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "direction": "horizontal",
+      "gap": "6",
+      "align": "center",
+      "children": [
+        {
+          "type": "icon",
+          "svg": "<path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z\" />",
+          "size": "lg",
+          "ariaLabel": "Featured cabin"
+        },
+        {
+          "type": "select",
+          "label": "Cabin Size",
+          "placeholder": "Choose a size",
+          "items": [
+            {
+              "label": "Cozy (2 guests)",
+              "value": "cozy"
+            },
+            {
+              "label": "Family (4 guests)",
+              "value": "family"
+            },
+            {
+              "label": "Group (8 guests)",
+              "value": "group"
+            }
+          ]
+        },
+        {
+          "type": "segmentGroup",
+          "label": "Stay Length",
+          "defaultValue": "weekend",
+          "items": [
+            {
+              "label": "1 Night",
+              "value": "night"
+            },
+            {
+              "label": "Weekend",
+              "value": "weekend"
+            },
+            {
+              "label": "Week",
+              "value": "week"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "direction": "horizontal",
+      "gap": "6",
+      "align": "center",
+      "children": [
+        {
+          "type": "switch",
+          "label": "Pet friendly only",
+          "colorPalette": "green"
+        },
+        {
+          "type": "slider",
+          "label": "Max Budget ($/night)",
+          "defaultValue": 220,
+          "min": 50,
+          "max": 500,
+          "step": 10,
+          "showValueText": true,
+          "colorPalette": "blue"
+        },
+        {
+          "type": "progress",
+          "label": "Cabins Booked",
+          "value": 65,
+          "showValueText": true,
+          "colorPalette": "purple"
+        }
+      ]
+    },
+    {
+      "type": "skeleton",
+      "shape": "text",
+      "noOfLines": 3,
+      "loaded": false
+    },
+    {
+      "type": "stack",
+      "direction": "horizontal",
+      "gap": "4",
+      "children": [
+        {
+          "type": "popover",
+          "triggerText": "Cancellation Info",
+          "title": "Flexible Cancellation",
+          "description": "Free cancellation up to 48 hours before check-in.",
+          "showArrow": true,
+          "closable": true
+        },
+        {
+          "type": "menu",
+          "triggerText": "Manage Booking",
+          "items": [
+            {
+              "type": "item",
+              "label": "Edit Booking",
+              "value": "edit"
+            },
+            {
+              "type": "separator"
+            },
+            {
+              "type": "item",
+              "label": "Cancel Booking",
+              "value": "cancel"
+            }
+          ]
+        },
+        {
+          "type": "colorPicker",
+          "label": "Accent Color",
+          "defaultValue": "#3b82f6",
+          "trigger": true
+        }
+      ]
+    },
+    {
+      "type": "carousel",
+      "slides": [
+        {
+          "image": "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80",
+          "caption": "Mountain Cabin Adventure",
+          "href": "#"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1518602164578-cd0074062767?w=800&q=80",
+          "caption": "Lakeside Retreat",
+          "href": "#"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80",
+          "caption": "Forest Hideaway",
+          "href": "#"
+        }
+      ],
+      "slidesPerPage": 1,
+      "loop": true,
+      "autoplayDelay": "",
+      "pauseOnHover": true,
+      "orientation": "horizontal"
+    },
+    {
+      "type": "fileUpload",
+      "label": "Upload ID Document",
+      "name": "idDocument",
+      "accept": ".pdf,image/*",
+      "maxFiles": 1,
+      "dropzoneText": "Drag your ID here, or",
+      "triggerText": "browse files"
+    },
+    {
+      "type": "heading",
+      "size": "2xl",
+      "text": "9. Data & Pagination",
+      "as": "h2"
+    },
+    {
+      "type": "paginatedTable"
+    },
+    {
+      "type": "pagination",
+      "count": 120,
+      "pageSize": 10,
+      "defaultPage": 1,
+      "siblingCount": 1,
+      "boundaryCount": 1
+    },
+    {
+      "type": "heading",
+      "size": "2xl",
+      "text": "10. Form Layout: Fieldset, Grid & Textarea",
+      "as": "h2"
+    },
+    {
+      "type": "fieldset",
+      "legend": "Special Requests",
+      "helperText": "Let us know about any accessibility needs or requests.",
+      "children": [
+        {
+          "type": "field",
+          "label": "Arrival Time",
+          "name": "arrivalTime",
+          "placeholder": "e.g. 3:00 PM"
+        },
+        {
+          "type": "textarea",
+          "label": "Notes",
+          "name": "notes",
+          "placeholder": "Anything else we should know?",
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "type": "grid",
+      "columns": "3",
+      "gap": "4",
+      "children": [
+        {
+          "type": "badge",
+          "variant": "solid",
+          "colorPalette": "green",
+          "text": "WiFi"
+        },
+        {
+          "type": "badge",
+          "variant": "solid",
+          "colorPalette": "blue",
+          "text": "Hot Tub"
+        },
+        {
+          "type": "badge",
+          "variant": "solid",
+          "colorPalette": "orange",
+          "text": "Fireplace"
+        }
+      ]
     }
   ]
 }
