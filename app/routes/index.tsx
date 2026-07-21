@@ -247,17 +247,6 @@ export default createRoute((c) => {
 						})}
 					>
 						<Anchor
-							href="#tabs-showcase"
-							variant="plain"
-							class={css({
-								display: { base: "none", md: "block" },
-								textStyle: "sm",
-								fontWeight: "medium",
-							})}
-						>
-							Tabs Showcase
-						</Anchor>
-						<Anchor
 							href="/blog"
 							variant="plain"
 							class={css({
@@ -382,14 +371,14 @@ export default createRoute((c) => {
 				</div>
 			</section>
 
-			{/* Brand New Tabs Showcase Section */}
+			{/* Tabs Showcase Section */}
 			<section
 				id="tabs-showcase"
 				class={css({ py: "12", px: "6", maxW: "5xl", mx: "auto" })}
 			>
 				<div class={css({ textAlign: "center", mb: "8" })}>
 					<Heading as="h2" size="3xl" class={css({ fontWeight: "bold" })}>
-						Intuitive Tabs Showcase
+						Tabs Showcase
 					</Heading>
 					<Text size="md" class={css({ color: "fg.muted", mt: "2" })}>
 						Re-implemented completely in pure Hono/JSX with sliding indicators,
