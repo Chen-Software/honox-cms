@@ -264,6 +264,24 @@ test("PageRenderer renders slider and switch correctly", () => {
 	expect(html).not.toContain('label="Dark Mode"');
 });
 
+test("PageRenderer renders pinField correctly", () => {
+	const content = [
+		{
+			type: "pinField",
+			label: "Verification Code",
+			helperText: "Check your email",
+			count: 6,
+			format: "alphanumeric",
+		},
+	];
+
+	const html = (<PageRenderer content={content} />).toString();
+
+	expect(html).toContain("Verification Code");
+	expect(html).toContain("Check your email");
+	expect(html.match(/data-part="input"/g)?.length).toBe(6);
+});
+
 test("PageRenderer renders custom triggers for collapsible, dialog, and drawer correctly", () => {
 	const content = [
 		{

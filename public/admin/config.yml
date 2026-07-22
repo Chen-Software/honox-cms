@@ -587,6 +587,43 @@ collections:
                                 widget: select
                                 options: [blue, green, red, purple, orange, amber, cyan, slate]
                                 required: false
+                          - label: Pin Field
+                            name: pinField
+                            widget: object
+                            fields: &pinfield_fields
+                              - { label: Label, name: label, widget: string, required: false }
+                              - { label: Name, name: name, widget: string, required: false, hint: "HTML name attribute, used when submitting a form." }
+                              - { label: Form, name: form, widget: string, required: false, hint: "id of a <form> to associate with, for Auto Submit and reset." }
+                              - { label: Helper Text, name: helperText, widget: string, required: false }
+                              - { label: Error Text, name: errorText, widget: string, required: false }
+                              - { label: Count, name: count, widget: number, default: 4, hint: "Number of boxes to render." }
+                              - label: Format
+                                name: format
+                                widget: select
+                                options: [numeric, alphanumeric, alphabetic]
+                                default: numeric
+                              - { label: Placeholder, name: placeholder, widget: string, required: false }
+                              - { label: Pattern, name: pattern, widget: string, required: false, hint: "Custom per-character regexp source, overrides Format." }
+                              - { label: Mask, name: mask, widget: boolean, default: false, hint: "Renders each box as a password field, hiding entered characters." }
+                              - { label: OTP, name: otp, widget: boolean, default: false, hint: "Hints browsers/password managers this is a one-time code." }
+                              - { label: Blur On Complete, name: blurOnComplete, widget: boolean, default: false }
+                              - { label: Auto Focus, name: autoFocus, widget: boolean, default: false }
+                              - { label: Select On Focus, name: selectOnFocus, widget: boolean, default: true }
+                              - { label: Auto Submit, name: autoSubmit, widget: boolean, default: false, hint: "Submits the form once every box is filled." }
+                              - { label: Disabled, name: disabled, widget: boolean, default: false }
+                              - { label: Read Only, name: readOnly, widget: boolean, default: false }
+                              - { label: Required, name: required, widget: boolean, default: false }
+                              - { label: Invalid, name: invalid, widget: boolean, default: false }
+                              - label: Size
+                                name: size
+                                widget: select
+                                options: [xs, sm, md, lg, xl, "2xl"]
+                                default: md
+                              - label: Variant
+                                name: variant
+                                widget: select
+                                options: [outline, subtle, surface, flushed]
+                                default: outline
                           - label: Color Picker
                             name: colorPicker
                             widget: object
@@ -1108,6 +1145,10 @@ collections:
                     name: switch
                     widget: object
                     fields: *switch_fields
+                  - label: Pin Field
+                    name: pinField
+                    widget: object
+                    fields: *pinfield_fields
                   - label: Color Picker
                     name: colorPicker
                     widget: object
@@ -1604,6 +1645,10 @@ collections:
             name: switch
             widget: object
             fields: *switch_fields
+          - label: Pin Field
+            name: pinField
+            widget: object
+            fields: *pinfield_fields
           - label: Color Picker
             name: colorPicker
             widget: object

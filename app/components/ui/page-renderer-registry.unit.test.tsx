@@ -254,6 +254,7 @@ test("registry exposes a renderer for every canonical block type", () => {
 		"search",
 		"slider",
 		"switch",
+		"pinField",
 		"fileUpload",
 	];
 	for (const type of types) {

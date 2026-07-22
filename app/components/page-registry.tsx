@@ -32,6 +32,7 @@ import {
 	Loader,
 	PaginatedTable,
 	Pagination,
+	PinField,
 	Popover,
 	Progress,
 	RadioCardGroup,
@@ -729,6 +730,7 @@ const registry: Record<string, BlockRenderer> = {
 		);
 	},
 	colorPicker: (b) => <ColorPicker interactive {...propsOf(b)} />,
+	pinField: (b) => <PinField interactive {...propsOf(b)} />,
 
 	tabs: (b) => {
 		const { items, variant, size, orientation, activationMode, ...rest } =
