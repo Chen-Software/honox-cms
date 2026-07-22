@@ -245,6 +245,7 @@
     {
       "type": "editable",
       "label": "Project name",
+      "placeholder": "",
       "defaultValue": "Mountain Cabin Adventure",
       "size": "md",
       "activationMode": "focus",
@@ -292,11 +293,11 @@
     },
     {
       "type": "search",
-      "src": "/api/posts/search.json",
       "placeholder": "Search posts...",
-      "itemLabel": "posts",
+      "src": "/api/posts/search.json",
+      "debounceMs": 150,
       "maxSuggestions": 5,
-      "debounceMs": 150
+      "itemLabel": "posts"
     },
     {
       "type": "stack",
@@ -398,15 +399,15 @@
           "children": [
             {
               "type": "heading",
-              "size": "lg",
               "text": "Cabin Booking Portal",
+              "size": "lg",
               "as": "h3"
             },
             {
               "type": "badge",
+              "text": "3 cabins free",
               "variant": "subtle",
-              "colorPalette": "green",
-              "text": "3 cabins free"
+              "colorPalette": "green"
             }
           ]
         }
@@ -448,9 +449,9 @@
         },
         {
           "type": "button",
-          "text": "Check Availability",
           "variant": "solid",
-          "colorPalette": "blue"
+          "colorPalette": "blue",
+          "text": "Check Availability"
         }
       ],
       "footer": [
@@ -470,10 +471,10 @@
       "header": [
         {
           "type": "alert",
-          "variant": "subtle",
-          "status": "info",
           "title": "Header slot",
-          "description": "Any component works here — this one is an Alert."
+          "description": "Any component works here — this one is an Alert.",
+          "variant": "subtle",
+          "status": "info"
         }
       ],
       "content": [
@@ -502,11 +503,10 @@
     {
       "type": "tabs",
       "variant": "enclosed",
-      "size": "md",
       "items": [
         {
-          "value": "amenities",
           "label": "🏡 Included Amenities",
+          "value": "amenities",
           "content": [
             {
               "type": "text",
@@ -537,8 +537,8 @@
           ]
         },
         {
-          "value": "rates",
           "label": "💳 Flexible Rates",
+          "value": "rates",
           "content": [
             {
               "type": "text",
@@ -546,9 +546,8 @@
             },
             {
               "type": "radioCardGroup",
-              "label": "Reservation Class",
-              "defaultValue": "weekend",
               "variant": "outline",
+              "label": "Reservation Class",
               "items": [
                 {
                   "label": "Weekday Pass — $150/night",
@@ -558,11 +557,13 @@
                   "label": "Weekend Escape — $220/night",
                   "value": "weekend"
                 }
-              ]
+              ],
+              "defaultValue": "weekend"
             }
           ]
         }
-      ]
+      ],
+      "size": "md"
     },
     {
       "type": "heading",
@@ -576,36 +577,36 @@
     },
     {
       "type": "group",
-      "attached": true,
-      "orientation": "horizontal",
       "children": [
         {
           "type": "button",
-          "text": "Weekday",
-          "variant": "outline"
+          "variant": "outline",
+          "text": "Weekday"
         },
         {
           "type": "button",
-          "text": "Weekend",
-          "variant": "outline"
+          "variant": "outline",
+          "text": "Weekend"
         },
         {
           "type": "button",
-          "text": "Holiday",
-          "variant": "outline"
+          "variant": "outline",
+          "text": "Holiday"
         }
-      ]
+      ],
+      "attached": true,
+      "orientation": "horizontal"
     },
     {
       "type": "stack",
       "direction": "horizontal",
-      "gap": "6",
       "align": "center",
+      "gap": "6",
       "children": [
         {
           "type": "icon",
-          "svg": "<path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z\" />",
           "size": "lg",
+          "svg": "<path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z\" />",
           "ariaLabel": "Featured cabin"
         },
         {
@@ -651,8 +652,8 @@
     {
       "type": "stack",
       "direction": "horizontal",
-      "gap": "6",
       "align": "center",
+      "gap": "6",
       "children": [
         {
           "type": "switch",
@@ -663,20 +664,40 @@
           "type": "slider",
           "label": "Max Budget ($/night)",
           "defaultValue": 220,
+          "colorPalette": "blue",
           "min": 50,
           "max": 500,
-          "step": 10,
           "showValueText": true,
-          "colorPalette": "blue"
+          "step": 10
         },
         {
           "type": "progress",
           "label": "Cabins Booked",
+          "colorPalette": "purple",
           "value": 65,
-          "showValueText": true,
-          "colorPalette": "purple"
+          "showValueText": true
         }
       ]
+    },
+    {
+      "type": "pinField",
+      "label": "Booking Confirmation Code",
+      "helperText": "Enter the 6-digit code we texted you.",
+      "variant": "outline",
+      "size": "md",
+      "count": 6,
+      "format": "numeric",
+      "otp": true
+    },
+    {
+      "type": "pinField",
+      "label": "Staff Access Key",
+      "helperText": "Case-insensitive, 4 characters.",
+      "variant": "subtle",
+      "size": "lg",
+      "count": 4,
+      "format": "alphanumeric",
+      "mask": true
     },
     {
       "type": "skeleton",
@@ -691,9 +712,9 @@
       "children": [
         {
           "type": "popover",
-          "triggerText": "Cancellation Info",
           "title": "Flexible Cancellation",
           "description": "Free cancellation up to 48 hours before check-in.",
+          "triggerText": "Cancellation Info",
           "showArrow": true,
           "closable": true
         },
@@ -718,14 +739,15 @@
         },
         {
           "type": "colorPicker",
+          "trigger": true,
           "label": "Accent Color",
-          "defaultValue": "#3b82f6",
-          "trigger": true
+          "defaultValue": "#3b82f6"
         }
       ]
     },
     {
       "type": "carousel",
+      "orientation": "horizontal",
       "slides": [
         {
           "image": "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80",
@@ -746,17 +768,16 @@
       "slidesPerPage": 1,
       "loop": true,
       "autoplayDelay": "",
-      "pauseOnHover": true,
-      "orientation": "horizontal"
+      "pauseOnHover": true
     },
     {
       "type": "fileUpload",
       "label": "Upload ID Document",
       "name": "idDocument",
+      "triggerText": "browse files",
       "accept": ".pdf,image/*",
       "maxFiles": 1,
-      "dropzoneText": "Drag your ID here, or",
-      "triggerText": "browse files"
+      "dropzoneText": "Drag your ID here, or"
     },
     {
       "type": "heading",
@@ -783,8 +804,6 @@
     },
     {
       "type": "fieldset",
-      "legend": "Special Requests",
-      "helperText": "Let us know about any accessibility needs or requests.",
       "children": [
         {
           "type": "field",
@@ -799,11 +818,12 @@
           "placeholder": "Anything else we should know?",
           "rows": 4
         }
-      ]
+      ],
+      "helperText": "Let us know about any accessibility needs or requests.",
+      "legend": "Special Requests"
     },
     {
       "type": "grid",
-      "columns": "3",
       "gap": "4",
       "children": [
         {
@@ -824,7 +844,8 @@
           "colorPalette": "orange",
           "text": "Fireplace"
         }
-      ]
+      ],
+      "columns": "3"
     }
   ]
 }
