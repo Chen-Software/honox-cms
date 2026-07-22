@@ -1,0 +1,112 @@
+---
+title: Table Tabelle
+hydration: 2
+category: Data Display
+---
+
+import { Table } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine flexible Komponente zur Anzeige von Tabellendaten.
+
+# Verwendung
+
+<DemoPreview>
+  <div style={{ width: "100%" }}>
+    <Table
+      variant="plain"
+      caption="Product Inventory"
+      columns={[
+        { header: "Name", key: "name" },
+        { header: "Category", key: "category" },
+        { header: "Price", key: "price", align: "end" },
+      ]}
+      rows={[
+        { name: "Laptop", category: "Electronics", price: "$999.00" },
+        { name: "Coffee Mug", category: "Home & Kitchen", price: "$15.00" },
+      ]}
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Table } from "../components/ui";
+
+export default function MyPage() {
+  const columns = [
+    { header: "Name", key: "name" },
+    { header: "Category", key: "category" },
+    { header: "Price", key: "price", align: "end" },
+  ];
+
+  const rows = [
+    { name: "Laptop", category: "Electronics", price: "$999.00" },
+    { name: "Coffee Mug", category: "Home & Kitchen", price: "$15.00" },
+  ];
+
+  return (
+    <Table
+      variant="plain"
+      caption="Product Inventory"
+      columns={columns}
+      rows={rows}
+      footer={
+        <tr>
+          <td colSpan={2}>Total</td>
+          <td style={{ textAlign: "end" }}>$1,014.00</td>
+        </tr>
+      }
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `table`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar. Da Zeilendaten keine feste CMS-Struktur haben können, ist `rows` ein als JSON kodiertes Zeichenfolgenfeld, das zur Render-Zeit geparst wird:
+
+```json
+{
+  "type": "table",
+  "columns": [
+    { "header": "Room", "key": "room" },
+    { "header": "Price", "key": "price", "align": "end" }
+  ],
+  "rows": "[{\"room\": \"Cabin Loft\", \"price\": \"$180/night\"}, {\"room\": \"Cabin Suite\", \"price\": \"$240/night\"}]",
+  "variant": "plain",
+  "striped": true
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `columns` | `TableColumn[]` | Konfiguration für Tabellenspalten. |
+| `rows` | `any[]` | In der Tabelle anzuzeigende Daten. |
+
+| `caption` | `string \| JSX.Element` | Optionale Beschriftung, die oben oder unten angezeigt wird. |
+
+| `footer` | `JSX.Element` | Optionaler Inhalt für die Fußzeile. |
+
+| `variant` | `"plain" \| "surface"` | Der visuelle Stil der Tabelle. |
+
+| `striped` | `boolean` | Legt fest, ob Zeilen abwechselnd farbig hinterlegt werden (Zebra-Muster). |
+| `interactive` | `boolean` | Legt fest, ob Zeilen Hover-Zustände anzeigen. |
+| `columnBorder` | `boolean` | Legt fest, ob Rahmen zwischen Spalten angezeigt werden. |
+| `stickyHeader` | `boolean` | Legt fest, ob die Kopfzeile beim Scrollen sichtbar bleibt. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+### TableColumn
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `header` | `string \| JSX.Element` | Kopfzeilentext oder -element. |
+
+| `key` | `string` | Schlüssel im Zeilendaten-Objekt. |
+| `render` | `(row, index) => JSX.Element` | Benutzerdefinierte Render-Funktion für die Zelle. |
+
+| `align` | `"start" \| "center" \| "end"` | Textausrichtung für die Spalte. |

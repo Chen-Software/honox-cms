@@ -1,0 +1,119 @@
+---
+title: Slider Schieberegler
+hydration: 2
+category: Forms
+---
+
+import { Slider } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Steuerung, mit der der Benutzer einen Wert (oder einen Wertebereich) aus einer kontinuierlichen Skala auswählen kann.
+
+# Verwendung
+
+## Einfacher Slider
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "280px" }}>
+    <Slider
+      label="Volume"
+      defaultValue={30}
+      min={0}
+      max={100}
+      showValueText
+      interactive
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Slider } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Slider
+      label="Volume"
+      defaultValue={30}
+      min={0}
+      max={100}
+      showValueText
+      interactive
+    />
+  );
+}
+```
+
+## Mit Markierungen
+
+```tsx
+import { Slider } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Slider
+      defaultValue={50}
+      marks={[
+        { value: 0, label: "0" },
+        { value: 50, label: "50" },
+        { value: 100, label: "100" },
+      ]}
+      interactive
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `slider`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "slider",
+  "label": "Volume",
+  "defaultValue": 30,
+  "min": 0,
+  "max": 100,
+  "showValueText": true
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `value` | `number \| number[]` | Der oder die aktuelle(n) Wert(e) (kontrolliert). |
+| `defaultValue` | `number \| number[]` | Der oder die anfängliche(n) Wert(e) (unkontrolliert). |
+
+| `min` | `number` | Der Mindestwert. |
+| `max` | `number` | Der Höchstwert. |
+| `step` | `number` | Die Schrittweite. |
+| `onChange` | `(details: { value: number[] }) => void` | Rückruf, der ausgelöst wird, wenn sich der Wert ändert. |
+| `onDraggingChange` | `(details: { dragging: boolean }) => void` | Rückruf, der ausgelöst wird, wenn sich der Zieh-Zustand ändert. |
+
+| `label` | `string \| JSX.Element` | Beschriftung, die über dem Schieberegler angezeigt wird. |
+
+| `showValueText` | `boolean` | Legt fest, ob der aktuelle Wertetext angezeigt wird. |
+| `formatValue` | `(value: number) => string` | Benutzerdefinierte Formatierung für den Wertetext. |
+
+| `marks` | `{ value: number; label: string \| JSX.Element }[]` | Entlang der Spur anzuzeigende Markierungen. |
+| `orientation` | `"horizontal" \| "vertical"` | Die Ausrichtung des Schiebereglers. |
+
+| `height` | `string` | Höhe (erforderlich für die vertikale Ausrichtung). |
+| `disabled` | `boolean` | Legt fest, ob der Schieberegler deaktiviert ist. |
+| `readOnly` | `boolean` | Legt fest, ob der Schieberegler schreibgeschützt ist. |
+| `interactive` | `boolean` | Aktiviert die clientseitige Interaktivität. |
+
+| `size` | `"sm" \| "md" \| "lg"` | Die Größe des Schiebereglers. |
+
+| `colorPalette` | `string` | Das Farbschema des Schiebereglers. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+| `trackClass` | `string` | Benutzerdefinierte CSS-Klassen für die Spur. |
+| `rangeClass` | `string` | Benutzerdefinierte CSS-Klassen für den Bereich. |
+| `thumbClass` | `string` | Benutzerdefinierte CSS-Klassen für den Griff. |
+| `labelClass` | `string` | Benutzerdefinierte CSS-Klassen für die Beschriftung. |
+| `valueTextClass` | `string` | Benutzerdefinierte CSS-Klassen für den Wertetext. |
+| `markClass` | `string` | Benutzerdefinierte CSS-Klassen für die Markierungen. |

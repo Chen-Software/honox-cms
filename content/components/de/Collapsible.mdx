@@ -1,0 +1,101 @@
+---
+title: Collapsible Aufklappbar
+hydration: 1
+category: Overlays
+---
+
+import { Collapsible } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine interaktive Komponente, die erweitert oder eingeklappt werden kann, um Inhalte anzuzeigen oder auszublenden.
+
+# Verwendung
+
+## Einfaches Aufklappbares
+
+<DemoPreview>
+  <Collapsible
+    trigger="Show more"
+    content={<p>Additional details go here.</p>}
+    defaultOpen
+  />
+</DemoPreview>
+
+```tsx
+import { Collapsible } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Collapsible
+      trigger="Show more"
+      content={<p>Additional details go here.</p>}
+      defaultOpen
+    />
+  );
+}
+```
+
+## Mit Indikator und kontrolliertem Zustand
+
+```tsx
+import { Collapsible } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Collapsible
+      trigger="Details"
+      content={<p>Content revealed on toggle.</p>}
+      indicatorPlacement="start"
+      onOpenChange={(open) => console.log("open:", open)}
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `collapsible`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar. `trigger` ist eine verschachtelte Blockliste (das CMS übermittelt immer ein Array, selbst für ein einzelnes Auslöser-Element):
+
+```json
+{
+  "type": "collapsible",
+  "trigger": [{ "type": "button", "text": "Show more" }],
+  "showIndicator": true,
+  "children": [
+    { "type": "text", "content": "Additional details go here." }
+  ]
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `trigger` | \`JSX.Element \ | string\` | Das Auslöser-Element oder der String. Ein String wird in eine Schaltfläche eingebettet. |
+
+| `content` | `JSX.Element` | Der anzuzeigende oder auszublendende Inhalt. |
+| `indicator` | `JSX.Element` | Optionales Indikator-Element (z. B. ein Chevron). |
+
+| `indicatorPlacement` | \`"start" \ | "end"\` | Wo der Indikator relativ zum Auslöser platziert wird. Standard: `"end"`. |
+
+| `open` | `boolean` | Ob das Aufklappbare geöffnet ist (kontrolliert). |
+| `defaultOpen` | `boolean` | Ob das Aufklappbare standardmäßig geöffnet ist (unkontrolliert). |
+| `onOpenChange` | `(open: boolean) => void` | Rückruf, der bei Änderung des Öffnungszustands aufgerufen wird. |
+| `disabled` | `boolean` | Ob das Aufklappbare deaktiviert ist. |
+| `interactive` | `boolean` | Aktiviert die clientseitige Interaktivität. Aufklappbar ist **Tier-1 (auto-interactive)**: es hydriert immer als Insel, sofern nicht `interactive={false}` übergeben wird. |
+| `class` | `string` | Klassenname des Wurzelelements. |
+| `triggerClass` | `string` | Klassenname des Auslöser-Elements. |
+| `contentClass` | `string` | Klassenname des Inhalts-Elements. |
+| `indicatorClass` | `string` | Klassenname des Indikator-Elements. |
+| `id` | `string` | ID für das Aufklappbare. |
+
+# Hydration
+
+Aufklappbar wird als **Tier-1 (auto-interactive)** eingestuft.
+
+- Es wird immer als hydratisierte Client-Insel gerendert (es benötigt JS, um auf- und zuzuklappen und um `onOpenChange` auszuführen).
+- Der einzige Weg, die Hydration abzuwählen, ist das Übergeben von `interactive={false}`, woraufhin es das statische Markup `*-primitive` ohne Umschaltverhalten rendert.
+- Dies wird über das gemeinsame Prädikat `shouldHydrate(interactive, true)` in `app/components/ui/island-utils.ts` implementiert, der alleinigen Quelle der Wahrheit für alle Hydrationsentscheidungen.

@@ -1,0 +1,61 @@
+---
+title: Pagination Paginierung
+hydration: 2
+category: Data Display
+---
+
+import { Pagination } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+Eine Komponente zum Navigieren durch mehrere Seiten mit Inhalten.
+
+## Verwendung
+
+<DemoPreview>
+  <Pagination count={100} pageSize={10} />
+</DemoPreview>
+
+### CMS-Seitenbauer
+
+Diese Komponente ist als `pagination`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "pagination",
+  "count": 100,
+  "pageSize": 10
+}
+```
+
+## Eigenschaften
+
+| Eigenschaft | Typ | Standard | Beschreibung |
+| --- | --- | --- | --- |
+| `count` | `number` | - | Gesamtzahl der Einträge. |
+| `pageSize` | `number` | `10` | Anzahl der Einträge pro Seite. |
+| `defaultPage` | `number` | `1` | Die anfänglich anzuzeigende Seite. |
+
+| `type` | \`'button' \ | 'link'\` | `'button'` | Legt fest, ob für die Navigation Schaltflächen oder Links verwendet werden. |
+
+| `interactive` | `boolean` | `true` | Legt fest, ob die clientseitige Interaktivität aktiviert wird. |
+
+## CMS-Konfiguration
+
+```yaml
+- label: Pagination
+  name: pagination
+  widget: object
+  fields:
+    - { label: Count, name: count, widget: number }
+    - { label: Page Size, name: pageSize, widget: number, default: 10 }
+    - { label: Default Page, name: defaultPage, widget: number, default: 1 }
+    - label: Type
+      name: type
+      widget: select
+      options: [button, link]
+      default: button
+```
+
+## Hydration
+
+Tier-2: Hydriert, wenn `onPageChange` bereitgestellt wird oder wenn nicht im Link-Modus mit `getPageUrl`.

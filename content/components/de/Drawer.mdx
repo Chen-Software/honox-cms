@@ -1,0 +1,80 @@
+---
+title: Drawer Schublade
+hydration: 1
+category: Overlays
+---
+
+import { Drawer, Button } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Panel, das vom Rand des Bildschirms einfährt, um Inhalte oder Aktionen darzustellen, ohne die aktuelle Seite zu verlassen.
+
+# Verwendung
+
+## Einfache Schublade
+
+<DemoPreview>
+  <Drawer
+    trigger={<Button>Open Drawer</Button>}
+    title="Settings"
+    description="Adjust your preferences."
+    body="Drawer body content goes here."
+    cancel={<Button variant="outline">Close</Button>}
+    confirm={<Button>Save</Button>}
+  />
+</DemoPreview>
+
+```tsx
+import { Drawer, Button } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Drawer
+      trigger={<Button>Open Drawer</Button>}
+      title="Settings"
+      description="Adjust your preferences."
+      body="Drawer body content goes here."
+      cancel={<Button variant="outline">Close</Button>}
+      confirm={<Button>Save</Button>}
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `drawer`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar: `trigger` ist eine verschachtelte Blockliste (der CMS übergibt immer ein Array):
+
+```json
+{
+  "type": "drawer",
+  "title": "Settings",
+  "description": "Adjust your preferences.",
+  "confirmText": "Save",
+  "cancelText": "Close",
+  "trigger": [{ "type": "button", "text": "Open Drawer" }]
+}
+```
+
+# Eigenschaften
+
+## Schublade
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `trigger` | `JSX.Element` | Element, das die Schublade beim Aktivieren öffnet. |
+
+| `title` | \`string \ | JSX.Element\` | Der Titel der Schublade. |
+| `description` | \`string \ | JSX.Element\` | Die Beschreibung der Schublade. |
+| `body` | \`string \ | JSX.Element\` | Der Hauptinhaltsbereich. |
+| `footer` | \`string \ | JSX.Element\` | Benutzerdefinierter Inhalt für die Fußzeile. |
+
+| `cancel` | `JSX.Element` | Element, das als Schließen- (Abbrechen-)Auslöser gerendert wird. |
+| `confirm` | `JSX.Element` | Element, das als Aktionsauslöser gerendert wird. |
+| `closable` | `boolean` | Legt fest, ob die Schließen-Schaltfläche angezeigt wird. Standard: `true`. |
+| `interactive` | `boolean` | Aktiviert die clientseitige Hydration für interaktives Verhalten. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+Zusätzliche Props (z. B. `open`, `defaultOpen`, `onOpenChange`, `id`) werden an das zugrunde liegende Schubladen-Primitive weitergeleitet.

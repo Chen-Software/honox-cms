@@ -1,0 +1,53 @@
+---
+title: Heading Überschrift
+hydration: 3
+category: Typography
+---
+
+import { Heading } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine polymorphe Komponente zur Anzeige von Titeln und Überschriften mit einheitlichem Styling.
+
+# Verwendung
+
+<DemoPreview>
+  <Heading as="h1" size="3xl">Page Title</Heading>
+</DemoPreview>
+
+```tsx
+import { Heading } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Heading as="h1" size="3xl">
+      Page Title
+    </Heading>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `heading`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "heading",
+  "text": "Page Title",
+  "as": "h1",
+  "size": "3xl"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Der Text oder Inhalt. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+| `as` | `string` | Das zu rendernde HTML-Element (z. B. "h1", "h2"). Standardmäßig "h2". |
+| `size` | `string` | Die Schriftgrößenvariante. |
+| `interactive` | `boolean` | Legt fest, ob die clientseitige Hydration aktiviert wird. |

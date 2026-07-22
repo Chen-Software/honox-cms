@@ -1,0 +1,62 @@
+---
+title: AbsoluteCenter Absolute Zentrierung
+hydration: 3
+category: Layout
+---
+
+import { AbsoluteCenter } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Hilfskomponente zum Zentrieren von Inhalten innerhalb ihres übergeordneten Containers.
+
+# Verwendung
+
+<DemoPreview>
+  <div style={{ position: "relative", height: "140px", width: "260px", border: "1px solid var(--colors-border)" }}>
+    <AbsoluteCenter axis="both">Centered Content</AbsoluteCenter>
+  </div>
+</DemoPreview>
+
+```tsx
+import { AbsoluteCenter } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <div
+      style={{
+        position: "relative",
+        height: "200px",
+        width: "200px",
+        border: "1px solid black",
+      }}
+    >
+      <AbsoluteCenter axis="both">Centered Content</AbsoluteCenter>
+    </div>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `absoluteCenter`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```markdown
+{
+  "type": "absoluteCenter",
+  "axis": "both",
+  "children": [
+    { "type": "badge", "text": "Centered Badge", "colorPalette": "purple", "variant": "solid" }
+  ]
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Inhalt, der innerhalb der Komponente gerendert wird. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `axis` | \`"horizontal" \ | "vertical" \ | "both"\` | Die Achse, auf der der Inhalt zentriert wird. |

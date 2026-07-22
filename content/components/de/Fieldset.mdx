@@ -1,0 +1,103 @@
+---
+title: Fieldset Feldsatz
+hydration: 3
+category: Layout
+---
+
+import { Fieldset, Field } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+## Einführung
+
+Gruppiert zusammengehörige Formularsteuerelemente unter einem nativen `<fieldset>`, mit einer barrierefreien Legende, Hilfetext und Fehlertext. Im Gegensatz zu `Field` hat es keine eigene Validierung — es ist ein statisches, serverseitig gerendertes Gruppierungs-Primitive und hydriert daher nie als Client-Insel. Es stellt seinen `disabled`/`invalid`/`required`-Zustand als Kontext für verschachtelte `Field`s bereit, angelehnt an Ark UIs Fieldset — siehe [Kontextweitergabe](#kontextweitergabe-an-verschachtelte-felder).
+
+## Verwendung
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "320px" }}>
+    <Fieldset legend="User Profile" helperText="Manage your info." required>
+      <Field label="Name" placeholder="Jane Doe" />
+    </Fieldset>
+  </div>
+</DemoPreview>
+
+```tsx
+import { Fieldset, Field } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Fieldset
+      legend="User Profile"
+      helperText="Manage your info."
+      required
+      errorText="Something went wrong."
+    >
+      <Field>...</Field>
+    </Fieldset>
+  );
+}
+```
+
+Das Übergeben von `errorText` genügt, um den Feldsatz in seinen ungültigen Zustand zu versetzen — `invalid` muss nicht zusätzlich übergeben werden. Übergeben Sie `invalid={false}` explizit, wenn Sie das Fehler-Styling unterdrücken möchten, den Text aber beibehalten wollen.
+
+### Kontextweitergabe an verschachtelte Felder
+
+`Fieldset` stellt seinen `disabled`/`invalid`/`required`-Zustand als Kontext bereit. Jedes verschachtelte `Field` liest ihn als Fallback für den eigenen — ein gruppenweites `disabled` oder `required` muss daher nicht auf jedem Feld wiederholt werden:
+
+```tsx
+<Fieldset legend="Shipping address" disabled required>
+  <Field label="Street" />   {/* wird als deaktiviert + erforderlich gerendert */}
+  <Field label="Apt #" required={false} />  {/* optet aus required aus */}
+</Fieldset>
+```
+
+Die eigene Prop eines `Field` hat stets Vorrang vor der vererbten. Speziell für `invalid` gilt die Vererbung nur, wenn das `Field` keine eigene Validierung besitzt (kein `validator`, `minLength` oder explizite `invalid`-Prop) — ein `Field`, das seinen eigenen Wert validiert, wird vom der Gruppe nie stillschweigend überschrieben.
+
+Diese Weitergabe reicht eine Ebene tief: Nur `Field` (und alles, was darauf aufbaut, wie `Textarea`) konsultiert den Kontext des `Fieldset`. Ein nacktes `Switch` oder `Checkbox` direkt innerhalb eines `Fieldset` — ohne umschließendes `Field` — übernimmt das Styling der Gruppe nicht, wenngleich ein natives `<fieldset disabled>` die Interaktion damit unabhängig davon blockiert.
+
+### Zusammensetzung
+
+`children` ist stets die Gruppe der eigentlichen Formularsteuerelemente — `Fieldset` umschließt sie für Sie in einem Abstands-Container. `legend` / `helperText` / `errorText` akzeptieren jedes `Child`, nicht nur Zeichenketten, sodass reicher Inhalt (ein Symbol, ein Abzeichen) dorthin gehört und nicht in `children`:
+
+```tsx
+<Fieldset legend={<>Profile <Badge>New</Badge></>}>
+  <Field>...</Field>
+  <Textarea>...</Textarea>
+</Fieldset>
+```
+
+Platzieren Sie `FieldsetLegend` (oder `FieldsetHelperText` / `FieldsetErrorText`) nicht innerhalb von `children` — `Fieldset` umschließt `children` in einem `<div>`, und Browser verwenden nur ein direktes `<legend>` als untergeordnetes Element von `<fieldset>` zur Berechnung des barrierefreien Namens, nicht wenn es in einem Wrapper verschachtelt ist. Die exportierten Unterkomponenten (`FieldsetLegend`, `FieldsetHelperText`, `FieldsetErrorText`, `FieldsetContent`, `FieldsetControl`, `FieldsetRequiredIndicator`) dienen der Wiederverwendung in vollständig von Hand erstelltem Markup, nicht als alternative Kompositionsweise innerhalb von `Fieldset` selbst.
+
+### CMS-Seitenbauer
+
+Diese Komponente ist als `fieldset`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "fieldset",
+  "legend": "User Profile",
+  "helperText": "Manage your info.",
+  "required": true,
+  "children": [
+    { "type": "field", "label": "Name" }
+  ]
+}
+```
+
+## Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Innerhalb des Feldsatzes zu rendernde Formularsteuerelemente. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+| `id` | `string` | Eindeutige Kennung. Automatisch generiert, falls weggelassen. |
+| `disabled` | `boolean` | Deaktiviert den Feldsatz. Ein natives `<fieldset disabled>` deaktiviert automatisch jede nachgeordnete Steuerung, und verschachtelte `Field`s übernehmen dies ebenfalls als Kontext — siehe [Kontextweitergabe](#kontextweitergabe-an-verschachtelte-felder). |
+| `invalid` | `boolean` | Ob der Feldsatz sich in einem ungültigen Zustand befindet. Standardmäßig `true`, sobald `errorText` gesetzt ist, sodass dies meist nicht explizit übergeben werden muss. |
+| `required` | `boolean` | Markiert die Gruppe als erforderlich und hängt der Legende einen Pflicht-Indikator an. |
+| `legend` | `Child` | Der Legendentext für den Feldsatz. Wird stets als direktes Kind von `<fieldset>` gerendert — siehe [Zusammensetzung](#zusammensetzung). |
+| `helperText` | `Child` | Hilfetext unterhalb der Legende. |
+| `errorText` | `Child` | Fehlertext, der bei ungültigem Feldsatz angezeigt wird. |
+
+## CMS-Bindungen
+
+`legend`, `helperText`, `errorText`, `disabled`, `invalid` und `required` sind als bearbeitbare Felder in `public/admin/config.yml` verfügbar, plus einer `children`-Liste zum Verschachteln anderer Blöcke — dieselben Komfort-Props wie oben dokumentiert. `id`/`class` und die Kompositions-Unterkomponenten (`FieldsetContent`, `FieldsetControl`, `FieldsetRequiredIndicator` usw.) sind nicht verfügbar: Sie sind eine JSX-Ebene-API für Entwickler, die Seiten von Hand verfassen, und keine Möglichkeit, die ein JSON-gesteuerter CMS-Block ausdrücken kann.

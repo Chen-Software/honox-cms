@@ -9,10 +9,10 @@
  */
 
 /** All supported locales, with the default first. */
-export const ALL_LOCALES = ["en", "zh", "es", "pt", "fr"] as const;
+export const ALL_LOCALES = ["en", "zh", "es", "pt", "fr", "de"] as const;
 
 /** Translated-content locale codes (excludes the default "en"). */
-export const TRANSLATED_LOCALES = ["zh", "es", "pt", "fr"] as const;
+export const TRANSLATED_LOCALES = ["zh", "es", "pt", "fr", "de"] as const;
 
 /** Human-readable names for the language switcher dropdown. */
 export const LOCALE_NAMES: Record<string, string> = {
@@ -21,6 +21,7 @@ export const LOCALE_NAMES: Record<string, string> = {
 	es: "Español",
 	pt: "Português",
 	fr: "Français",
+	de: "Deutsch",
 };
 
 /** Route collections that support locale-scoped sub-paths. */
@@ -60,6 +61,11 @@ export const BLOG_SEARCH_STRINGS: Record<
 		placeholder: "Rechercher des articles...",
 		placeholderAll: "Rechercher tous les articles...",
 		itemLabel: "articles",
+	},
+	de: {
+		placeholder: "Artikel suchen...",
+		placeholderAll: "Alle Artikel suchen...",
+		itemLabel: "Artikel",
 	},
 };
 

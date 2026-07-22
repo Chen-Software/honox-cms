@@ -1,0 +1,104 @@
+---
+title: Clipboard Zwischenablage
+hydration: 2
+category: Forms
+---
+
+import { Clipboard } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein schreibgeschütztes Feld mit einem Auslöser zum Kopieren in die Zwischenablage und eingebauten Zuständen für „kopiert“ / „nicht kopiert“.
+
+# Verwendung
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "360px" }}>
+    <Clipboard
+      label="Clone Command"
+      value="git clone https://github.com/honojs/honox"
+      interactive
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Clipboard } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Clipboard
+      label="Clone Command"
+      value="git clone https://github.com/honojs/honox"
+    />
+  );
+}
+```
+
+## Eigene Zusammensetzung
+
+Übergeben Sie `children` an `Clipboard.Trigger`, um den standardmäßigen Symbolwechsel zwischen Kopieren und Häkchen zu überschreiben, oder komponieren Sie die Teile direkt für vollständige Kontrolle:
+
+```tsx
+import { Clipboard } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Clipboard.Root value="npm install honox">
+      <Clipboard.Label>Install Command</Clipboard.Label>
+      <Clipboard.Control>
+        <Clipboard.Input />
+        <Clipboard.Trigger>
+          <Clipboard.CopyText />
+        </Clipboard.Trigger>
+      </Clipboard.Control>
+    </Clipboard.Root>
+  );
+}
+```
+
+# Eigenschaften
+
+## Wurzel
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `value` | `string` | Der zu kopierende Text (kontrolliert). |
+| `defaultValue` | `string` | Der anfängliche zu kopierende Text (unkontrolliert). |
+| `disabled` | `boolean` | Deaktiviert den Auslöser. |
+| `timeout` | `number` | Millisekunden, die der kopierte Zustand aktiv bleibt, bevor er zurückgesetzt wird. Standard `3000`. |
+| `translations` | `Partial<ClipboardTranslations>` | Überschreibungen für das `aria-label` des Auslösers. |
+| `onValueChange` | `(details: { value: string }) => void` | Wird aufgerufen, wenn sich der Wert ändert (z. B. über ein benutzerdefiniertes Eingabefeld). |
+| `onStatusChange` | `(details: { copied: boolean }) => void` | Wird aufgerufen, wenn der kopierte Zustand umschlägt. |
+| `size` | `"sm" \| "md" \| "lg"` | Visuelle Größe. Standard `"md"`. |
+| `colorPalette` | `string` | Das Farbschema. Standard `"green"`. |
+| `interactive` | `boolean` | Erzwingt (oder unterdrückt) die Hydration als Insel. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+## Standardzusammensetzung
+
+Diese gelten nur für das oberste `<Clipboard>` (nicht `Clipboard.Root`), das `Label` + `Control` (`Input` + `Trigger`) für Sie rendert.
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `label` | `JSX.Element \| string` | Beschriftung über dem Steuerelement. |
+| `children` | `JSX.Element` | Benutzerdefinierter `Trigger`-Inhalt, der den standardmäßigen Symbolwechsel zwischen Kopieren und Häkchen überschreibt. |
+
+## Unterkomponenten
+
+| Bestandteil | Beschreibung |
+| --- | --- |
+| `Clipboard.Label` | `<label>`, das an das schreibgeschützte Eingabefeld gebunden ist. |
+| `Clipboard.Control` | Umschließt `Input` und `Trigger`. |
+| `Clipboard.Input` | Schreibgeschütztes `<input>`, das den aktuellen Wert anzeigt; markiert seinen Text beim Fokussieren. Manuelles Kopieren per Strg/Cmd+C löst ebenfalls den kopierten Zustand aus. |
+| `Clipboard.Trigger` | Kopiert `value` beim Klick in die Zwischenablage. Akzeptiert `asChild`, um auf ein benutzerdefiniertes Kind zusammenzuführen, anstatt einen `<button>` zu rendern. |
+| `Clipboard.Indicator` | Rendert sowohl `children` als auch eine `copied`-Variante als nebengeordnete Knoten, umgeschaltet über `hidden` — nützlich für benutzerdefinierte Symbol- oder Textwechsel zwischen kopiert/nicht kopiert. |
+| `Clipboard.CopyText` | Bequemes `Indicator`, das zwischen dem Text „Copy“ / „Copied“ wechselt (überschreibbar über die Props `children`/`copied`). |
+| `Clipboard.Context` | Render-Prop-Zugriff auf den Zwischenablage-Kontext: `<Clipboard.Context>{(ctx) => ...}</Clipboard.Context>`. |
+
+# Barrierefreiheit
+
+- `Trigger` erhält ein `aria-label` von `translations.triggerLabel(copied)` (Standard „Copy to clipboard“ / „Copied to clipboard“), das die Zustandsänderung für assistive Technologien ankündigt.
+- `Input` ist `readOnly`, nicht `disabled`, sodass es fokussierbar bleibt und sein Text auch ohne Klick auf den Auslöser per nativer Tastenkombination ausgewählt und kopiert werden kann.
+- `data-copied` wird auf jedes Teil gespiegelt für zustandsbasierte Gestaltung.

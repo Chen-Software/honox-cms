@@ -1,0 +1,163 @@
+---
+title: ColorPicker Farbwähler
+hydration: 2
+category: Forms
+---
+
+import { ColorPicker } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Farbwähler mit einem Sättigungs-/Helligkeitsbereich, Farbton- und Alpha-Reglern, editierbaren Kanal-Eingaben (HEX / RGBA / HSLA), voreingestellten Farbfeldern und einem optionalen Farbfeld-Auslöser, der das Panel in einem Popover öffnet. Er folgt der Ark UI / Park UI-Farbwähler-Anatomie — jedes Teil trägt `data-scope="colorPicker"` und ein passendes `data-part` — ist jedoch vollständig auf Hono JSX und Panda CSS implementiert, **ohne React und ohne `@ark-ui/react`-Abhängigkeit**.
+
+Die Komponente ist auf die gleiche Weise aufgeteilt wie der Rest der Bibliothek:
+
+- `app/components/ui/color-picker-primitive.tsx` — Farbmathematik, Kontext und jedes anatomische Teil, alles serverseitig renderbar.
+- `app/islands/color-picker.tsx` — dünne Insel-Hülle um `InteractiveColorPicker`, die den Zustand besitzt und Zeiger-/Tastatur-Handler anhängt.
+- `app/theme/recipes/color-picker.ts` — die Panda-CSS-Slot-Rezeptur.
+
+Farben werden intern als **HSVA** (`{ h: 0–360, s: 0–100, v: 0–100, a: 0–1 }`) gehalten, dem natürlichen Modell für einen Sättigungs-/Helligkeitsbereich, und an den Rändern konvertiert.
+
+# Neuerungen in dieser Überarbeitung
+
+- **HSLA-Ausgabe ist echtes HSL.** `hsvaToHslaString` stempelte zuvor rohe HSV-Sättigungs-/Werte-Zahlen in einen `hsla()`-String und erzeugte so eine andere Farbe als die ausgewählte (z. B. reines Rot als `hsla(0, 100%, 100%, 1)` — weiß). Nun konvertiert es HSV → HSL korrekt (`hsla(0, 100%, 50%, 1)`).
+- **Die HSLA-Eingabezeile bearbeitet echte HSL-Kanäle.** Die Sättigungs-/Helligkeits-Eingaben zeigten zuvor HSV-Werte unter HSL-Beschriftungen; Bearbeitungen und angezeigte Werte stimmen nun überein, und ein eigener `l`-Kanal bildet Helligkeitsänderungen zurück in das HSV-Modell ab.
+- **Ungültige Hex-Eingaben werden abgewiesen statt übernommen.** Das Eintippen von Unfug in das Hex-Feld fiel zuvor auf Weiß zurück und gab dies als Wertänderung aus. Das Feld validiert nun `#RGB`, `#RGBA`, `#RRGGBB` und `#RRGGBBAA` (mit oder ohne führendes `#`) und ignoriert alles andere.
+- **Die Formatauswahl ist beschriftet** für assistive Technologien.
+
+# Tastaturunterstützung
+
+Der Bereich und beide Regler sind fokussierbar (`Tab`) und per Tastatur bedienbar:
+
+| Taste | Bereich | Farbton-Regler | Alpha-Regler |
+| --- | --- | --- | --- |
+| <kbd>←</kbd> / <kbd>→</kbd> | Sättigung ±1 | Farbton ±1° | Alpha ±1% |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Helligkeit ±1 | — | — |
+| <kbd>Shift</kbd> + Pfeile | ±10 Schritte | ±10° | ±10% |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Eckpunkt Min / Max | 0° / 360° | 0% / 100% |
+
+Mit `trigger` schließen <kbd>Esc</kbd> und Klicks außerhalb das Popover.
+
+# Barrierefreiheit
+
+- Der Bereich und die Kanal-Regler bieten `role="slider"` mit `aria-valuemin`/`aria-valuemax`/`aria-valuenow` (der Bereich meldet zusätzlich beide Kanäle über `aria-valuetext`).
+- Kanal-Eingaben, die Formatauswahl, voreingestellte Farbfelder und der Pipetten-Auslöser tragen alle `aria-label`s; das aktive voreingestellte Farbfeld wird über `aria-pressed` angesagt.
+- `disabled` und `readOnly` entfernen die interaktiven Tab-Stops und deaktivieren die Farbfeld-Schaltflächen; der Zustand wird auf `data-disabled` / `data-readonly` bei jedem Teil gespiegelt.
+- Die Pipetten-Schaltfläche wird deaktiviert gerendert, wo die `EyeDropper`-API nicht verfügbar ist, sodass sie nie eine nutzlose Steuerung ist.
+
+# Gestaltungsslots
+
+Die Panda-CSS-Slot-Rezeptur (`app/theme/recipes/color-picker.ts`) gestaltet die unter Anatomie aufgeführten Teile. Zustände werden über Datenattribute gesteuert (`data-disabled`, `data-readonly`, `data-state="checked"` am aktiven Farbfeld, `data-channel` an Regler-Teilen), sodass eigene Skins sie ohne Änderung der Rezeptur ansprechen können. Die `size`-Variante skaliert Bereich, Farbfelder und Abstände.
+
+# Verwendung
+
+<DemoPreview>
+  <ColorPicker label="Brand colour" defaultValue="#3b82f6" />
+</DemoPreview>
+
+```tsx
+import { ColorPicker } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <>
+      {/* Inline picker, static SSR (no signal, no island) */}
+      <ColorPicker interactive={false} />
+
+      {/* Interactive inline picker */}
+      <ColorPicker
+        label="Brand colour"
+        defaultValue="#3b82f6"
+        onValueChange={({ value }) => console.log(value)}
+      />
+
+      {/* Swatch trigger + popover, custom presets */}
+      <ColorPicker
+        trigger
+        label="Accent"
+        defaultValue="#22c55e"
+        presets={["#ef4444", "#f97316", "#22c55e", "#3b82f6"]}
+        closeOnSelect
+      />
+
+      {/* Inside a native form — submits as `theme` (hex) */}
+      <form method="post" action="/settings">
+        <ColorPicker name="theme" defaultValue="#7c3aed" />
+        <button type="submit">Save</button>
+      </form>
+    </>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `colorPicker`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "colorPicker",
+  "label": "Brand colour",
+  "defaultValue": "#3b82f6"
+}
+```
+
+# Eigenschaften
+
+`<ColorPicker />` (die gestaltete Hülle) akzeptiert:
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `value` | \`string \ | HSVA\` | Aktuelle Farbe (kontrolliert). Strings akzeptieren hex (`#rgb`, `#rgba`, `#rrggbb`, `#rrggbbaa`), `rgb()`/`rgba()` sowie `hsl()`/`hsla()`. |
+
+| `defaultValue` | \`string \ | HSVA\` | Anfängliche Farbe (unkontrolliert). Standard ist `#7c3aed`. |
+
+| `format` | \`"hex" \ | "rgba" \ | "hsla"\` | Aktives Eingabeformat (kontrolliert). |
+
+| `defaultFormat` | \`"hex" \ | "rgba" \ | "hsla"\` | Anfängliches Eingabeformat (unkontrolliert). Standard ist `"hex"`. |
+
+| `onValueChange` | `(details: { value: string; hsva: HSVA }) => void` | Wird bei jeder Farbänderung aufgerufen; `value` ist der Hex-String (mit Alpha-Suffix, wenn transparent). |
+| `onFormatChange` | `(details: { format: ColorFormat }) => void` | Wird aufgerufen, wenn sich die Formatauswahl ändert. |
+| `trigger` | `boolean` | Rendert einen Farbfeld-Auslöser, der das Panel in einem Popover anstatt inline öffnet. |
+| `open` / `defaultOpen` | `boolean` | Popover-Zustand (kontrolliert / unkontrolliert); nur in Kombination mit `trigger` relevant. |
+| `onOpenChange` | `(details: { open: boolean }) => void` | Wird aufgerufen, wenn sich das Popover öffnet oder schließt. |
+| `closeOnSelect` | `boolean` | Schließt das Popover nach der Auswahl eines voreingestellten Farbfelds. Standard ist `false`. |
+| `presets` | `string[]` | Farben der voreingestellten Farbfelder. Standard ist eine kuratierte Palette mit 14 Farben; übergeben Sie `[]`, um sie auszublenden. |
+| `name` | `string` | Rendert ein verstecktes Eingabefeld mit dem Hex-Wert für die native `<form>`-Übermittlung. |
+
+| `label` | \`string \ | JSX.Element\` | Optionale Beschriftung über dem Wähler. |
+
+| `showArea` / `showSliders` / `showInputs` / `showSwatches` | `boolean` | Schaltet einzelne Panel-Bereiche um. Alle standardmäßig `true`. |
+| `disabled` | `boolean` | Deaktiviert die gesamte Interaktion. |
+| `readOnly` | `boolean` | Der Wert ist sichtbar, kann jedoch nicht geändert werden. |
+
+| `size` | \`"sm" \ | "md" \ | "lg"\` | Rezept-Größenvariante (Bereichshöhe, Farbfeldgröße, Abstände). Standard ist `"md"`. |
+
+| `interactive` | `boolean` | Erzwingt (oder unterdrückt) die Hydration als Insel. |
+
+## Hydration
+
+Die Hülle hydriert automatisch, sobald ein Verhaltenssignal vorhanden ist — ein beliebiger Rückruf, ein `value`/`defaultValue`, `open`/`defaultOpen` oder `trigger` — und rendert andernfalls statisches HTML. `interactive={false}` wählt immer ab; `interactive` (oder `interactive={true}`) wählt immer zu. Die Entscheidung läuft über den gemeinsamen `shouldHydrate()`-Helfer, wie bei jeder Insel der Bibliothek.
+
+## Farb-Hilfsfunktionen
+
+Aus dem Primitiv exportiert für Wiederverwendung und Tests:
+
+| Hilfsfunktion | Beschreibung |
+| --- | --- |
+| `parseColor(input)` | Parst hex/rgb(a)/hsl(a)-Strings sowie HSVA- oder RGB-artige Objekte in ein begrenztes `HSVA`. Fällt auf Weiß zurück. |
+| `hsvToRgb(h, s, v)` / `rgbToHsv(r, g, b)` | HSV ↔ RGB-Konvertierung. |
+| `hsvToHsl(h, s, v)` / `hslToHsv(h, s, l)` | HSV ↔ HSL-Konvertierung (s/v/l als 0–100). |
+| `hexToRgb(hex)` | Parst 3-/4-/6-/8-stelliges Hex in `{ r, g, b, a }` oder `null` bei ungültiger Form. |
+| `hsvaToHex(c, includeAlpha?)` | Hex-String; hängt das Alpha-Byte nur an, wenn angefordert und transparent. |
+| `hsvaToRgbaString(c)` / `hsvaToHslaString(c)` | CSS-`rgba()`- / `hsla()`-Strings. |
+
+# Hinweise zur Produktion
+
+- **Keine neuen Abhängigkeiten.** Die gesamte Farbmathematik (HSV/HSL/RGB/Hex-Konvertierungen, Parsing) ist lokal implementiert und unit-getestet; nichts wird aus `@rc-component`, `@ark-ui` oder React bezogen.
+- **SSR-sicher.** Jedes Teil rendert sinnvolles Markup auf dem Server — die statische Variante ist eine getreue, nicht-interaktive Vorschau desselben DOM, das die Insel hydriert.
+- **Kontrolliert oder unkontrolliert.** `value`/`format`/`open` unterstützen jeweils beide Modi mit den üblichen `default*`-Gegenstücken.
+- **Präzision.** Weisen Sie `HSVA`-Objekte (aus `details.hsva` von `onValueChange`) statt erneut geparster Strings in kontrollierten Szenarien zu, um Rundungsdrift beim Hin-und-her zwischen Formaten zu vermeiden.
+- **Formularbereit.** Die `name`-Eigenschaft rendert ein verstecktes Eingabefeld mit dem aktuellen Hex-Wert, das bei jeder Änderung synchron gehalten wird.

@@ -1,0 +1,174 @@
+---
+title: Select Auswahlfeld
+hydration: 1
+category: Forms
+---
+
+import { Select } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Dropdown-Steuerung zum Auswählen einer oder mehrerer Optionen aus einer Liste — eine barrierefreie, gestaltbare Alternative zum nativen `<select>`-Element.
+
+Wann etwas anderes verwendet werden sollte:
+
+- Bei weniger als ca. 5 Optionen ist eine `RadioGroup` meist übersichtlicher.
+- Wenn der Benutzer zum Filtern der Optionen tippen können soll, verwenden Sie `Combobox`.
+
+Die Komponente rendert ein visuell ausgeblendetes natives `<select>` neben der benutzerdefinierten Oberfläche, sodass eine `name`-Eigenschaft sie ohne zusätzlichen Aufwand an der regulären Formularübermittlung beteiligt.
+
+# Tastaturinteraktion
+
+Der Auslöser ist eine `role="combobox"`-Schaltfläche; der Fokus bleibt darauf, während die hervorgehobene Option über `aria-activedescendant` gemeldet wird.
+
+| Taste | Verhalten |
+| --- | --- |
+| `Enter` / `Space` | Öffnet die Liste; bei geöffneter Liste wird die hervorgehobene Option ausgewählt. |
+| `ArrowDown` / `ArrowUp` | Öffnet die Liste oder bewegt die Hervorhebung (zyklisch, überspringt deaktivierte Optionen). |
+| `Home` / `End` | Hebt die erste / letzte aktivierte Option hervor. |
+| `Escape` | Schließt die Liste. |
+| `Tab` | Schließt die Liste und verschiebt den Fokus. |
+| `Druckbare Zeichen` | Typeahead: springt zur ersten Option, deren Beschriftung dem eingegebenen Präfix entspricht. Wenn die Liste geschlossen ist (Einzelmodus), wird der Treffer direkt ausgewählt, wie bei einem nativen `<select>`. |
+
+Das Öffnen der Liste hebt die aktuell ausgewählte Option (oder die erste aktivierte) hervor, und die Tastaturnavigation hält die hervorgehobene Option im sichtbaren Bereich.
+
+# Hydration
+
+**Stufe 1 — automatisch interaktiv.** Das Öffnen der Dropdown-Liste und das Auswählen einer Option erfordern Client-JS, und es gibt keinen statischen Fallback (das native `<select>` ist visuell ausgeblendet und dient nur der Formularübermittlung), daher hydratisiert `Select` standardmäßig. Übergeben Sie `interactive={false}`, um ein rein statisches Rendering zu erzwingen.
+
+| `interactive`-Eigenschaft | Ergebnis |
+| --- | --- |
+| weggelassen | Hydratisiert als Insel |
+| `true` | Hydratisiert als Insel |
+| `false` | Statisch — kein Client-JS |
+
+Alle Interaktivitätsentscheidungen in der Bibliothek laufen über den gemeinsamen `shouldHydrate()`-Helfer in `app/components/ui/island-utils.ts`.
+
+# Verwendung
+
+<DemoPreview>
+  <Select
+    items={[
+      { label: "React", value: "react" },
+      { label: "Solid", value: "solid" },
+      { label: "Svelte", value: "svelte", disabled: true },
+      { label: "Vue", value: "vue" },
+      { label: "Hono", value: "hono" },
+    ]}
+    label="Framework"
+    placeholder="Select a framework"
+    allowClear
+  />
+</DemoPreview>
+
+```tsx
+import { Select } from "../components/ui";
+
+const items = [
+  { label: "React", value: "react" },
+  { label: "Solid", value: "solid" },
+  { label: "Svelte", value: "svelte", disabled: true },
+  { label: "Vue", value: "vue" },
+  { label: "Hono", value: "hono" },
+];
+
+export default function MyPage() {
+  return (
+    <Select
+      items={items}
+      label="Framework"
+      placeholder="Select a framework"
+      allowClear
+    />
+  );
+}
+```
+
+## Mehrfachauswahl
+
+Die Liste bleibt geöffnet, während Optionen umgeschaltet werden, und der Auslöser zeigt die ausgewählten Beschriftungen durch Kommas getrennt an.
+
+```tsx
+<Select
+  multiple
+  items={items}
+  label="Frameworks"
+  placeholder="Select frameworks"
+  defaultValue={["hono"]}
+/>
+```
+
+## In einem Formular
+
+Das ausgeblendete native `<select>` trägt die Auswahl, daher funktioniert ein einfacher Formular-Post:
+
+```tsx
+<form method="post" action="/frameworks">
+  <Select name="framework" items={items} label="Framework" required />
+  <Button type="submit">Save</Button>
+</form>
+```
+
+## Größen und Varianten
+
+```tsx
+<Select items={items} size="sm" placeholder="Small" />
+<Select items={items} size="lg" variant="surface" placeholder="Large surface" />
+<Select items={items} invalid placeholder="Invalid state" />
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `select`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "select",
+  "label": "Framework",
+  "placeholder": "Select a framework",
+  "items": [
+    { "label": "React", "value": "react" },
+    { "label": "Hono", "value": "hono" }
+  ]
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `items` | `SelectItem[]` | Die in der Liste anzuzeigenden Optionen. |
+| `label` | `Child` | Über dem Auslöser gerenderte und mit ihm verknüpfte Beschriftung. |
+| `placeholder` | `string` | Text, der im Auslöser angezeigt wird, solange nichts ausgewählt ist. |
+| `allowClear` | `boolean` | Zeigt eine Löschen-Schaltfläche an, sobald eine Auswahl existiert. |
+| `multiple` | `boolean` | Erlaubt die Auswahl mehrerer Optionen; die Liste bleibt beim Umschalten geöffnet. |
+| `defaultValue` | `string[]` | Anfängliche Auswahl (ungesteuert). Alias von `selectedValues`. |
+| `selectedValues` | `string[]` | Anfängliche Auswahl (identisch mit `defaultValue`). |
+| `deselectable` | `boolean` | Im Einzelmodus entfernt erneutes Klicken der ausgewählten Option die Auswahl. |
+| `name` | `string` | Name des ausgeblendeten nativen `<select>` für die Formularübermittlung. |
+| `disabled` | `boolean` | Deaktiviert die gesamte Steuerung. |
+| `invalid` | `boolean` | Markiert die Steuerung als ungültig (`aria-invalid`, Fehlerrahmen). |
+| `readOnly` | `boolean` | Die Auswahl ist sichtbar, aber die Liste kann nicht geöffnet werden. |
+| `required` | `boolean` | Markiert die Steuerung als erforderlich (`aria-required`, ausgeblendetes `<select>` `required`). |
+| `open` | `boolean` | Gesteuerter Öffnungszustand der Dropdown-Liste. |
+
+| `size` | \`"xs" \ | "sm" \ | "md" \ | "lg" \ | "xl"\` | Größe des Auslösers und der Liste. Standardmäßig `md`. |
+
+| `variant` | \`"outline" \ | "surface"\` | Visuelle Variante des Auslösers. Standardmäßig `outline`. |
+
+| `interactive` | `boolean` | Überschreibt die Hydratisierungsentscheidung (siehe unten). |
+| `onValueChange` | `(values: string[]) => void` | Wird bei jeder Änderung der Auswahl mit der vollständigen Auswahl aufgerufen (Auswählen, Abwählen, Leeren). |
+| `onItemSelect` | `(value: string) => void` | Wird mit dem Wert der Option aufgerufen, mit der interagiert wurde. |
+| `onClear` | `() => void` | Wird aufgerufen, wenn die Löschen-Schaltfläche die Auswahl leert. |
+| `onOpenChange` | `(open: boolean) => void` | Wird aufgerufen, wenn die Dropdown-Liste geöffnet oder geschlossen wird. |
+
+> Callback-Eigenschaften funktionieren nur, wenn das Select aus clientseitigem Code (innerhalb einer anderen Insel) zusammengesetzt wird. Von einer serverseitig gerenderten Route serialisierte Eigenschaften müssen reine Daten sein.
+
+## SelectItem
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `label` | `string` | Der Anzeigetext für die Option. Wird auch für die Typeahead-Suche verwendet. |
+| `value` | `string` | Der eindeutige Wert für die Option. |
+| `disabled` | `boolean` | Legt fest, ob die Option ausgewählt werden kann. |

@@ -1,0 +1,111 @@
+---
+title: Tabs Registerkarten
+hydration: 2
+category: Navigation
+---
+
+import { Tabs, Stack, Badge } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Navigations- oder Layout-Element, das Inhalte in umschaltbare, sich gegenseitig ausschließende Panels organisiert.
+
+# Verwendung
+
+<DemoPreview>
+  <Tabs defaultValue="features" interactive variant="enclosed" size="md">
+    <Tabs.List>
+      <Tabs.Trigger value="features">⚡ Key Features</Tabs.Trigger>
+      <Tabs.Trigger value="pricing">💎 Pricing Plans</Tabs.Trigger>
+      <Tabs.Indicator />
+    </Tabs.List>
+
+    <Tabs.Content value="features">
+      Our Hono/JSX Tabs component supports zero runtime styled-system classes, smooth sliding indicator transitions, and native keyboard interaction.
+    </Tabs.Content>
+
+    <Tabs.Content value="pricing">
+      Flexible subscription pricing for individuals, start-ups, and scaling enterprise workspaces.
+    </Tabs.Content>
+  </Tabs>
+</DemoPreview>
+
+```tsx
+import { Tabs } from "../components/ui/tabs";
+
+<Tabs defaultValue="features" interactive variant="enclosed" size="md">
+  <Tabs.List>
+    <Tabs.Trigger value="features">⚡ Key Features</Tabs.Trigger>
+    <Tabs.Trigger value="pricing">💎 Pricing Plans</Tabs.Trigger>
+    <Tabs.Indicator />
+  </Tabs.List>
+
+  <Tabs.Content value="features">
+    Our Hono/JSX Tabs component supports zero-runtime classes, smooth sliding transitions, and native keyboard interaction.
+  </Tabs.Content>
+
+  <Tabs.Content value="pricing">
+    Flexible subscription pricing for individuals, start-ups, and scaling enterprise workspaces.
+  </Tabs.Content>
+</Tabs>;
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `tabs`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar und wurde mit einer klaren, vereinfachten API entworfen:
+
+```json
+{
+  "type": "tabs",
+  "variant": "enclosed",
+  "size": "md",
+  "items": [
+    {
+      "value": "features",
+      "label": "⚡ Key Features",
+      "content": [
+        {
+          "type": "text",
+          "content": "Our high-end tabs component is lightning fast."
+        }
+      ]
+    },
+    {
+      "value": "pricing",
+      "label": "💎 Pricing Plans",
+      "content": [
+        {
+          "type": "text",
+          "content": "Starting from $0/mo."
+        }
+      ]
+    }
+  ]
+}
+```
+
+# Eigenschaften
+
+## Wurzel
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `defaultValue` | `string` | Der anfänglich ausgewählte Tab-Wert beim Rendern (unkontrolliert). |
+| `value` | `string` | Der gesteuerte ausgewählte Tab-Wert. |
+| `variant` | `"line" \| "subtle" \| "enclosed"` | Visuelle Erscheinung der Registerkarten-Liste und des Indikators. Standard `"line"`. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg"` | Gesamthöhe, Abstände und Innenabstand der Registerkarten-Elemente. Standard `"md"`. |
+| `orientation` | `"horizontal" \| "vertical"` | Der Layout-Fluss der Auslöser. Standard `"horizontal"`. |
+| `activationMode` | `"automatic" \| "manual"` | Im manuellen Modus werden Auslöser bei Klick mit Enter/Leertaste aktiviert; im automatischen Modus werden sie beim Fokussieren sofort aktiviert. Standard `"automatic"`. |
+| `loopFocus` | `boolean` | Legt fest, ob der Tastaturfokus an den Anfang oder das Ende der Liste zurückkehrt. Standard `true`. |
+| `lazyMount` | `boolean` | Verzögert das Rendern der Tab-Inhaltspanels, bis sie erstmals aufgerufen werden. Standard `false`. |
+| `unmountOnExit` | `boolean` | Entfernt Tab-Panel-Elemente aus dem DOM, sobald sie inaktiv werden. Standard `false`. |
+| `onValueChange` | `(details: { value: string }) => void` | Wird aufgerufen, wenn sich der aktive Tab-Wert ändert. |
+| `onFocusChange` | `(details: { value: string }) => void` | Wird aufgerufen, wenn ein anderer Tab-Auslöser den Tastatur- oder Klickfokus erhält. |
+
+# Barrierefreiheit
+
+Diese Komponente entspricht vollständig dem **WAI-ARIA Tabs Design Pattern**:
+- Setzt `role="tablist"` auf dem Listen-Container und ordnet `aria-orientation` dem Layout zu.
+- Setzt `role="tab"` auf die Auslöser, wobei `aria-selected` mit dem aktiven Zustand übereinstimmt und `aria-controls` auf die Panel-IDs verweist.
+- Tastaturunterstützung: ArrowRight/ArrowLeft (oder ArrowDown/ArrowUp bei vertikaler Ausrichtung) navigiert mit einem wandernden tabIndex zwischen den Auslösern. Home/End bewegt den Fokus sofort an die Endpunkte. Enter/Space aktiviert im manuellen Modus die Auslöser.

@@ -1,0 +1,100 @@
+---
+title: Breadcrumb Brotkrümel
+hydration: 3
+category: Navigation
+---
+
+import { Breadcrumb } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Navigationshilfe, die den Standort der aktuellen Seite innerhalb einer Hierarchie mithilfe einer Liste von Links anzeigt.
+
+# Verwendung
+
+## Einfacher Brotkrümel
+
+<DemoPreview>
+  <Breadcrumb
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Components", href: "/components" },
+      { label: "Breadcrumb" },
+    ]}
+  />
+</DemoPreview>
+
+```tsx
+import { Breadcrumb } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Breadcrumb
+      items={[
+        { label: "Home", href: "/" },
+        { label: "Components", href: "/components" },
+        { label: "Breadcrumb" },
+      ]}
+    />
+  );
+}
+```
+
+## Benutzerdefinierter Trenner
+
+```tsx
+import { Breadcrumb } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Breadcrumb
+      separator="/"
+      items={[
+        { label: "Home", href: "/" },
+        { label: "Breadcrumb" },
+      ]}
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `breadcrumb`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "breadcrumb",
+  "items": [
+    { "label": "Home", "href": "/" },
+    { "label": "Docs", "href": "/docs" },
+    { "label": "Breadcrumb" }
+  ],
+  "variant": "underline",
+  "size": "md"
+}
+```
+
+# Eigenschaften
+
+## Brotkrümel
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `items` | `BreadcrumbItem[]` | Die zu rendernden Brotkrümel-Einträge. |
+| `separator` | `Child` | Benutzerdefinierter Trenner zwischen den Einträgen. Standard: ein Pfeil-nach-rechts-Symbol. |
+
+| `variant` | \`"underline" \ | "plain"\` | Der visuelle Stil des Brotkrümels. |
+
+| `size` | \`"xs" \ | "sm" \ | "md" \ | "lg"\` | Die Größe des Brotkrümels. |
+
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+### BreadcrumbItem
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `label` | `Child` | Anzuzeigender Text oder JSX-Knoten. |
+| `href` | `string` | Wenn vorhanden, als Link gerendert; andernfalls als einfacher Text (aktuelle Seite) gerendert. |
+| `current` | `boolean` | Markiert die aktuelle Seite. Standardmäßig `true` für den letzten Eintrag. |

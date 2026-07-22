@@ -1,0 +1,64 @@
+---
+title: Group Gruppe
+hydration: 3
+category: Layout
+---
+
+import { Group, Button } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Layout-Komponente zum visuellen Gruppieren zusammengehöriger Elemente.
+
+# Verwendung
+
+<DemoPreview>
+  <Group attached>
+    <Button>First</Button>
+    <Button>Second</Button>
+    <Button>Third</Button>
+  </Group>
+</DemoPreview>
+
+```tsx
+import { Group } from "../components/ui";
+import { Button } from "../components/ui/button";
+
+export default function MyPage() {
+  return (
+    <Group attached>
+      <Button>First</Button>
+      <Button>Second</Button>
+      <Button>Third</Button>
+    </Group>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `group`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "group",
+  "attached": true,
+  "children": [
+    { "type": "button", "text": "First" },
+    { "type": "button", "text": "Second" }
+  ]
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Innerhalb der Komponente zu rendernder Inhalt. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `orientation` | \`"horizontal" \ | "vertical"\` | Die Ausrichtung der Gruppe. |
+
+| `attached` | `boolean` | Ob die Kinder zusammengefügt werden sollen. |
+| `grow` | `boolean` | Ob die Kinder wachsen sollen, um den verfügbaren Platz zu füllen. |

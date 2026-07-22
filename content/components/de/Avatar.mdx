@@ -1,0 +1,82 @@
+---
+title: Avatar
+category: Data Display
+hydration: 2
+---
+
+import { Avatar, Stack } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Zeigt das Profilbild eines Benutzers an und fällt auf dessen Initialen oder ein generisches Benutzersymbol zurück, wenn kein Bild verfügbar ist oder das Laden des Bildes fehlschlägt.
+
+# Hydration
+
+**Stufe 2 — intelligente Auto-Erkennung.** `Avatar` wird als statisches HTML gerendert und liefert kein Client-JS, sofern kein `src` angegeben ist.
+
+| `interactive`-Eigenschaft | Ergebnis |
+| --- | --- |
+| nicht angegeben, kein `src` | Statisch — kein Client-JS |
+| nicht angegeben, `src` vorhanden | Wird als Insel hydriert |
+| `true` | Wird als Insel hydriert |
+| `false` | Statisch — kein Client-JS (Bild wird eager gerendert, ohne Fehler-Fallback beim Laden) |
+
+# Verwendung
+
+<DemoPreview>
+  <Stack direction="horizontal" gap="4">
+    <Avatar name="Artefact UI" size="sm" variant="solid" colorPalette="blue" />
+    <Avatar
+      src="https://i.pravatar.cc/80"
+      name="Jane Doe"
+      size="md"
+      shape="rounded"
+    />
+    <Avatar size="lg" />
+  </Stack>
+</DemoPreview>
+
+```tsx
+import { Avatar } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Avatar
+      src="https://i.pravatar.cc/80"
+      name="Jane Doe"
+      size="md"
+      shape="rounded"
+    />
+  );
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `src` | `string` | Bild-URL. Das Angeben dieser Eigenschaft ist das Hydration-Signal der Stufe 2. |
+| `alt` | `string` | Alternativtext für das Bild. |
+| `name` | `string` | Wird verwendet, um Initialen (Vor- + Nachname) abzuleiten, wenn kein Bild vorhanden ist. |
+| `fallback` | `JSX.Element` | Benutzerdefinierter Fallback-Inhalt, der die abgeleiteten Initialen/ das Symbol überschreibt. |
+
+| `status` | \`"idle" \ | "loading" \ | "loaded" \ | "error"\` | Der Ladezustand des Bildes. Wird automatisch von der Insel verwaltet; nur manuell bei einem statischen Render setzen. |
+
+| `size` | \`"full" \ | "2xs" \ | "xs" \ | "sm" \ | "md" \ | "lg" \ | "xl" \ | "2xl"\` | Visuelle Größe. Standard `"md"`. |
+
+| `variant` | \`"solid" \ | "surface" \ | "subtle" \ | "outline"\` | Visueller Stil. Standard `"subtle"`. |
+
+| `shape` | \`"square" \ | "rounded" \ | "full"\` | Eckform. Standard `"full"`. |
+
+| `interactive` | `boolean` | Überschreibt die Hydrationsentscheidung (siehe oben). |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+## Unterkomponenten
+
+Für eigene Zusammensetzungen werden `Avatar.Root` / `Avatar.Image` / `Avatar.Fallback` zusammen mit der Standardkomponente aus dem Primitiv exportiert — dieselben Teile, die die Standard-`src`/`name`/`fallback`-API intern rendert.
+
+# Barrierefreiheit
+
+- Der Fallback wird als `<span>` gerendert; geben Sie dem Bild einen sinnvollen `alt`-Text (oder lassen Sie ihn für rein dekorative Avatare weg), da der Fallback selbst keinen eigenständigen zugänglichen Namen über seine sichtbaren Initialen/ sein Symbol hinaus trägt.
+- `data-state` (`idle`/`loading`/`loaded`/`error`) wird auf dem Wurzelelement, dem Bild und dem Fallback für zustandsbasierte Gestaltung gesetzt.

@@ -1,0 +1,114 @@
+---
+title: Icon Symbol
+hydration: 3
+category: Data Display
+---
+
+import { Icon } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine leichtgewichtige, größen- und farbaware Hülle für SVG-Symbole. Sie wendet einheitliche Größen
+(`2xs`–`xl`) an und erbt `currentcolor`, sodass Symbole standardmäßig der umgebenden Text-/Symbolfarbe
+entsprechen, ohne dass eine Symbolbibliothek erforderlich ist.
+
+`Icon` wird auf zwei Arten zusammengesetzt, automatisch anhand seiner `children` entschieden:
+
+- **Umschließen** — falls `children` nackter SVG-Inhalt (`<path>`, `<circle>`, `<g>`, …), Text oder mehr
+  als ein Element ist, rendert `Icon` sein eigenes `<svg>` darum herum.
+- **Zusammenführen (`asChild`, Standard `true`)** — falls `children` ein einzelnes Element ist, das kein
+  nackter SVG-Inhalt ist (z. B. ein selbst geschriebenes `<svg>…</svg>`), führt `Icon` seine Klasse (und
+  alle weiteren übergebenen Props) direkt mit diesem Element zusammen, anstatt es in einem zweiten
+  `<svg>` zu umschließen. Übergeben Sie `asChild={false}`, um auch in diesem Fall ein Umschließen zu erzwingen.
+
+# Verwendung
+
+## Nackte SVG-Pfade (keine Symbolbibliothek erforderlich)
+
+<DemoPreview>
+  <Icon size="lg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <path d="M12 2 2 7l10 5 10-5-10-5z" />
+  </Icon>
+</DemoPreview>
+
+```tsx
+import { Icon } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Icon size="lg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M12 2 2 7l10 5 10-5-10-5z" />
+    </Icon>
+  );
+}
+```
+
+## Zusammenfügen mit selbst geschriebenem `<svg>` (`asChild`, Standard)
+
+```tsx
+import { Icon } from "../components/ui";
+
+function HeartSvg(props: { class?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M12 21s-6.7-4.35-9.3-8.1C.8 9.7 2 6 5.4 6c1.9 0 3.2 1 4.6 2.6C11.4 7 12.7 6 14.6 6 18 6 19.2 9.7 17.3 12.9 14.7 16.65 12 21 12 21z" />
+    </svg>
+  );
+}
+
+export default function MyPage() {
+  return (
+    <span style={{ color: "red" }}>
+      <Icon size="sm">
+        <HeartSvg />
+      </Icon>
+    </span>
+  );
+}
+```
+
+Die `icon`-Klasse (und -größe) wird mit dem von `HeartSvg` zurückgegebenen `<svg>` zusammengeführt, sodass
+kein zusätzliches Umschließungselement im gerenderten Markup vorhanden ist. Da das Symbol-Rezept
+`color: currentcolor` setzt, übernimmt das Symbol die umgebende Textfarbe (hier, `red`), solange seine
+Pfade `fill="currentColor"` oder `stroke="currentColor"` verwenden.
+
+## Beschriftetes (nicht-dekoratives) Symbol
+
+```tsx
+<Icon aria-label="Search" viewBox="0 0 24 24">
+  <path d="M10 2a8 8 0 105.3 14.03l4.34 4.34 1.42-1.42-4.34-4.34A8 8 0 0010 2z" />
+</Icon>
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `icon`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`)
+verfügbar — `svg` enthält das rohe innere SVG-Markup:
+
+```json
+{
+  "type": "icon",
+  "svg": "<path d=\"M12 2 2 7l10 5 10-5-10-5z\" />",
+  "viewBox": "0 0 24 24",
+  "size": "lg"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `Child` | SVG-Inhalt (`<path>` usw.) oder ein einzelnes SVG-ähnliches Element zum Rendern/Zusammenführen. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `size` | \`"2xs" \ | "xs" \ | "sm" \ | "md" \ | "lg" \ | "xl"\` | Die Größe des Symbols. Standardmäßig `"md"`. |
+
+| `asChild` | `boolean` | Mit dem einzelnen Kindelement zusammenführen, anstatt es in einem neuen `<svg>` zu umschließen. Standardmäßig `true`. |
+| `viewBox` | `string` | Durchgereicht an das gerenderte/zusammengeführte `<svg>`. |
+| `xmlns` | `string` | Durchgereicht an den generierten `<svg>`-Umschlag. Standardmäßig der SVG-Namensraum. |
+| `fill` | `string` | Durchgereicht an das gerenderte/zusammengeführte `<svg>`. |
+| `stroke` | `string` | Durchgereicht an das gerenderte/zusammengeführte `<svg>`. |
+| `aria-label` | `string` | Barrierefreies Label. Wenn angegeben, wird `aria-hidden` weggelassen. |
+
+| `aria-hidden` | \`boolean \ | "true" \ | "false"\` | Standardmäßig `"true"`, wenn kein `aria-label` angegeben ist (Symbole sind standardmäßig dekorativ). |

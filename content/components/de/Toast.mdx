@@ -1,0 +1,150 @@
+---
+title: Toast Benachrichtigung
+hydration: 1
+category: Feedback
+---
+
+import { Toast, Button } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine kurzzeitige Benachrichtigung, die Rückmeldung zu einer Aktion gibt. Toasts werden imperativ über die `toaster`-API erstellt. Binden Sie eine einzelne `<Toast.Toaster />` ein, um sie darzustellen.
+
+Integriertes Verhalten:
+
+- **Typfarbiger Akzent** — `success` / `error` / `warning` / `info` / `loading` erhalten jeweils einen eigenen Akzent an der linken Kante und ein eingefärbtes Indikatorsymbol.
+- **Ein-/Ausblend-Animation** — Toasts werden beim Einbinden per Slide + Fade eingeblendet und spielen eine passende Ausblend-Animation ab, bevor sie aus dem DOM entfernt werden – richtungsabhängig für oben bzw. unten verankerte Platzierungen.
+- **Pause bei Hover/Fokus** — das Bewegen des Zeigers über (oder das Tabulieren in) einen beliebigen Toast im Viewport hält jeden aktiven Auto-Ausblend-Timer an; das Verlassen des Viewports setzt sie mit der verbleibenden Zeit fort.
+- **Wischen zum Schließen** — Zeiger-/Berührungs-Ziehen über einen Schwellenwert schließt einen Toast in die Richtung, die für die `placement` des Toasters passend ist (z. B. nach rechts wischen für `bottom-end`, links für `bottom-start`, oben für `top`).
+- **Schließen per Tastatur** — ein fokussierter Toast schließt bei <kbd>Escape</kbd>, unabhängig davon, ob er einen sichtbaren Schließen-Button rendert.
+- **Standardmäßig barrierefrei** — jeder Toast hat `role="status"` (`role="alert"` für `type: "error"`) mit passendem `aria-live`, sodass Screenreader ihn ohne separaten versteckten Ankündiger ausgeben.
+
+> Eine live ausführbare Version jedes Beispiels unten befindet sich in `app/routes/index.tsx` – dem Abschnitt **Toast Component Examples**. Die Dokumentationsbeispiele werden mit dieser Datei synchron gehalten.
+
+# Verwendung
+
+<DemoPreview>
+  <Toast.Toaster />
+  <Button
+    variant="outline"
+    onclick="window.dispatchEvent(new CustomEvent('park-ui:toast:create', { detail: { id: Math.random().toString(36).substring(2, 9), title: 'Success', description: 'Action completed successfully', closable: true, type: 'success' } }))"
+  >
+    Show Success Toast
+  </Button>
+</DemoPreview>
+
+## Toaster einbinden
+
+Platzieren Sie `<Toast.Toaster />` einmal nahe dem Wurzelknoten Ihrer App (dies entspricht `app/routes/index.tsx`):
+
+```tsx
+import { Toast } from "../components/ui";
+
+export default function App() {
+  return (
+    <>
+      {/* ...your application... */}
+      <Toast.Toaster />
+    </>
+  );
+}
+```
+
+## Toast anzeigen (Client-Komponenten / Inseln)
+
+Rufen Sie aus einer hydratisierten Client-Komponente oder Insel `Toast.toaster.*` auf:
+
+```tsx
+import { Toast, Button } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Button
+      onClick={() =>
+        Toast.toaster.success("Saved!", { description: "Your changes are live." })
+      }
+    >
+      Save
+    </Button>
+  );
+}
+```
+
+## Toast anzeigen (SSG-sicher)
+
+Das Demo auf der Startseite löst Toasts aus, indem es das zugrunde liegende `park-ui:toast:create`-CustomEvent direkt versendet. Dies funktioniert **ohne Client-Hydration**, weshalb das statische `onclick`-Attribut anstelle eines JSX-`onClick`-Handlers verwendet wird. Der folgende Block ist aus `app/routes/index.tsx` übernommen:
+
+```tsx
+<Toast.Toaster />
+<div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+  <Button
+    variant="outline"
+    onclick="window.dispatchEvent(new CustomEvent('park-ui:toast:create', { detail: { id: Math.random().toString(36).substring(2, 9), title: 'Success', description: 'Action completed successfully', closable: true, type: 'success' } }))"
+  >
+    Show Success Toast
+  </Button>
+  <Button
+    variant="outline"
+    onclick="window.dispatchEvent(new CustomEvent('park-ui:toast:create', { detail: { id: Math.random().toString(36).substring(2, 9), title: 'Error', description: 'An error occurred', closable: true, type: 'error' } }))"
+  >
+    Show Error Toast
+  </Button>
+  <Button
+    variant="outline"
+    onclick="window.dispatchEvent(new CustomEvent('park-ui:toast:create', { detail: { id: Math.random().toString(36).substring(2, 9), title: 'Loading', description: 'Please wait...', type: 'loading' } }))"
+  >
+    Show Loading Toast
+  </Button>
+</div>
+```
+
+> Hinweis: Toast-Inhalte werden **imperativ** erstellt – `title` und `description` akzeptieren nur Zeichenfolgen, sodass der Inhalt eines Toasts nicht als JSX verfasst werden kann. Der `Toaster` rendert ihn intern aus den privaten Primitiven.
+
+# API
+
+`Toast.toaster` (oder jede von `createToaster` zurückgegebene Instanz) stellt folgende Hilfsfunktionen bereit:
+
+| Methode | Signatur |
+| --- | --- |
+| `create` | `(options: Omit<ToastOptions, "id">) => string` |
+| `success` | `(title: string, options?: Partial<ToastOptions>) => string` |
+| `error` | `(title: string, options?: Partial<ToastOptions>) => string` |
+| `warning` | `(title: string, options?: Partial<ToastOptions>) => string` |
+| `info` | `(title: string, options?: Partial<ToastOptions>) => string` |
+| `loading` | `(title: string, options?: Partial<ToastOptions>) => string` |
+| `promise` | `(promise: Promise<T>, options: PromiseOptions<T>) => Promise<T>` — zeigt einen `loading`-Toast an und tauscht ihn gegen `success`/`error`, sobald das Promise aufgelöst wird. |
+| `update` | `(id: string, options: Partial<ToastOptions>) => void` |
+| `dismiss` | `(id?: string) => void` — schließt einen Toast oder alle Toasts, wenn `id` weggelassen wird. |
+| `pause` | `() => void` — friert jeden aktiven Auto-Ausblend-Timer ein und bewahrt die verbleibende Zeit. |
+| `resume` | `() => void` — setzt durch `pause` eingefrorene Timer fort. |
+| `subscribe` | `(callback: (toasts: ToastOptions[]) => void) => () => void` |
+| `getToasts` / `getCount` | Snapshot-Zugriffsmethoden. |
+
+`Toast.Toaster` (sowie das modulebene `toaster`/`createToaster`) ruft `pause`/`resume` automatisch als Reaktion auf Zeiger-Hover und Fokus innerhalb des Toaster-Viewports auf – Sie müssen sie im Allgemeinen nicht selbst aufrufen.
+
+## createToaster(config)
+
+| Eigenschaft | Typ | Standard | Beschreibung |
+| --- | --- | --- | --- |
+
+| `placement` | `"top-start" | "top" | "top-end" | "bottom-start" | "bottom" | "bottom-end"` | `"bottom-end"` | Bildschirmecke/-kante, an der der Viewport verankert wird. Bestimmt zudem die Standard-Richtung zum Wischen-zum-Schließen sowie die Ein-/Ausblend-Richtung. |
+
+| `overlap` | `boolean` | `false` | Reserviert für gestapeltes/überlappendes Layout. |
+| `max` | `number` | `24` | Maximale Anzahl gleichzeitig gehaltener Toasts; das älteste wird zuerst entfernt. |
+| `duration` | `number` | `5000` | Standard-Auto-Ausblend-Dauer in ms für Toasts, die ihre eigene nicht angeben. |
+| `gap` | `number` | `16` | Reserviert für den Abstand zwischen gestapelten Toasts. |
+| `removeDelay` | `number` | `200` | Obere Grenze (ms), die der Toaster auf die Ausblend-Animation eines Toasts wartet, bevor er ihn zwangsweise entfernt, falls `animationend` nie ausgelöst wird (z. B. reduced-motion). |
+
+## ToastOptions
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `title` | `string` | Der Toast-Titel. |
+| `description` | `string` | Die Toast-Beschreibung. |
+
+| `type` | `"info" | "success" | "warning" | "error" | "loading"` | Absicht/Stil des Toasts – steuert Akzentfarbe, Indikatorsymbol und die barrierefreie Rolle/`aria-live` (`error` → `role="alert"`/`assertive`, alles andere → `role="status"`/`polite`). |
+
+| `duration` | `number` | Auto-Ausblend-Dauer in Millisekunden. `0` oder `Infinity` deaktiviert das Auto-Ausblenden. |
+| `closable` | `boolean` | Legt fest, ob ein sichtbarer Schließen-Button gerendert wird. Der Toast kann dennoch über <kbd>Escape</kbd> oder Wischen geschlossen werden, unabhängig von diesem Flag. |
+| `action` | `{ label: string; onClick: () => void }` | Optionaler Aktions-Button. |

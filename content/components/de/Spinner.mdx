@@ -1,0 +1,48 @@
+---
+title: Spinner
+hydration: 3
+category: Feedback
+---
+
+import { Spinner } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Komponente, die einen Ladezustand anzeigt.
+
+# Verwendung
+
+<DemoPreview>
+  <Spinner size="md" label="Loading..." />
+</DemoPreview>
+
+```tsx
+import { Spinner } from "../components/ui";
+
+export default function MyPage() {
+  return <Spinner size="md" label="Loading..." />;
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `spinner`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "spinner",
+  "size": "lg",
+  "label": "Loading"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "inherit"` | Die Größe des Spinners. |
+
+| `label` | `string` | Ein barrierefreies Label für Screenreader. |

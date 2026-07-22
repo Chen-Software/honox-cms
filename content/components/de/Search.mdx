@@ -1,0 +1,150 @@
+---
+title: Search Suche
+hydration: 1
+category: Forms
+---
+
+import { Search } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Sofort-Sucheingabefeld über einem vorgenerierten JSON-Index: Tastenanschläge werden entprellt, Treffer erscheinen als Autovervollständigungs-Dropdown-Liste, und das Auswählen eines Ergebnisses navigiert zu dessen `href`. Optional kann es serverseitig gerenderte Elemente direkt filtern (z. B. eine Liste von Blog-Karten) und fällt ohne JS stets auf ein einfaches `?q=`-GET-Formular zurück.
+
+`Search` ruft nicht bei jedem Tastenanschlag gegen einen Live-Endpunkt ab — es lädt ein JSON-Dokument (`src`) beim ersten Interagieren träge nach und filtert es dann vollständig clientseitig. Erstellen Sie einen passenden Index (siehe [Suchindex-Format](#suchindex-format) unten) für beliebige durchsuchbare Inhalte.
+
+# Hydration
+
+**Stufe 1 — automatisch interaktiv.** Das entprellte Filtern, die Autovervollständigungs-Dropdown-Liste und die Tastaturnavigation erfordern alle Client-JS, daher hydratisiert `Search` standardmäßig. Übergeben Sie `interactive={false}`, um den statischen Fallback zu erzwingen: ein einfaches `<input type="search" name="q">`, umschlossen von einem GET-`<form>`, wenn `action` gesetzt ist.
+
+| `interactive`-Eigenschaft | Ergebnis |
+| --- | --- |
+| weggelassen | Hydratisiert als Insel |
+| `true` | Hydratisiert als Insel |
+| `false` | Statisch — ein einfaches GET-Formular-Eingabefeld, kein Client-JS |
+
+Alle Interaktivitätsentscheidungen in der Bibliothek laufen über den gemeinsamen `shouldHydrate()`-Helfer in `app/components/ui/island-utils.ts`.
+
+# Verwendung
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "420px" }}>
+    <Search
+      src="/api/posts/search.json"
+      placeholder="Search articles..."
+      itemLabel="articles"
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Search } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Search
+      src="/api/posts/search.json"
+      placeholder="Search articles..."
+      itemLabel="articles"
+    />
+  );
+}
+```
+
+## Suchindex-Format
+
+`src` verweist auf ein statisches JSON-Dokument in der Form von `SearchIndexDocument` (`app/utils/search.ts`):
+
+```ts
+interface SearchIndexEntry {
+  /** Stable id (e.g. post slug) — matched against DOM filter attributes */
+  key: string;
+  /** Navigation target when the entry is picked from autocomplete */
+  href: string;
+  title: string;
+  description?: string;
+  tags?: string[];
+  /** Precomputed lowercase text blob the query tokens are matched against */
+  haystack: string;
+}
+
+interface SearchIndexDocument {
+  generated: string;
+  entries: SearchIndexEntry[];
+}
+```
+
+`buildHaystack()` und `tokenize()` / `filterEntries()` im selben Modul werden vom SSG-Index-Builder, dem No-JS-`?q=`-Server-Fallback und der Client-Insel gemeinsam genutzt, sodass alle drei darüber einig sind, was als Treffer gilt. `/api/posts/search.json` und `/api/docs/search.json` sind die beiden bereits in diesem Projekt generierten Indizes — richten Sie `src` auf einen von beiden oder erstellen Sie Ihren eigenen auf dieselbe Weise.
+
+## Ergebnisse direkt filtern
+
+Setzen Sie `filterAttribute`, um passende serverseitig gerenderte Elemente ebenfalls ein- oder auszublenden, während sich die Abfrage ändert, anstatt nur eine Autovervollständigungs-Dropdown-Liste anzubieten. So kombiniert die Blog-Index-Seite (`app/routes/blog/index.tsx`) das Suchfeld mit ihren bereits gerenderten Beitragskarten:
+
+```tsx
+<Search
+  src="/api/posts/search.json"
+  action="/blog"
+  initialQuery={searchQuery}
+  placeholder="Search articles..."
+  itemLabel="articles"
+  total={blogPosts.length}
+  filterAttribute="data-post-slug"
+  emptyStateId="blog-search-empty"
+/>
+
+{blogPosts.map((post) => (
+  <article data-post-slug={post.slug}>...</article>
+))}
+
+<div id="blog-search-empty" hidden>
+  No articles match your search.
+</div>
+```
+
+Jedes Element mit `data-post-slug` ist ausgeblendet, sofern sein Wert nicht mit einem Eintrags-`key` in den aktuellen Ergebnissen übereinstimmt; das Element, dessen `id` mit `emptyStateId` übereinstimmt, wird angezeigt, sobald die Treffer auf null sinken. `total` legt die Ergebnisanzahl fest, die vor dem Laden des Index angezeigt wird.
+
+## No-JS-Fallback
+
+Wenn `action` gesetzt ist, rendern sowohl die statische als auch die hydratisierte Variante ein `<form method="get">` um das Eingabefeld mit dem Namen `q`. Ohne Client-JS übermittelt dies `?q=` direkt an `action`; eine Route, die diesen Abfrageparameter ausliest (z. B. über `filterEntries()` serverseitig), beantwortet dieselbe Anfrage, die sonst die Insel behandelt hätte — die `/blog?q=...`-Lesevorgänge der Blog-Seite funktionieren unabhängig davon, ob JS ausgeführt wurde.
+
+## Tastaturinteraktion
+
+| Taste | Verhalten |
+| --- | --- |
+| `ArrowDown` | Öffnet die Dropdown-Liste oder bewegt die Hervorhebung zur nächsten Vorschlagszeile (zyklisch). |
+| `ArrowUp` | Bewegt die Hervorhebung zur vorherigen Vorschlagszeile (zyklisch). |
+| `Enter` | Navigiert zur `href` der hervorgehobenen Vorschlagszeile. |
+| `Escape` | Schließt die Dropdown-Liste, sofern geöffnet; andernfalls wird die Abfrage geleert. |
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `search`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "search",
+  "src": "/api/posts/search.json",
+  "placeholder": "Search posts...",
+  "itemLabel": "posts",
+  "maxSuggestions": 5,
+  "debounceMs": 150
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Standard | Beschreibung |
+| --- | --- | --- | --- |
+| `src` | `string` | `/api/posts/search.json` | URL des SSG-generierten JSON-Suchindex. |
+| `placeholder` | `string` | `"Search..."` | Platzhaltertext für das Eingabefeld. |
+| `initialQuery` | `string` | - | Anfängliche Abfrage, z. B. aus einem `?q=`-URL-Parameter beim ersten Rendern übernommen. |
+| `debounceMs` | `number` | `150` | Verzögerung, bevor ein Tastenanschlag als aktive Abfrage übernommen wird. |
+| `maxSuggestions` | `number` | `8` | Maximale Anzahl an Einträgen in der Autovervollständigungs-Dropdown-Liste. |
+| `filterAttribute` | `string` | - | Falls gesetzt, werden Elemente mit diesem Attribut (z. B. `data-post-slug`) ein- oder ausgeblendet, je nachdem, ob ihr Wert mit einem Eintrags-`key` übereinstimmt. |
+| `emptyStateId` | `string` | - | `id` eines Elements, das angezeigt wird, wenn die gefilterte Liste keine Treffer hat. |
+| `total` | `number` | - | Ergebnisanzahl, die vor dem Laden des Index angezeigt wird. |
+| `itemLabel` | `string` | `"results"` | Substantiv, das in der Ergebnisanzahl verwendet wird, z. B. `"articles"`. |
+| `showCount` | `boolean` | `true` | Die Ergebniszeile „X von N angezeigt" einblenden. |
+| `action` | `string` | - | No-JS-Fallback: Übermittelt `?q=` an diesen Pfad über ein einfaches GET-Formular. |
+| `syncUrl` | `boolean` | `true` | Spiegelt die aktive Abfrage als `?q=` in die Adresszeile. |
+| `interactive` | `boolean` | - | Überschreibt die Hydratisierungsentscheidung (siehe oben). |

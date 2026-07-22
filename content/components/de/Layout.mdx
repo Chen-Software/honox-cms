@@ -1,0 +1,204 @@
+---
+title: Layout
+hydration: 3
+category: Layout
+---
+
+import { Layout, Heading, Text, Stack } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Betten Sie ein `<Layout>` in den `content` oder die verschachtelten Kinder eines anderen `<Layout>` ein,
+um zusammengesetzte Hüllen zu erstellen, z. B. ein äußeres Layout mit Seitenkopf/-fuß und ein inneres
+Layout, das eine Navigationsleiste enthält.
+
+# Verwendung
+
+## Kopf + Inhalt + Fuß
+
+Ohne `sider` stapeln sich die Teile in einer einzelnen Spalte.
+
+<DemoPreview>
+  <div style={{ width: "100%", border: "1px solid var(--colors-border)", borderRadius: "12px", overflow: "hidden" }}>
+    <Layout
+      header={
+        <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Heading as="h4" size="sm">Header</Heading>
+        </div>
+      }
+      content={<div style={{ padding: "16px" }}><Text size="sm">Content</Text></div>}
+      footer={
+        <div style={{ padding: "12px 16px", borderTop: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Text size="xs">Footer</Text>
+        </div>
+      }
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Layout
+      header={<SiteHeader />}
+      content={<Article />}
+      footer={<SiteFooter />}
+    />
+  );
+}
+```
+
+## Kopf + Sider + Inhalt
+
+Wird `sider` übergeben, werden es und `content` in einer Zeile umschlossen. `siderWidth` wählt eine
+Schienenbreite (`sm` 14rem, `md` 16rem Standard, `lg` 18rem); `siderHideBelow` blendet die Schiene unter
+einem Breakpoint für kleine Bildschirme aus.
+
+<DemoPreview>
+  <div style={{ width: "100%", border: "1px solid var(--colors-border)", borderRadius: "12px", overflow: "hidden" }}>
+    <Layout
+      siderWidth="sm"
+      header={
+        <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Heading as="h4" size="sm">Dashboard</Heading>
+        </div>
+      }
+      sider={
+        <div style={{ padding: "16px", borderRight: "1px solid var(--colors-border)", background: "var(--colors-bg-subtle)" }}>
+          <Stack direction="vertical" gap="2">
+            <Text size="sm">Overview</Text>
+            <Text size="sm">Reports</Text>
+            <Text size="sm">Settings</Text>
+          </Stack>
+        </div>
+      }
+      content={<div style={{ padding: "16px" }}><Text size="sm">Content next to the sider</Text></div>}
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Layout
+      header={<SiteHeader />}
+      sider={<Sidenav />}
+      siderWidth="sm"
+      siderHideBelow="md"
+      content={<Article />}
+    />
+  );
+}
+```
+
+## Sticky-Kopf und Sider
+
+`stickyHeader` heftet den Kopf an den oberen Rand des Seitenscrolls. `stickySider` heftet die Sider
+darunter an und scrollt ihren eigenen Überlauf — nützlich für eine lange Navigation neben kurzem Inhalt
+oder umgekehrt. `fullHeight` füllt den Viewport für die äußerste Seitenhülle.
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function DocsPage() {
+  return (
+    <Layout
+      fullHeight
+      stickyHeader
+      stickySider
+      header={<SiteHeader />}
+      sider={<DocsSidenav />}
+      siderHideBelow="md"
+      content={<Article />}
+    />
+  );
+}
+```
+
+## Verschachteltes Layout
+
+Betten Sie ein `<Layout>` in `content` ein, wenn Kopf/Fuß über die volle Breite reichen, aber nur ein
+Teil des Rumpfs eine Sider-Schiene benötigt:
+
+```tsx
+import { Layout } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Layout
+      header={<SiteHeader />}
+      content={
+        <Layout sider={<Sidenav />} content={<Article />} />
+      }
+      footer={<SiteFooter />}
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `layout`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`)
+verfügbar. `header`, `sider`, `content` und `footer` sind jeweils eine Liste von Komponentenblöcken —
+jeder Blocktyp funktioniert, einschließlich eines weiteren `layout` für verschachtelte Hüllen:
+
+```json
+{
+  "type": "layout",
+  "siderWidth": "sm",
+  "siderHideBelow": "md",
+  "header": [
+    { "type": "heading", "text": "Dashboard", "as": "h3", "size": "lg" }
+  ],
+  "sider": [
+    {
+      "type": "stack",
+      "direction": "vertical",
+      "gap": "2",
+      "children": [
+        { "type": "link", "text": "Overview", "href": "#" },
+        { "type": "link", "text": "Reports", "href": "#" }
+      ]
+    }
+  ],
+  "content": [
+    { "type": "text", "content": "Pick a page from the rail on the left." }
+  ],
+  "footer": [
+    { "type": "text", "size": "sm", "content": "© 2026 Acme" }
+  ]
+}
+```
+
+Das Leerlassen (oder Weglassen) der Liste eines Teils überspringt dessen Umschlagselement vollständig —
+ein unberührtes optionales Feld wie `siderWidth`/`siderHideBelow` kommt als `""` aus dem CMS und wird als
+nicht gesetzt behandelt, wobei auf den Standard der Komponente zurückgefallen wird.
+
+# Eigenschaften
+
+## Layout
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `header` | \`string \| JSX.Element\` | Innerhalb eines semantischen `<header>` über dem Rumpf gerendert. (Nur Shorthand-API) |
+| `sider` | \`string \| JSX.Element\` | Innerhalb einer semantischen `<aside>`-Schiene gerendert. Ihre Anwesenheit schaltet den Rumpf auf eine Zeile aus Sider + Inhalt um. (Nur Shorthand-API) |
+| `content` | \`string \| JSX.Element\` | Innerhalb eines semantischen `<main>` gerendert. `children` werden dahinter angehängt. (Nur Shorthand-API) |
+| `footer` | \`string \| JSX.Element\` | Innerhalb eines semantischen `<footer>` unter dem Rumpf gerendert. (Nur Shorthand-API) |
+| `fullHeight` | `boolean` | Füllt die Viewport-Höhe — für die äußerste Seitenhülle. |
+| `stickyHeader` | `boolean` | Heftet den Kopf an den oberen Rand des Seitenscrolls. |
+| `stickySider` | `boolean` | Heftet die Sider unter einem sticky-Kopf an; sie scrollt intern. |
+| `siderWidth` | \`"sm" \| "md" \| "lg"\` | Sider-Schienenbreite: sm (14rem), md (16rem, Standard), lg (18rem). |
+| `siderHideBelow` | \`"sm" \| "md" \| "lg"\` | Blendet die Sider unter diesem Breakpoint aus. Kombinieren mit einer Einblendung im Fluss. |
+| `hasSider` | `boolean` | Erzwingt manuell die Layout-Richtung auf Zeile. (Compound-API) |
+| `headerClass` | `string` | Zusätzliche Klasse für den `<header>`-Teil. (Nur Shorthand-API) |
+| `siderClass` | `string` | Zusätzliche Klasse für den `<aside>`-Teil. (Nur Shorthand-API) |
+| `contentClass` | `string` | Zusätzliche Klasse für den `<main>`-Teil. (Nur Shorthand-API) |
+| `footerClass` | `string` | Zusätzliche Klasse für den `<footer>`-Teil. (Nur Shorthand-API) |
+| `bodyClass` | `string` | Zusätzliche Klasse für den Zeilen-Umschlag um Sider + Inhalt (nur gerendert, wenn `sider` gesetzt ist). |
+| `children` | `any` | Kinder, die innerhalb der Layout-Hülle gerendert werden. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |

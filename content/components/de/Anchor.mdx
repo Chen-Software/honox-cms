@@ -1,0 +1,89 @@
+---
+title: Anchor Anker
+hydration: 3
+category: Navigation
+---
+
+import { Anchor, Stack } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein formatiertes `<a>`-Element für interne und externe Navigationslinks, mit sicheren Vorgaben für `target="_blank"`.
+
+# Verwendung
+
+<DemoPreview>
+  <Stack direction="horizontal" gap="4">
+    <Anchor href="/docs">Docs</Anchor>
+    <Anchor href="/blog" variant="plain">
+      Blog
+    </Anchor>
+    <Anchor href="https://github.com" target="_blank" colorPalette="purple">
+      GitHub ↗
+    </Anchor>
+  </Stack>
+</DemoPreview>
+
+```tsx
+import { Anchor } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Stack direction="horizontal" gap="4">
+      <Anchor href="/docs">Docs</Anchor>
+      <Anchor href="/blog" variant="plain">
+        Blog
+      </Anchor>
+      <Anchor href="https://github.com" target="_blank" colorPalette="purple">
+        GitHub ↗
+      </Anchor>
+    </Stack>
+  );
+}
+```
+
+## Routing-Komposition
+
+Übergeben Sie `asChild`, um die Stile des Ankers und die sichere Target-Behandlung auf ein einzelnes Kindelement zu verschmelzen, anstatt ein `<a>` zu rendern — nützlich zum Umschließen eines eigenen `<Link />` eines Routers:
+
+```tsx
+import { Anchor } from "../components/ui";
+
+<Anchor asChild variant="plain">
+  <MyRouterLink to="/dashboard">Dashboard</MyRouterLink>
+</Anchor>;
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `link`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "link",
+  "text": "View Pricing",
+  "href": "/pricing",
+  "variant": "underline",
+  "colorPalette": "blue"
+}
+```
+
+`text` wird zu den Kindelementen des Ankers; jedes andere Feld wird direkt an `Anchor` durchgereicht.
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `href` | `string` | Das Linkziel. |
+| `target` | `string` | Standard-Anker-Target, z. B. `"_blank"`. |
+| `rel` | `string` | Standard-Anker-rel. Wird automatisch mit `"noopener noreferrer"` gefüllt, wenn `target="_blank"` und `rel` sonst nicht gesetzt ist. |
+| `as` | `ElementType` | Als anderes Element/andere Komponente anstelle von `<a>` rendern. |
+| `asChild` | `boolean` | Verschmilzt die Stile des Ankers und die sichere Target-Behandlung auf ein einzelnes Kindelement, anstatt einen Wrapper zu rendern. |
+| `variant` | `"underline" \| "plain"` | Visueller Stil. Standard `"underline"`. |
+| `colorPalette` | `"blue" \| "green" \| "red" \| "orange" \| "gray" \| "cyan" \| "amber" \| "purple"` | Das Farbschema. Standard `"blue"`. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+# Barrierefreiheit
+
+`Anchor` rendert ein natives `<a>` (oder, mit `as`, welches Element Sie wählen), sodass es standardmäßig tastaturfokussier- und -aktivierbar ist, ohne zusätzliches ARIA-Verkabeln. Beim Verlinken auf einen neuen Tab über `target="_blank"` wird stets ein explizites `rel` angewendet, um zu verhindern, dass die geöffnete Seite auf `window.opener` zugreift.

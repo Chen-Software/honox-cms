@@ -1,0 +1,102 @@
+---
+title: Card Karte
+hydration: 2
+category: Data Display
+---
+
+import { Card, Button } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein flexibler Container zum Gruppieren zusammengehöriger Inhalte, mit optionalen Slots für Kopfzeile, Inhalt, Fußzeile, Bild und Avatar.
+
+# Verwendung
+
+## Einfache Karte
+
+<DemoPreview>
+  <Card
+    variant="elevated"
+    title="Project title"
+    description="A short description of the project."
+    body="Main content of the card goes here."
+    footer={<Button>View</Button>}
+  />
+</DemoPreview>
+
+```tsx
+import { Card, Button } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Card
+      variant="elevated"
+      title="Project title"
+      description="A short description of the project."
+      body="Main content of the card goes here."
+      footer={<Button>View</Button>}
+    />
+  );
+}
+```
+
+## Karte mit Bild
+
+```tsx
+import { Card } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Card
+      image="/cover.png"
+      imagePosition="top"
+      title="Card with image"
+      body="Content beneath the image."
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `card`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "card",
+  "title": "Project title",
+  "description": "A short description of the project.",
+  "body": "Main content of the card goes here.",
+  "variant": "elevated"
+}
+```
+
+# Eigenschaften
+
+## Karte
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `title` | \`string \ | JSX.Element\` | Der Kartentitel. |
+| `description` | \`string \ | JSX.Element\` | Die Kartenbeschreibung. |
+| `body` | \`string \ | JSX.Element\` | Der Hauptinhaltsbereich. |
+| `footer` | \`string \ | JSX.Element\` | Fußzeileninhalt. |
+
+| `avatar` | `JSX.Element` | Element, das in der Kopfzeile angezeigt wird (z. B. ein Avatar). |
+| `headerAction` | `JSX.Element` | Element, das am Ende der Kopfzeile angezeigt wird (z. B. ein Menü). |
+
+| `image` | \`string \ | JSX.Element\` | Bildquelle oder -element. |
+
+| `imagePosition` | \`"top" \ | "bottom" \ | "left" \ | "right"\` | Wo das Bild platziert wird. Standard: `"top"`. |
+
+| `headerClass` | `string` | Benutzerdefinierte CSS-Klassen für die Kopfzeile. |
+| `bodyClass` | `string` | Benutzerdefinierte CSS-Klassen für den Inhaltsbereich. |
+| `footerClass` | `string` | Benutzerdefinierte CSS-Klassen für die Fußzeile. |
+| `imageClass` | `string` | Benutzerdefinierte CSS-Klassen für das Bild. |
+
+| `variant` | \`"elevated" \ | "outline" \ | "subtle"\` | Der visuelle Stil der Karte. |
+
+| `interactive` | `boolean` | Aktiviert die clientseitige Hydration. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |

@@ -1,0 +1,67 @@
+---
+title: Stack Stapel
+hydration: 3
+category: Layout
+---
+
+import { Stack } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+Ein Layout-Primitive, mit dem sich ein vertikaler oder horizontaler Stapel von Elementen erstellen lässt.
+
+## Verwendung
+
+<DemoPreview>
+  <Stack direction="row" gap="4">
+    <div style={{ padding: "0.75rem 1rem", background: "var(--colors-blue-3)", borderRadius: "8px" }}>Item 1</div>
+    <div style={{ padding: "0.75rem 1rem", background: "var(--colors-blue-3)", borderRadius: "8px" }}>Item 2</div>
+    <div style={{ padding: "0.75rem 1rem", background: "var(--colors-blue-3)", borderRadius: "8px" }}>Item 3</div>
+  </Stack>
+</DemoPreview>
+
+```tsx
+import { Stack } from '../components/ui/stack'
+
+export const Example = () => (
+  <Stack direction="row" gap="4">
+    <div>Item 1</div>
+    <div>Item 2</div>
+    <div>Item 3</div>
+  </Stack>
+)
+```
+
+### CMS-Seitenbauer
+
+Diese Komponente ist als `stack`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "stack",
+  "direction": "horizontal",
+  "gap": "4",
+  "children": [
+    { "type": "text", "content": "Item 1" },
+    { "type": "text", "content": "Item 2" }
+  ]
+}
+```
+
+## Eigenschaften
+
+| Eigenschaft | Typ | Standard | Beschreibung |
+| --- | --- | --- | --- |
+| `direction` | `flex-direction` | `column` | Die Flex-Richtung des Stapels. |
+| `gap` | `spacing` | `8px` | Der Abstand zwischen den Elementen im Stapel. |
+| `align` | `align-items` | - | Die Ausrichtung der Elemente im Stapel. |
+| `justify` | `justify-content` | - | Die Ausrichtung der Elemente im Stapel (justify-content). |
+
+## Responsives Verhalten
+
+Die `Stack`-Komponente unterstützt responsive Werte für all ihre Props.
+
+```tsx
+<Stack direction={{ base: 'column', md: 'row' }} gap={{ base: '4', md: '8' }}>
+  {/* Elements will be stacked vertically on mobile and horizontally on desktop */}
+</Stack>
+```

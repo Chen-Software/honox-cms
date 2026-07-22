@@ -1,0 +1,133 @@
+---
+title: Grid Raster
+hydration: 3
+category: Layout
+---
+
+import { Grid } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein responsives CSS-Grid-Layout-Primitive. Ordnen Sie Kinder mit einer expliziten Spalten-/Zeilenzahl an, oder lassen Sie sie automatisch an eine Mindestkindbreite anpassen — beides unterstützt responsive (pro Breakpoint) Werte.
+
+# Verwendung
+
+## Feste Spalten
+
+<DemoPreview>
+  <Grid columns={3} gap="4" style={{ width: "100%" }}>
+    <div style={{ padding: "1rem", textAlign: "center", background: "var(--colors-blue-3)", borderRadius: "8px" }}>1</div>
+    <div style={{ padding: "1rem", textAlign: "center", background: "var(--colors-blue-3)", borderRadius: "8px" }}>2</div>
+    <div style={{ padding: "1rem", textAlign: "center", background: "var(--colors-blue-3)", borderRadius: "8px" }}>3</div>
+  </Grid>
+</DemoPreview>
+
+```tsx
+import { Grid } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Grid columns={3} gap="4">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </Grid>
+  );
+}
+```
+
+## Auto-Anpassung an Mindestkindbreite
+
+Keine Breakpoints nötig — Spalten werden automatisch hinzugefügt oder entfernt, während sich der Container vergrößert/verkleinert.
+
+<DemoPreview>
+  <Grid minChildWidth="120px" gap="4" style={{ width: "100%" }}>
+    <div style={{ padding: "1rem", textAlign: "center", background: "var(--colors-purple-3)", borderRadius: "8px" }}>A</div>
+    <div style={{ padding: "1rem", textAlign: "center", background: "var(--colors-purple-3)", borderRadius: "8px" }}>B</div>
+    <div style={{ padding: "1rem", textAlign: "center", background: "var(--colors-purple-3)", borderRadius: "8px" }}>C</div>
+    <div style={{ padding: "1rem", textAlign: "center", background: "var(--colors-purple-3)", borderRadius: "8px" }}>D</div>
+  </Grid>
+</DemoPreview>
+
+```tsx
+import { Grid } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Grid minChildWidth="120px" gap="4">
+      <div>A</div>
+      <div>B</div>
+      <div>C</div>
+      <div>D</div>
+    </Grid>
+  );
+}
+```
+
+## Responsive Spaltenanzahl
+
+```tsx
+import { Grid } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Grid columns={{ base: 1, md: 2, lg: 3 }} gap="4">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </Grid>
+  );
+}
+```
+
+## Getrennte Spalten- und Zeilenabstände
+
+```tsx
+import { Grid } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Grid columns={2} columnGap="6" rowGap="2">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+    </Grid>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `grid`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "grid",
+  "columns": 3,
+  "gap": "4",
+  "children": [
+    { "type": "text", "content": "1" },
+    { "type": "text", "content": "2" },
+    { "type": "text", "content": "3" }
+  ]
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Innerhalb des Rasters zu rendernder Inhalt. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `columns` | \`Responsive\<number \ | string\>\` | Anzahl der Spalten (`repeat(columns, minmax(0, 1fr))`). Hat Vorrang vor `minChildWidth`, wenn beide gesetzt sind. |
+| `rows` | \`Responsive\<number \ | string\>\` | Anzahl der Zeilen (`repeat(rows, minmax(0, 1fr))`). |
+| `minChildWidth` | \`Responsive\<number \ | string\>\` | Passt automatisch so viele Spalten ein, wie Platz haben, jede mindestens so breit (`repeat(auto-fit, minmax(width, 1fr))`). Wird ignoriert, wenn `columns` gesetzt ist. |
+
+| `gap` | \`string \ | number \ | Responsive\<...\>\` | Abstand zwischen Zellen. Standard `"8px"`, sofern `columnGap`/`rowGap` nicht gesetzt ist. |
+| `columnGap` | \`string \ | number \ | Responsive\<...\>\` | Abstand nur zwischen Spalten. |
+| `rowGap` | \`string \ | number \ | Responsive\<...\>\` | Abstand nur zwischen Zeilen. |
+
+`Responsive<T>` akzeptiert entweder einen einfachen Wert oder ein pro-Breakpoint-Objekt, z. B. `{ base: 1, md: 2, lg: 3 }`, mit denselben Breakpoints wie der Rest des Design-Systems (`base`, `sm`, `md`, `lg`, `xl`, `2xl`).

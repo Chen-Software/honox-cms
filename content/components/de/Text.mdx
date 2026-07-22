@@ -1,0 +1,53 @@
+---
+title: Text
+hydration: 3
+category: Typography
+---
+
+import { Text } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine polymorphe Komponente zum Anzeigen von Fließtext, Absätzen oder Spans mit konsistenter Typografie.
+
+# Verwendung
+
+<DemoPreview>
+  <Text size="lg">This is a paragraph.</Text>
+</DemoPreview>
+
+```tsx
+import { Text } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Text size="lg" class="muted">
+      This is a paragraph.
+    </Text>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `text`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "text",
+  "content": "This is a paragraph.",
+  "size": "lg"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Der Text oder Inhalt. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+| `as` | `string` | Das zu rendernde HTML-Element (z. B. „p", „span"). Standardwert ist „p". |
+| `size` | `string` | Die Schriftgrößenvariante. |
+| `variant` | `string` | Typografische Stilvariante (z. B. „heading", „label"). |
+| `interactive` | `boolean` | Legt fest, ob die clientseitige Hydration aktiviert wird. |

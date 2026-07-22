@@ -1,0 +1,94 @@
+---
+title: Splitter Teiler
+hydration: 1
+category: Layout
+---
+
+import { Splitter } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Layout-Komponente, die Inhalte in größenveränderbare Panels unterteilt, die durch Zieh-Griffe getrennt sind.
+
+# Verwendung
+
+## Einfacher Teiler
+
+<DemoPreview>
+  <div style={{ width: "100%", height: "180px" }}>
+    <Splitter
+      orientation="horizontal"
+      panels={[
+        { id: "left", content: <div style={{ padding: "1rem" }}>Sidebar</div> },
+        { id: "right", content: <div style={{ padding: "1rem" }}>Content</div> },
+      ]}
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Splitter } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Splitter
+      orientation="horizontal"
+      panels={[
+        { id: "left", content: <aside>Sidebar</aside> },
+        { id: "right", content: <main>Content</main> },
+      ]}
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `splitter`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar. **Wird immer statisch gerendert** (`interactive={false}`, kein Ziehen zum Ändern der Größe) — der `content` eines Panels ist beliebiges verschachteltes JSX, das die Prop-Serialisierungsgrenze der Insel nicht auf die gleiche Weise überqueren kann wie `children`:
+
+```json
+{
+  "type": "splitter",
+  "orientation": "horizontal",
+  "panels": [
+    { "id": "left", "content": [{ "type": "text", "content": "Left panel" }] },
+    { "id": "right", "content": [{ "type": "text", "content": "Right panel" }] }
+  ]
+}
+```
+
+# Eigenschaften
+
+## Teiler
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `panels` | `PanelConfig[]` | Die zu rendernden Panels (erforderlich). |
+
+| `orientation` | `"horizontal" \| "vertical"` | Layout-Richtung der Panels. |
+
+| `interactive` | `boolean` | Aktiviert clientseitiges Ziehen zum Ändern der Größe. |
+
+| `defaultSize` | `{ id: string \| number; size: number }[]` | Anfängliche Größen (interaktiver Modus). |
+| `size` | `{ id: string \| number; size: number }[]` | Gesteuerte Größen (interaktiver Modus). |
+| `onSizeChange` | `(sizes: { id: string \| number; size: number }[]) => void` | Rückruf, wenn sich die Größen ändern. |
+
+| `resizeTriggerClass` | `string` | Benutzerdefinierte CSS-Klassen für die Größenänderungs-Griffe. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+| `style` | `Record<string, string \| number>` | Inline-Stile für das Wurzelelement. |
+
+| `id` | `string` | Benutzerdefinierte ID für das Wurzelelement. |
+
+### PanelConfig
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `id` | `string \| number` | Eindeutiger Bezeichner für das Panel. |
+| `content` | `JSX.Element \| string` | Im Panel gerenderter Inhalt. |
+
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Panel. |
+
+| `style` | `Record<string, string \| number>` | Inline-Stile für das Panel. |

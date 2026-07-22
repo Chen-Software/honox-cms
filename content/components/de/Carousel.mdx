@@ -1,0 +1,172 @@
+---
+title: Carousel Karussell
+hydration: 1
+category: Data Display
+---
+
+import { Carousel } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Diashow, die durch einen Satz von Folien blättert, indem echtes, natives CSS-Scroll-Snap verwendet wird — keine Transform-Mathematik. Unterstützt das Blättern nach Gruppe (`slidesPerPage`), Schleifen, Autoplay, Scrollen per Mausziehen, Tastaturnavigation und vertikale Ausrichtung.
+
+# Verwendung
+
+## Einfaches Karussell
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "360px" }}>
+    <Carousel
+      slides={[
+        <div style={{ padding: "3rem 1rem", textAlign: "center", background: "var(--colors-blue-3)" }}>Slide 1</div>,
+        <div style={{ padding: "3rem 1rem", textAlign: "center", background: "var(--colors-purple-3)" }}>Slide 2</div>,
+        <div style={{ padding: "3rem 1rem", textAlign: "center", background: "var(--colors-green-3)" }}>Slide 3</div>,
+      ]}
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Carousel } from "../components/ui";
+
+export default function Page() {
+  return (
+    <Carousel
+      slides={[
+        <div>Slide 1</div>,
+        <div>Slide 2</div>,
+        <div>Slide 3</div>,
+      ]}
+    />
+  );
+}
+```
+
+## Mehrere Folien pro Seite, Schleife
+
+```tsx
+<Carousel
+  slides={slides}
+  slidesPerPage={3}
+  spacing="16px"
+  loop
+  colorPalette="purple"
+/>
+```
+
+## Autoplay mit Pause beim Darüberfahren
+
+```tsx
+<Carousel
+  slides={slides}
+  autoplay={{ delay: 2500 }}
+  pauseOnHover
+  loop
+  showAutoplayTrigger
+/>
+```
+
+## Vertikale Ausrichtung
+
+```tsx
+<div class={css({ height: "72" })}>
+  <Carousel slides={slides} orientation="vertical" class={css({ height: "full" })} />
+</div>
+```
+
+## Überlagerte (inline) Steuerelemente
+
+```tsx
+<Carousel slides={slides} inline loop />
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `carousel`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar. Folien sind flache `{ image, caption, href }`-Datensätze, keine verschachtelten Komponentenblöcke:
+
+```json
+{
+  "type": "carousel",
+  "slides": [
+    { "image": "/hero-1.jpg", "caption": "Slide 1" },
+    { "image": "/hero-2.jpg", "caption": "Slide 2" }
+  ],
+  "loop": true,
+  "autoplayDelay": 3000
+}
+```
+
+***
+
+# Eigenschaften
+
+## Karussell
+
+Die datengetriebene Komfortkomponente: Übergeben Sie `slides`, und sie setzt für Sie `ItemGroup`/`Item` plus ein Standard-`Control` (vorherige/nächste Auslöser und Indikator-Punkte) zusammen. Für die vollständige manuelle Zusammensetzung verwenden Sie direkt `Carousel.Root` und die exportierten Teile (siehe [Manuelle Zusammensetzung](#manual-composition)).
+
+| Eigenschaft | Typ | Beschreibung | Standard |
+| --- | --- | --- | --- |
+| `slides` | `JSX.Element[]` | Die Folieninhalte. `slideCount` wird aus deren Länge abgeleitet. | - |
+| `interactive` | `boolean` | Erzwingt die Hydration als Insel. | `true` |
+| `page` | `number` | Gibt an, auf welcher Seite sich das Karussell befindet (gesteuert). | - |
+| `defaultPage` | `number` | Anfangsseite (uncontrolled). | `0` |
+| `slidesPerPage` | `number` | Anzahl der gleichzeitig sichtbaren Folien. | `1` |
+
+| `slidesPerMove` | \`number \ | "auto"\` | Pro Seitenschritt vorgerückte Folien. `"auto"` verwendet `slidesPerPage`. | `"auto"` |
+| `orientation` | \`"horizontal" \ | "vertical"\` | Scrollachse. | `"horizontal"` |
+
+| `loop` | `boolean` | Umschließen an der ersten/letzten Seite. | `false` |
+| `spacing` | `string` | Abstand zwischen den Folien (beliebige CSS-Länge). | `"0px"` |
+| `padding` | `string` | Zusätzliches Scroll-Padding an jedem Ende (beliebige CSS-Länge). | - |
+| `autoSize` | `boolean` | Lässt Folien sich selbst dimensionieren, anstatt gleichmäßig durch `slidesPerPage` zu teilen. | `false` |
+| `allowMouseDrag` | `boolean` | Aktiviert Klick-und-Ziehen-Scrollen mit der Maus (Touch/Trackpad-Scrollen funktioniert nativ immer). | `false` |
+
+| `autoplay` | \`boolean \ | \{ delay: number \}\` | Blättert Seiten automatisch vor. Wickelt am Ende unabhängig von `loop` immer um. | `false` |
+
+| `pauseOnHover` | `boolean` | Pausiert Autoplay, während der Zeiger über dem Karussell ist. | `false` |
+
+| `snapType` | \`"proximity" \ | "mandatory"\` | CSS-Scroll-Snap-Strenge. | `"mandatory"` |
+
+| `disabled` | `boolean` | Deaktiviert alle Auslöser/Indikatoren und das Ziehen. | `false` |
+| `showControls` | `boolean` | Rendert `PrevTrigger`/`NextTrigger` im Standard-`Control`. | `true` |
+| `showIndicators` | `boolean` | Rendert eine `IndicatorGroup` im Standard-`Control`. | `true` |
+| `showAutoplayTrigger` | `boolean` | Rendert einen `AutoplayTrigger` im Standard-`Control`. | `false` |
+| `itemClass` | `string` | Benutzerdefinierte Klasse, die auf jedes erzeugte `Item` angewendet wird. | - |
+
+| `size` | \`"sm" \ | "md" \ | "lg"\` | Größe der Auslöser/Indikatoren. | `"md"` |
+
+| `colorPalette` | \`"gray" \ | "blue" \ | "cyan" \ | "green" \ | "orange" \ | "purple" \ | "red" \ | "teal" \ | "indigo" \ | "pink" \ | "yellow" \ | "success" \ | "error" \ | "warning"\` | Akzentfarbe für den aktiven Indikator/gedrückten Autoplay-Auslöser. | `"green"` |
+
+| `inline` | `boolean` | Lagert `Control` über die Elementgruppe, anstatt es darunter zu stapeln. | `false` |
+| `translations` | `CarouselTranslations` | Lokalisierte Zeichenketten (aria-labels, Fortschrittstext). | - |
+| `onPageChange` | `(details: { page: number; pageSnapPoint: number }) => void` | Wird aufgerufen, wenn sich die aktive Seite festlegt. | - |
+| `onAutoplayStatusChange` | `(details: { type: string; isPlaying: boolean; page: number }) => void` | Wird aufgerufen, wenn Autoplay startet/tickt/stoppt. | - |
+| `onDragStatusChange` | `(details: { type: string; isDragging: boolean; page: number }) => void` | Wird bei Drag-Start/-Bewegung/-Ende aufgerufen. | - |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. | - |
+| `classNames` | `Record<string, string>` | Benutzerdefinierte CSS-Klassen pro Teil (`root`, `itemGroup`, `item`, `control`, `prevTrigger`, `nextTrigger`, `indicatorGroup`, `indicator`, `autoplayTrigger`). | - |
+
+### Carousel.Item
+
+| Eigenschaft | Typ | Beschreibung | Standard |
+| --- | --- | --- | --- |
+| `index` | `number` | Die Position der Folie. Erforderlich. | - |
+
+| `snapAlign` | \`"start" \ | "center" \ | "end"\` | Welche Kante der Folie in den Blick schnappt. | `"start"` |
+
+### Carousel.Indicator
+
+| Eigenschaft | Typ | Beschreibung | Standard |
+| --- | --- | --- | --- |
+| `index` | `number` | Die Seite, zu der gesprungen wird. Erforderlich. | - |
+| `readOnly` | `boolean` | Rendert den Punkt ohne Klick-Handler. | `false` |
+
+***
+
+# Architekturhinweise
+
+- **Natives Scrollen, keine Transforms.** `ItemGroup` ist ein echter `overflow: auto`-Grid-/Flex-Container mit `scroll-snap-type`; das Blättern ruft `scrollTo(...)` darauf auf. Das bedeutet, dass Touch-Wischen, Trackpad-Scrollen und Pfeiltasten-Scrollen eines fokussierten Elements sogar funktionieren, bevor die Hydration abgeschlossen ist — nur die Klicks der Auslöser/Indikatoren und Autoplay erfordern JavaScript.
+- **`pageSnapPoints`** ist der Elementindex, bei dem jede Seite beginnt, berechnet mit derselben Strukturformel wie die State-Maschine `@zag-js/carousel` von Ark UI (`getPageSnapPoints`) — deterministisch allein aus `slideCount`/`slidesPerPage`/`slidesPerMove`, also identisch auf dem Server und vor der Hydration (für SSR ist keine Layoutmessung nötig).
+- **Kinder werden bei der Hydration nicht neu gerendert.** Wie andere Inseln dieses Projekts patcht die interaktive `Carousel`-Wurzel `data-current`, `disabled`, `data-inview` und `aria-hidden` direkt auf dem bereits gerenderten DOM (siehe `applyPageState` in `carousel-primitive.tsx`), anstatt `Item`/`Indicator`-Kinder neu zu erzeugen — HonoX hydriert die Kinder einer Insel aus einem serialisierten HTML-Snapshot, nicht durch erneutes Aufrufen der Komponente, die sie erzeugt hat.
+- **Verlassen Sie sich nie auf ein JSX-`onClick` für eine Auslöser-/Indikator-Schaltfläche.** Aus demselben Grund: `PrevTrigger`/`NextTrigger`/`Indicator`/`AutoplayTrigger` werden als Kinder zusammengesetzt, sodass hono/jsx/dom seine eigenen synthetischen Event-Props nie auf diese bereits eingehängten Knoten abstimmt — ein `onClick` auf ihnen wird stillschweigend nie ausgelöst. Die gesamte Klickbehandlung wird vom Wurzelelement in einem einzigen `useEffect` delegiert (`target.closest('[data-part="..."]')`), analog zu `dropdown-primitive.tsx`/`combobox-primitive.tsx`. Dieser Effekt (und der von `pauseOnHover`) wird genau einmal eingehängt und liest `scrollNext`/`scrollPrev`/`isPlaying`/usw. über Refs, statt sie direkt zu schließen — reaktiven State in sein Abhängigkeitsarray zu legen, würde den Listener bei jeder Änderung neu anhängen, und `pauseOnHover` eigenes `setIsPlaying` (ausgelöst von `pointerenter`, das _kurz vor_ dem gepaarten Klick in einer echten Klickgeste landet) würde den Klick-Listener andernfalls in der Lücke zwischen Ankunft der Maus und Druck auf die Schaltfläche abreißen.
+- **Vereinfachungen gegenüber dem Ark-UI-Upstream:** Die In-View-Verfolgung verwendet dieselbe Indexbereichs-Mathematik wie das SSR-Render (kein echtes `IntersectionObserver`), und `ItemGroup`s `tabindex` ist immer `0` (nicht umgeschaltet je nachdem, ob eine Folie ein fokussierbares Element enthält). Beides sind pragmatische Abwägungen, die den gängigen Fall mit festem `slidesPerPage` abdecken; RTL (`dir`) wird nicht unterstützt, was mit dem Rest dieser Komponentenbibliothek übereinstimmt.

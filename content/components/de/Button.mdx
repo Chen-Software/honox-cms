@@ -1,0 +1,146 @@
+---
+title: Button Schaltfläche
+hydration: 2
+category: Forms
+---
+
+import { Button, ButtonGroup } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine klickbare Komponente zum Auslösen von Aktionen und Benutzerinteraktionen. Umfasst Varianten für Symbole und gruppierte Schaltflächen.
+
+# Verwendung
+
+## Einfache Schaltfläche
+
+<DemoPreview>
+  <Button variant="solid" colorPalette="blue">Click me</Button>
+  <Button variant="outline" colorPalette="blue">Click me</Button>
+  <Button variant="subtle" colorPalette="blue">Click me</Button>
+  <Button variant="surface" colorPalette="blue">Click me</Button>
+  <Button variant="plain" colorPalette="blue">Click me</Button>
+</DemoPreview>
+
+```tsx
+import { Button } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Button variant="solid" colorPalette="blue">
+      Click me
+    </Button>
+  );
+}
+```
+
+## Ladezustand
+
+<DemoPreview>
+  <Button loading loadingText="Saving...">Save</Button>
+</DemoPreview>
+
+```tsx
+import { Button } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Button loading loadingText="Saving...">
+      Save
+    </Button>
+  );
+}
+```
+
+## Symbol-Schaltfläche
+
+Eine für Symbole optimierte Schaltfläche.
+
+```tsx
+import { IconButton } from "../components/ui";
+import { SearchIcon } from "./icons";
+
+export default function MyPage() {
+  return (
+    <IconButton aria-label="Search">
+      <SearchIcon />
+    </IconButton>
+  );
+}
+```
+
+## Schließen-Schaltfläche
+
+Eine vorformatierte Schaltfläche zum Schließen von Elementen.
+
+```tsx
+import { CloseButton } from "../components/ui";
+
+export default function MyPage() {
+  return <CloseButton onClick={() => console.log("closed")} interactive />;
+}
+```
+
+## Schaltflächengruppe
+
+<DemoPreview>
+  <ButtonGroup attached>
+    <Button>First</Button>
+    <Button>Second</Button>
+  </ButtonGroup>
+</DemoPreview>
+
+```tsx
+import { Button, ButtonGroup } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <ButtonGroup attached>
+      <Button>First</Button>
+      <Button>Second</Button>
+    </ButtonGroup>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `button`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "button",
+  "text": "Click me",
+  "variant": "solid",
+  "colorPalette": "blue"
+}
+```
+
+# Eigenschaften
+
+## Schaltfläche
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Inhalt, der innerhalb der Komponente gerendert wird. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `variant` | `"solid" | "surface" | "subtle" | "outline" | "plain"` | Der visuelle Stil der Schaltfläche. |
+
+| `size` | `"2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"` | Die Größe der Schaltfläche. |
+
+| `loading` | `boolean` | Wenn `true`, zeigt die Schaltfläche einen Ladespinner an. |
+| `loadingText` | `string` | Der während des Ladevorgangs angezeigte Text. |
+
+| `type` | `"button" | "submit" | "reset"` | Der HTML-Schaltflächentyp. |
+
+| `colorPalette` | `string` | Das Farbschema der Schaltfläche. |
+| `interactive` | `boolean` | Legt fest, ob die clientseitige Hydration aktiviert wird. |
+
+## Schaltflächengruppe
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Zu gruppierende Schaltflächen. |
+| `attached` | `boolean` | Legt fest, ob die Schaltflächen aneinandergehängt werden. |

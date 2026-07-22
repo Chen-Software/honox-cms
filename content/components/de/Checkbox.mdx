@@ -1,0 +1,80 @@
+---
+title: Checkbox Kontrollkästchen
+hydration: 2
+category: Forms
+---
+
+import { Checkbox } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Steuerung, mit der der Benutzer zwischen den Zuständen aktiviert, deaktiviert und unbestimmt wechseln kann.
+
+# Verwendung
+
+<DemoPreview>
+  <Checkbox defaultChecked interactive>Accept Terms and Conditions</Checkbox>
+</DemoPreview>
+
+```tsx
+import { Checkbox } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Checkbox
+      defaultChecked={true}
+      onCheckedChange={(details) => console.log(details.checked)}
+      interactive
+    >
+      Accept Terms and Conditions
+    </Checkbox>
+  );
+}
+```
+
+## Unbestimmter Zustand
+
+```tsx
+import { Checkbox } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Checkbox checked="indeterminate" interactive>
+      Parent Checkbox
+    </Checkbox>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `checkbox`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "checkbox",
+  "label": "Accept Terms and Conditions",
+  "checked": true,
+  "colorPalette": "blue"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Inhalt der Beschriftung, der neben dem Kontrollkästchen gerendert wird. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `checked` | \`boolean \ | "indeterminate"\` | Ob das Kontrollkästchen aktiviert ist (kontrolliert). |
+
+| `defaultChecked` | \`boolean \ | "indeterminate"\` | Der anfängliche Aktivierungszustand (unkontrolliert). |
+
+| `disabled` | `boolean` | Ob das Kontrollkästchen deaktiviert ist. |
+
+| `onCheckedChange` | \`(details: \{ checked: boolean \ | "indeterminate" \}) => void\` | Rückruf, der ausgelöst wird, wenn sich der Aktivierungszustand ändert. |
+
+| `size` | \`"sm" \ | "md" \ | "lg"\` | Die Größe des Kontrollkästchens. |
+
+| `interactive` | `boolean` | Erzwingt die Hydration als Insel. |

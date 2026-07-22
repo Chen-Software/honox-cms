@@ -1,0 +1,216 @@
+---
+title: DatePicker Datumswähler
+hydration: 2
+category: Forms
+---
+
+import { DatePicker } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Datumswähler, der ein Texteingabefeld mit einem Popup-Kalender kombiniert. Er unterstützt Einzel-, Mehrfach- und Bereichsauswahl, Monats-/Jahres-Panelansichten, Schnellauswahl-Voreinstellungen, Kalenderwochen und manuelle Datumseingabe — serverseitig mit HonoX gerendert und nur bei Bedarf als Insel hydriert.
+
+Die Komponente ist **konsequent headless**: `app/components/ui/date-picker-primitive.tsx` erzeugt semantisches, barrierefreies Markup und Zustand, während `app/islands/date-picker.tsx` das clientseitige Verhalten hinzufügt (Tastaturnavigation, Hover-Vorschau, Klick-außerhalb, Tippen). Es werden keine neuen Laufzeitabhängigkeiten eingeführt — sie baut auf Hono JSX und Panda CSS auf, demselben Stack wie der Rest des Design-Systems.
+
+# Neuerungen in dieser Überarbeitung
+
+- **Ausgewählte Werte überstehen nun das statische Rendering.** Das Eingabefeld rendert seinen Wert zuvor über `defaultValue`, das hono/jsx als totes `defaultValue="…"`-Attribut serialisiert — ein statisch gerenderter Wähler mit einem `value`/`defaultValue` zeigte ein leeres Eingabefeld. Nun wird ein echtes `value`-Attribut gerendert; das Tippen bleibt unkontrolliert, da die DOM-Laufzeit die value-Eigenschaft nur zuweist, wenn sich die Eigenschaft tatsächlich ändert.
+- **Monats-/Jahres-Dropdowns werden in SSR korrekt vorausgewählt.** `MonthSelect`/`YearSelect` verwendeten `value` an `<select>`, was kein HTML-Attribut ist, sodass der fokussierte Monat/Jahr in der Serverausgabe nie vorausgewählt wurde. Die passende `<option>` trägt nun `selected`.
+- **Lokalisierter Kalendertext.** Wochentag-Köpfe, Monatsraster und das Monats-Dropdown werden aus `Intl.DateTimeFormat` für das konfigurierte `locale` erzeugt (pro Locale zwischengespeichert, mit englischem Fallback, wenn die Locale unbekannt ist). Zuvor respektierte nur die Überschrift `locale`.
+- **Bereichs-Endpunkte verbinden sich mit dem Band.** Die Start-/Endtage eines Bereichs tragen nun `data-range-start` / `data-range-end`, und die Rezeptur quadriert ihre inneren Ecken, sodass die Endpunkte nahtlos an die Innerbereich-Hervorhebung anschließen.
+- **Tastaturfokus übersteht Ansichtswechsel.** Das Zoomen zwischen Tag-/Monats-/Jahresansichten (über die Überschrift oder durch Eintauchen in einen Monat/Jahr) legte den DOM-Fokus zuvor auf `<body>`, da das zuvor fokussierte Steuerelement ausgeblendet wird. Der Fokus wandert nun auf die aktive Zelle der neuen Ansicht.
+- **Raster-Semantik verschärft.** Das verirrte `role="row"` an `<thead>` (das seine implizite `rowgroup`-Rolle überschrieb) ist entfernt, und das Raster meldet `aria-multiselectable` in den Modi `multiple`/`range`.
+- **Popup bleibt im Bildschirm.** Das Kalender-Popup begrenzt seine Breite auf das Ansichtsfenster auf schmalen Bildschirmen, anstatt horizontal überzulaufen.
+
+Übernommen aus der vorherigen Überarbeitung: tastaturzentrierte Rasternavigation, begrenzt auf `[min, max]`, begrenzte Monats-/Jahresansichten, Bereichs-Hover-Vorschau, Freitext-Eingabe mit Übernahme bei Enter/Blur, native Formularübermittlung über versteckte Eingabefelder, ISO-Kalenderwochen, bedingter Löschen-Auslöser, ARIA-Raster-Semantik mit wanderndem Tab-Stopp sowie Öffnen-/Schließen-Animationen, die an `data-state` gekoppelt sind.
+
+# Funktionsumfang
+
+- **Popup-Kalender** — öffnet über den Kalender-Auslöser oder durch Fokussieren/Klicken des Eingabefelds; schließt bei Klick außerhalb, <kbd>Escape</kbd> (Fokus kehrt zum Auslöser zurück) oder nach einer abgeschlossenen Auswahl, wenn `closeOnSelect` gesetzt ist.
+- **Panelansichten** — klicken Sie auf die Monats-/Jahresüberschrift, um von Tagen → Monaten → Jahren herauszuzoomen; die Auswahl eines Jahres oder Monats taucht wieder hinein. Die Vor-/Zurück-Pfeile blättern je nach Ansicht um Monat, Jahr oder Jahrzehnt.
+- **Begrenzte Auswahl** — `min`/`max` werden in jeder Ansicht erzwungen: außerhalb liegende Tage sind deaktiviert, ebenso Monate und Jahre, die vollständig außerhalb des Bereichs liegen, und der Tastaturfokus wird begrenzt, sodass er nie auf einer deaktivierten Zelle ruhen kann.
+- **Manuelle Eingabe** — geben Sie ein Datum in das Eingabefeld ein und drücken Sie <kbd>Enter</kbd> (oder entfernen Sie den Fokus). Gültige `YYYY-MM-DD`-Werte werden übernommen und normalisiert; ungültige oder außerhalb liegende Werte fallen auf den zuletzt übernommenen Wert zurück. Das Leeren des Eingabefelds löscht die Auswahl.
+- **Bereichsauswahl** — der erste Klick setzt den Start, der zweite das Ende (automatisch geordnet); die dazwischenliegenden Tage sind hervorgehoben, und das Darüberfahren zeigt die Spanne als Vorschau, bevor Sie übernehmen.
+- **Mehrfachauswahl** — Klicken schaltet einzelne Tage an und aus.
+- **Kalenderwochen** — mit `showWeekNumbers` wird eine ISO-Wochennummern-Spalte neben dem Tagraster angezeigt.
+- **Formularübermittlung** — übergeben Sie eine `name`-Eigenschaft, und für jedes ausgewählte Datum wird ein verstecktes Eingabefeld gerendert, sodass der Wähler in einem einfachen `<form>` ohne zusätzlichen Klebercode funktioniert.
+- **Voreinstellungen** — `DatePicker.PresetTrigger` unterstützt die Werte `today`, `last3Days`, `last7Days`, `last14Days`, `last30Days` und `last90Days`. Im Bereichsmodus wählt eine Voreinstellung die gesamte Spanne; andernfalls wählt sie das einzelne Ankerdatum.
+
+# Tastaturunterstützung
+
+Wenn das Popup geöffnet ist und der Fokus innerhalb des Kalenders liegt, sind die folgenden Tasten aktiv:
+
+| Taste | Tagesansicht | Monatsansicht | Jahresansicht |
+| --- | --- | --- | --- |
+| <kbd>←</kbd> / <kbd>→</kbd> | Vorheriger / nächster Tag | Vorheriger / nächster Monat | Vorheriges / nächstes Jahr |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | ±1 Woche | ±3 Monate | ±3 Jahre |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Anfang / Ende der Woche | — | — |
+| <kbd>PageUp</kbd> / <kbd>PageDown</kbd> | Vorheriger / nächster Monat | Vorheriges / nächstes Jahr | Vorheriges / nächstes Jahrzehnt |
+| <kbd>Shift</kbd>+<kbd>PageUp</kbd> / <kbd>Shift</kbd>+<kbd>PageDown</kbd> | Vorheriges / nächstes Jahr | — | — |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Fokussierten Tag auswählen | In Monat hineinzoomen | In Jahr hineinzoomen |
+| <kbd>Esc</kbd> | Popup schließen, Fokus zum Auslöser zurückgeben |  |  |
+
+Der Auslöser und das Eingabefeld sind per <kbd>Tab</kbd> erreichbar; das Öffnen von der Tastatur verschiebt den Fokus direkt in das Raster, sodass der Kalender ohne Maus bedienbar ist.
+
+# Barrierefreiheit
+
+- Das Raster verwendet ARIA-Raster-Semantik (`role="grid"`, `row`, `gridcell`, `columnheader`, `rowheader`) mit `aria-selected`, `aria-current="date"` an der heutigen Zelle und `aria-multiselectable` in den Modi `multiple`/`range`.
+- Ein **wandernder Tabindex** hält einen einzelnen Tab-Stopp auf dem fokussierten Datum; Pfeiltasten bewegen den Fokus, ohne durch jede Zelle zu tabben.
+- Der Fokus wird verwaltet: das Öffnen von der Tastatur fokussiert den aktiven Tag; das Schließen gibt den Fokus an den Auslöser zurück; der Wechsel zwischen Tag-/Monats-/Jahresansichten verschiebt den Fokus auf die aktive Zelle der neuen Ansicht, anstatt ihn fallen zu lassen.
+- Alle interaktiven Steuerelemente tragen `aria-label`s (`Open date picker`, `Clear selected dates`, `Previous`, `Next`, `Switch calendar view`, `Select month`, `Select year`).
+- Farbe ist nie das einzige Signal — ausgewählte, heutige, innerbereich- und deaktivierte Zustände kombinieren Füllung, Gewichtung und (für heute) eine Punkt-Markierung.
+- Respektiert `disabled` / `readOnly` / `invalid` über `aria-disabled`, `readonly` und `aria-invalid`.
+
+# Gestaltungsslots
+
+Die Panda-CSS-Slot-Rezeptur (`app/theme/recipes/date-picker.ts`) bietet die folgenden `data-part`-Slots für das Theming an. Überschreiben Sie sie über die Props `class`/`className` oder eine semantische `classNames`-Map:
+
+`root`, `label`, `control`, `input`, `trigger`, `clearTrigger`, `positioner`, `content`, `view`, `viewControl`, `prevTrigger`, `nextTrigger`, `viewTrigger`, `rangeText`, `table`, `tableHead`, `tableHeader`, `tableRow`, `tableBody`, `tableCell`, `tableCellTrigger`, `weekNumber`, `monthSelect`, `yearSelect`, `presetTrigger`, `valueText`. Der `hidden-input`-Teil wird nur gerendert, wenn `name` gesetzt ist, und trägt keine sichtbare Gestaltung.
+
+Die Zustände ausgewählt / heute / innerbereich / bereichsvorschau / deaktiviert werden über die Attribute `data-selected`, `data-today`, `data-in-range`, `data-outside-range`, `data-range-preview` und `data-disabled` gesteuert (in allen drei Panelansichten angewendet), sodass sie unabhängig von der Rezeptur neu gestaltet werden können. Bereichs-Endpunkte tragen zusätzlich `data-range-start` / `data-range-end` (nur wenn sich der Bereich über mehr als einen Tag erstreckt), die die Rezeptur verwendet, um ihre inneren Ecken gegen das Innerbereich-Band abzuschrägen. Die Öffnen-/Schließen-Animation ist an `data-state="open"` / `data-state="closed"` gekoppelt.
+
+# Hydration
+
+**Tier 1 — standardmäßig interaktiv.** Ein `DatePicker` hydriert als Insel, sofern nicht explizit mit `interactive={false}` abgewählt, in welchem Fall er als statisches HTML ohne Client-JS gerendert wird.
+
+| `interactive`-Prop | Ergebnis |
+| --- | --- |
+| weggelassen | Hydriert als Insel |
+| `true` | Hydriert als Insel |
+| `false` | Statisch — kein Client-JS |
+
+Alle Interaktivitätsentscheidungen der Bibliothek laufen über den gemeinsamen `shouldHydrate()`-Helfer in `app/components/ui/island-utils.ts`.
+
+# Verwendung
+
+<DemoPreview>
+  <DatePicker label="Choose Date" selectionMode="single" />
+</DemoPreview>
+
+```tsx
+import { DatePicker } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <>
+      {/* Single date */}
+      <DatePicker label="Choose Date" selectionMode="single" />
+
+      {/* Date range with bounds */}
+      <DatePicker
+        label="Travel Dates"
+        selectionMode="range"
+        min="2026-01-01"
+        max="2026-12-31"
+      />
+
+      {/* Week numbers + accent colour */}
+      <DatePicker
+        label="Pick a day"
+        selectionMode="single"
+        showWeekNumbers
+        colorPalette="purple"
+      />
+
+      {/* Preselected value */}
+      <DatePicker label="Due Date" defaultValue="2026-07-15" />
+
+      {/* Inside a native form — the selected date submits as `due` */}
+      <form method="post" action="/submit">
+        <DatePicker label="Due Date" name="due" selectionMode="single" />
+        <button type="submit">Save</button>
+      </form>
+
+      {/* Range submission — start/end submit as two `range` entries */}
+      <form method="post" action="/report">
+        <DatePicker
+          label="Reporting Window"
+          name="range"
+          selectionMode="range"
+        />
+        <button type="submit">Run</button>
+      </form>
+    </>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `datePicker`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "datePicker",
+  "label": "Check-in Date",
+  "selectionMode": "single",
+  "placeholder": "YYYY-MM-DD",
+  "colorPalette": "blue"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `label` | `string` | Rendert eine Beschriftung, die dem ersten Eingabefeld zugeordnet ist (nur Standardstruktur). |
+| `placeholder` | `string` | Platzhalter für das Eingabefeld. Standard ist `YYYY-MM-DD`. |
+
+| `selectionMode` | \`"single" \ | "multiple" \ | "range"\` | Wie Daten ausgewählt werden. Standard ist `"single"`. Der Bereichsmodus rendert Start- und Endeingaben. |
+
+| `value` | \`CalendarDate[] \ | string[] \ | string \ | Date[]\` | Ausgewählte(s) Datum/Daten (kontrolliert). Strings verwenden das Format `YYYY-MM-DD`. |
+
+| `defaultValue` | \`CalendarDate[] \ | string[] \ | string \ | Date[]\` | Anfänglich ausgewähltes Datum/Daten (unkontrolliert). |
+
+| `focusedValue` | \`CalendarDate \ | string \ | Date\` | Das Datum, auf das das Kalender-Panel fokussiert ist (kontrolliert). |
+
+| `defaultFocusedValue` | \`CalendarDate \ | string \ | Date\` | Anfängliches Panel-Datum (unkontrolliert). |
+
+| `min` | \`CalendarDate \ | string \ | Date\` | Frühestes wählbares Datum. Frühere Tage, Monate und Jahre sind deaktiviert; eingetippte Daten außerhalb des Bereichs werden abgewiesen; der Tastaturfokus wird auf den Bereich begrenzt. |
+
+| `max` | \`CalendarDate \ | string \ | Date\` | Spätestes wählbares Datum. |
+
+| `isDateUnavailable` | `(date, locale) => boolean` | Markiert einzelne Daten als nicht wählbar (statische/zusammengesetzte Verwendung). |
+
+| `view` | \`"day" \ | "month" \ | "year"\` | Die aktive Panelansicht (kontrolliert). |
+
+| `open` | `boolean` | Ob der Popup-Kalender geöffnet ist (kontrolliert). |
+| `closeOnSelect` | `boolean` | Schließt das Popup nach einer abgeschlossenen Auswahl. Standard ist `true`. |
+| `showWeekNumbers` | `boolean` | Rendert eine ISO-8601-Wochennummern-Spalte. Standard ist `false`. |
+| `numOfMonths` | `number` | Reserviert für die Mehrmonats-Darstellung. Derzeit wird immer ein einzelnes Monats-Panel angezeigt; Werte größer als `1` werden akzeptiert, aber noch nicht gerendert. |
+| `name` | `string` | Wenn gesetzt, rendert es ein verstecktes Eingabefeld pro ausgewähltem Datum unter diesem Namen und ermöglicht so die native `<form>`-Übermittlung. Im Bereichs-/Mehrfachmodus wird jedes ausgewählte Datum ein separater Eintrag (geordnet). |
+| `locale` | `string` | BCP 47-Locale für die Überschrift, Wochentag-Köpfe, Monatsnamen und Zellbeschriftungen (über `Intl.DateTimeFormat`, mit englischem Fallback). Standard ist `en-US`. |
+| `disabled` | `boolean` | Deaktiviert den gesamten Wähler. |
+| `readOnly` | `boolean` | Macht das Eingabefeld schreibgeschützt. |
+| `invalid` | `boolean` | Markiert das Eingabefeld als ungültig (`aria-invalid` + Fehler-Styling). |
+
+| `colorPalette` | \`"blue" \ | "green" \ | "red" \ | "orange" \ | "gray" \ | "cyan" \ | "amber" \ | "purple"\` | Akzentfarbe für das ausgewählte Datum, die Heute-Anzeige und die Bereichshervorhebung. Standard ist `"blue"`. |
+
+| `interactive` | `boolean` | Erzwingt (oder unterdrückt) die Hydration als Insel. |
+| `onValueChange` | `(details: { value: CalendarDate[] }) => void` | Wird aufgerufen, wenn sich die Auswahl ändert. |
+| `onOpenChange` | `(details: { open: boolean }) => void` | Wird aufgerufen, wenn sich das Popup öffnet oder schließt. |
+
+## CalendarDate
+
+Daten werden durch die `CalendarDate`-Klasse (`{ year, month, day }`, Monat ist 1-basiert) dargestellt, um Zeitzonenversatz zu vermeiden. Hilfsfunktionen werden zusammen mit der Komponente exportiert:
+
+| Hilfsfunktion | Beschreibung |
+| --- | --- |
+| `parseDate(str)` | Parst einen `YYYY-MM-DD`-String und begrenzt außerhalb liegende Teile. |
+| `isValidDateString(str)` | Validiert einen `YYYY-MM-DD`-String strikt (einschließlich Monatslängen und Schaltjahre). |
+| `daysInMonth(year, month)` | Anzahl der Tage im angegebenen Monat. |
+| `fromJSDate(date)` | Wandelt ein JavaScript-`Date` in ein `CalendarDate` um. |
+| `getWeekNumber(date)` | ISO-8601-Wochennummer für ein `CalendarDate` (von `showWeekNumbers` verwendet). |
+| `getWeekDays(locale)` | Lokalisierte Wochentagsnamen (`{ short, narrow, long }`, sonntags beginnend), pro Locale zwischengespeichert. |
+| `getMonthNames(locale, format?)` | Lokalisierte Monatsnamen (`"short"` oder `"long"`), januarbeginnend, pro Locale zwischengespeichert. |
+
+# Hinweise zur Produktion
+
+- **Keine neuen Abhängigkeiten.** Vollständig auf Hono JSX + Panda CSS aufgebaut, konsistent mit dem Rest des Design-Systems.
+- **SSR-sicher.** Markup wird auf dem Server gerendert; nur der Insel-Zweig zieht clientseitiges Verhalten nach, und nur wenn signalisiert.
+- **Token-gesteuert.** Farben, Abstände, Radien und Schatten stammen aus den gemeinsamen Theme-Tokens, sodass der Wähler Dunkelmodus und das konfigurierte `colorPalette` automatisch erbt.
+- **Typsichere Werte.** `CalendarDate` vermeidet die Zeitzonenfallen der rohen `Date`/`string`-Handhabung.
+- **Von Entwurf begrenzt.** `min`/`max` werden konsistent über Tag-, Monats- und Jahresansichten erzwungen — sowohl für die Mausauswahl als auch für den Tastaturfokus — sodass ein außerhalb liegender Wert nie übernommen oder fokussiert werden kann.
+- **Formularbereit.** Die optionale `name`-Eigenschaft rendert versteckte Eingabefelder, sodass der Wähler ohne eigene Submit-Handler in native Formulare fällt.
+- **Einzelnes Monats-Panel.** `numOfMonths` wird aus Gründen der Vorwärtskompatibilität akzeptiert, rendert derzeit jedoch einen einzelnen Monat. Die Mehrmonats-Darstellung ist in Planung.

@@ -10,7 +10,7 @@
 # content/docs/Hydration.md (per omit_default_locale_from_file_path below).
 i18n:
   structure: multiple_folders
-  locales: [en, zh, es, pt, fr]
+  locales: [en, zh, es, pt, fr, de]
   default_locale: en
   omit_default_locale_from_file_path: true
 

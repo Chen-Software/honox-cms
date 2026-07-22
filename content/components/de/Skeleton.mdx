@@ -1,0 +1,79 @@
+---
+title: Skeleton Skelett
+hydration: 3
+category: Feedback
+---
+
+import { Skeleton } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Platzhalter, der anzeigt, dass Inhalte geladen werden, mit verschiedenen Animations- und Formoptionen.
+
+# Verwendung
+
+## Einfaches Skeleton
+
+<DemoPreview>
+  <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%", maxWidth: "320px" }}>
+    <Skeleton shape="circle" size="12" />
+    <Skeleton height="6" width="40" />
+    <Skeleton shape="text" noOfLines={3} />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Skeleton, SkeletonCircle, SkeletonText } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <div>
+      <SkeletonCircle size="12" />
+      <Skeleton height="6" width="40" />
+      <SkeletonText noOfLines={3} />
+    </div>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `skeleton`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar. Die CMS-`shape`-Optionen sind `box`/`circle`/`text` und werden dem echten `shape`-Attribut zugeordnet (`box` fällt auf den einfachen Standard zurück):
+
+```json
+{
+  "type": "skeleton",
+  "shape": "text",
+  "noOfLines": 3
+}
+```
+
+# Eigenschaften
+
+## Skeleton
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `loading` | `boolean` | Legt fest, ob das Skeleton angezeigt wird. Standard: `true`. |
+| `circle` | `boolean` | Rendert das Skeleton als Kreis. |
+
+| `variant` | \`"pulse" \ | "shine" \ | "none"\` | Der Animationsstil. |
+
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+Alle anderen nativen `<div>`-Attribute (z. B. `style`, `id`, `width`, `height`) werden an das zugrunde liegende Element weitergegeben.
+
+## SkeletonCircle
+
+Dieselben Eigenschaften wie `Skeleton`, vorkonfiguriert mit `circle`.
+
+## SkeletonText
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `noOfLines` | `number` | Anzahl der anzuzeigenden Zeilen. Standard: `3`. |
+
+| `gap` | \`string \ | number\` | Abstand zwischen den Zeilen. Standard: `"2"`. |
+
+Zuzüglich aller `Skeleton`-Eigenschaften.

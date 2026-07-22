@@ -1,0 +1,52 @@
+---
+title: PaginatedTable Paginiert Tabelle
+hydration: 2
+category: Data Display
+---
+
+import { PaginatedTable } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+Eine Komponente auf höherer Ebene, die eine Tabelle mit Pagination kombiniert und den Zustand intern verwaltet.
+
+## Verwendung
+
+<DemoPreview>
+  <div style={{ width: "100%" }}>
+    <PaginatedTable title="Users" pageSize={5} />
+  </div>
+</DemoPreview>
+
+### CMS-Seitenbauer
+
+Diese Komponente ist als `paginatedTable`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "paginatedTable",
+  "title": "Users",
+  "pageSize": 5
+}
+```
+
+## Eigenschaften
+
+| Eigenschaft | Typ | Standard | Beschreibung |
+| --- | --- | --- | --- |
+| `title` | `string` | - | Tabellentitel. |
+| `pageSize` | `number` | `10` | Einträge pro Seite. |
+
+## CMS-Konfiguration
+
+```yaml
+- label: PaginatedTable
+  name: paginated-table
+  widget: object
+  fields:
+    - { label: Title, name: title, widget: string, required: false }
+    - { label: Page Size, name: pageSize, widget: number, default: 10 }
+```
+
+## Hydration
+
+Tier-2: Hydriert immer als Insel, um den internen Paginierungszustand zu verwalten.

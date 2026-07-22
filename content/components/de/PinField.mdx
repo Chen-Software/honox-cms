@@ -1,0 +1,144 @@
+---
+title: PinField Pin-Feld
+hydration: 2
+category: Forms
+---
+
+import { PinField } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine segmentierte Eingabe für kurze Codes fester Länge — Einmalpasswörter, SMS-/E-Mail-Bestätigungscodes,
+PINs. Jedes Zeichen erhält seine eigene Box, mit Tastaturnavigation, Einfüge-/Autofill-Unterstützung und
+denselben Konventionen für Label/Hilfetext/Fehlertext/Validator wie `Field`.
+
+# Verwendung
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "320px" }}>
+    <PinField
+      label="Verification code"
+      helperText="Check your email for the 6-digit code"
+      count={6}
+      otp
+      blurOnComplete
+      validator={(value) => value !== "000000" || "That code isn't valid"}
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { PinField } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <PinField
+      label="Verification code"
+      helperText="Check your email for the 6-digit code"
+      count={6}
+      otp
+      blurOnComplete
+      onValueComplete={(details) => console.log(details.valueAsString)}
+    />
+  );
+}
+```
+
+## Zeichenformat
+
+`format` (`"numeric"` | `"alphanumeric"` | `"alphabetic"`, Standard `"numeric"`) schränkt ein, was eine
+Box akzeptiert, und wählt über `inputMode` die richtige mobile Tastatur. Übergeben Sie `pattern` mit einer
+benutzerdefinierten regexp-Quelle pro Zeichen, um es vollständig zu überschreiben — nützlich für
+gutscheinartige Codes.
+
+```tsx
+<PinField format="alphanumeric" count={8} placeholder="_" />
+```
+
+## Autofill
+
+`otp` markiert das Feld als SMS-/E-Mail-Einmalcode. Anstatt `autocomplete="one-time-code"` auf jede Box
+zu setzen (was Browser und Passwort-Manager eine Füll-Funktion auf allen gleichzeitig anzeigen ließe),
+wirbt nur die Box, die der Nutzer als nächstes füllen würde, darum — und akzeptiert die volle Code-Länge,
+sodass ein OTP-Vorschlag der mobilen Tastatur oder ein vollständiges Einfügen auf einen Schlag landen und
+automatisch auf die übrigen Boxen verteilt werden kann. Jede andere Box optiert aus Autofill und
+Passwort-Manager-Symbol-Overlays heraus.
+
+## Tastatur- und Zeigerverhalten
+
+- **Tippen**: Ein gültiges Zeichen füllt die aktuelle Box und rückt den Fokus vor; der Inhalt einer
+  bereits fokussierten Box wird zuerst ausgewählt (`selectOnFocus`, standardmäßig aktiv), sodass Tippen
+  immer ersetzt, anstatt stillschweigend blockiert zu werden.
+- **Backspace** in einer leeren Box löscht und springt in die vorherige zurück.
+- **Pfeil links/rechts** bewegen den Fokus zwischen Boxen; **Pfeil oben/unten** werden unterdrückt, anstatt
+  nichts Nützliches zu tun.
+- **Einfügen** oder ein Autofill des Betriebssystems/-Passwort-Managers verteilt Zeichen ab der Box, auf der
+  es landete, über die Boxen.
+- **Tab** und Klick-/Zeigerfokus halten an der ersten leeren Box an — Sie können nicht über eine Lücke
+  hinaus springen, sondern nur eine bereits gefüllte Box bearbeiten oder dort weitermachen, wo Sie
+  aufgehört haben.
+
+## Validierung
+
+Wie `Field` akzeptiert `PinField` einen `validator`, der gegen den zusammengefügten Wert läuft und `false`
+(allgemeiner Fehler) oder einen `string` (benutzerdefinierte Nachricht) zurückgeben kann. Er validiert erst
+erneut, sobald jede Box gefüllt ist.
+
+```tsx
+<PinField
+  count={6}
+  validator={(value) =>
+    value !== "000000" || "That code isn't valid"
+  }
+  errorText="Enter the code we sent you"
+/>
+```
+
+## Formulare: Auto-Absenden und Zurücksetzen
+
+`form` verknüpft das versteckte Absende-Eingabefeld des Felds mit einer `<form id>` an anderer Stelle im
+Dokument (oder lassen Sie es weg, wenn das Feld bereits innerhalb des Formulars liegt). `autoSubmit` ruft
+`form.requestSubmit()` in dem Moment auf, in dem jede Box gefüllt ist, nach dem Auslösen von `onAutoSubmit`;
+das Drücken von **Enter** in einer beliebigen Box versucht ebenfalls eine Übermittlung, da ein Formular mit
+mehreren gleichgeordneten Eingaben das eigene Absenden-per-Enter des Browsers unterdrückt. Das Zurücksetzen
+des Formulars (ein natives `<button type="reset">` oder `form.reset()`) leert das Feld wieder.
+
+```tsx
+<form id="verify-form">
+  <PinField form="verify-form" name="code" count={6} otp autoSubmit />
+  <button type="reset">Clear</button>
+</form>
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Standard | Beschreibung |
+| --- | --- | --- | --- |
+| `count` | `number` | `4` | Anzahl der Boxen. |
+| `value` | `string[]` | - | Gesteuerter Wert, ein Eintrag pro Box (erzwingt interaktiven Modus). |
+| `defaultValue` | `string[]` | - | Anfangswert, ein Eintrag pro Box (erzwingt interaktiven Modus). |
+| `format` | `"numeric" \| "alphanumeric" \| "alphabetic"` | `"numeric"` | Pro Box akzeptierte Zeichenklasse. |
+| `pattern` | `string` | - | Benutzerdefinierte regexp-Quelle pro Zeichen, überschreibt `format`. |
+| `placeholder` | `string` | `"○"` | In jeder leeren Box angezeigt. |
+| `mask` | `boolean` | - | Rendert jede Box als `type="password"`. |
+| `otp` | `boolean` | - | Zielt den `autocomplete="one-time-code"`-Autofill nur auf die aktive Box. |
+| `blurOnComplete` | `boolean` | - | Entzieht der letzten Box den Fokus, sobald jede Box gefüllt ist. |
+| `autoFocus` | `boolean` | - | Fokussiert die erste Box beim Einhängen. |
+| `selectOnFocus` | `boolean` | `true` | Wählt den Inhalt einer Box bei Fokus aus, sodass Tippen ihn ersetzt. |
+| `disabled` | `boolean` | - | Deaktiviert jede Box. |
+| `readOnly` | `boolean` | - | Verhindert die Bearbeitung. |
+| `required` | `boolean` | - | Markiert jede Box als erforderlich. |
+| `invalid` | `boolean` | - | Erzwingt den ungültigen Zustand und überschreibt `validator`. |
+| `name` | `string` | - | Formularfeldname für das versteckte Absende-Eingabefeld. |
+| `form` | `string` | - | Verknüpft das versteckte Eingabefeld (und `autoSubmit`/Zurücksetzen) mit einer `<form id>`. |
+| `autoSubmit` | `boolean` | - | Ruft `form.requestSubmit()` bei Vervollständigung auf (erzwingt interaktiven Modus). |
+| `onAutoSubmit` | `(valueAsString: string) => void` | - | Wird direkt vor einem versuchten `autoSubmit`-Absenden ausgelöst. |
+| `label` | `Child` | - | Das Label des Felds. |
+| `helperText` | `Child` | - | Hilfetext unterhalb der Boxen. |
+| `errorText` | `Child` | - | Fehlertext, der bei ungültigem Zustand angezeigt wird; ein `validator`-String-Ergebnis überschreibt dies. |
+| `validator` | `(value: string) => boolean \| string` | - | Validiert den zusammengefügten Wert bei Vervollständigung (erzwingt interaktiven Modus). |
+| `onValueChange` | `(details: { value: string[]; valueAsString: string }) => void` | - | Wird bei jeder Änderung ausgelöst (erzwingt interaktiven Modus). |
+| `onValueComplete` | `(details: { value: string[]; valueAsString: string }) => void` | - | Wird ausgelöst, sobald jede Box gefüllt ist. |
+| `onValueInvalid` | `(details: { index: number; value: string }) => void` | - | Wird ausgelöst, wenn ein getipptes/eingefügtes Zeichen von `format`/`pattern` abgewiesen wird. |
+| `interactive` | `boolean` | - | Erzwingt oder verbietet die Hydration als Insel. |

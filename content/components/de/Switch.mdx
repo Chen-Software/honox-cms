@@ -1,0 +1,62 @@
+---
+title: Switch Schalter
+hydration: 2
+category: Forms
+---
+
+import { Switch } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Steuerung, mit der der Benutzer zwischen aktiviertem und deaktiviertem Zustand umschalten kann.
+
+# Verwendung
+
+<DemoPreview>
+  <Switch defaultChecked interactive>Enable Notifications</Switch>
+</DemoPreview>
+
+```tsx
+import { Switch } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Switch
+      defaultChecked={true}
+      onCheckedChange={(details) => console.log(details.checked)}
+      interactive
+    >
+      Enable Notifications
+    </Switch>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `switch`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "switch",
+  "label": "Dark Mode",
+  "checked": true,
+  "colorPalette": "blue"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Beschriftungsinhalt, der neben dem Schalter gerendert wird. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+| `checked` | `boolean` | Legt fest, ob der Schalter aktiviert ist (kontrolliert). |
+| `defaultChecked` | `boolean` | Der anfängliche Aktivierungszustand (unkontrolliert). |
+| `disabled` | `boolean` | Legt fest, ob der Schalter deaktiviert ist. |
+| `onCheckedChange` | `(details: { checked: boolean }) => void` | Rückruf, der ausgelöst wird, wenn sich der Aktivierungszustand ändert. |
+
+| `size` | `"sm" \| "md" \| "lg"` | Die Größe des Schalters. |
+
+| `interactive` | `boolean` | Erzwingt die Hydration als Insel. |

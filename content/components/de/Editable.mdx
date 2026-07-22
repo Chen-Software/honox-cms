@@ -1,0 +1,132 @@
+---
+title: Editable Editierbar
+hydration: 2
+category: Forms
+---
+
+import { Editable, Stack } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Inline-Textfeld, das als einfacher Text angezeigt wird, bis es aktiviert wird (durch Fokus, Klick oder Doppelklick), und dann in ein bearbeitbares Eingabefeld mit Übernehmen/Abbrechen-Steuerung wechselt.
+
+# Verwendung
+
+<DemoPreview>
+  <Stack direction="vertical" gap="4" style={{ width: "100%", maxWidth: "320px" }}>
+    <Editable label="Project name" defaultValue="Artefact UI Suite" interactive />
+    <Editable label="Description" placeholder="Add a description…" interactive />
+  </Stack>
+</DemoPreview>
+
+```tsx
+import { Editable } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Editable label="Project name" defaultValue="Artefact UI Suite" />
+  );
+}
+```
+
+## Benutzerdefinierte Zusammensetzung
+
+Übergeben Sie `children` für volle Kontrolle über das Layout von Vorschau/Eingabe/Steuerung:
+
+```tsx
+import { Editable } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Editable defaultValue="Untitled" activationMode="dblclick">
+      <Editable.Label>Title</Editable.Label>
+      <Editable.Area>
+        <Editable.Preview />
+        <Editable.Input />
+      </Editable.Area>
+      <Editable.Control>
+        <Editable.EditTrigger>Edit</Editable.EditTrigger>
+        <Editable.SubmitTrigger>Save</Editable.SubmitTrigger>
+        <Editable.CancelTrigger>Cancel</Editable.CancelTrigger>
+      </Editable.Control>
+    </Editable>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `editable`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "editable",
+  "label": "Project name",
+  "defaultValue": "Artefact UI Suite",
+  "placeholder": "Untitled",
+  "size": "md",
+  "activationMode": "focus",
+  "submitMode": "both"
+}
+```
+
+Im Seitenbauer wird sie immer `interactive` gerendert.
+
+# Eigenschaften
+
+## Wurzel
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `value` | `string` | Der aktuelle Wert (gesteuert). |
+| `defaultValue` | `string` | Der anfängliche Wert (uncontrolled). |
+| `edit` | `boolean` | Ob der Bearbeitungsmodus aktiv ist (gesteuert). |
+| `defaultEdit` | `boolean` | Der anfängliche Zustand des Bearbeitungsmodus (uncontrolled). |
+| `activationMode` | `"focus" \| "dblclick" \| "click" \| "none"` | Wie die Vorschau in den Bearbeitungsmodus wechselt. Standard `"focus"`. |
+| `submitMode` | `"enter" \| "blur" \| "both" \| "none"` | Welche Interaktionen den Wert übernehmen. Standard `"both"`. |
+| `selectOnFocus` | `boolean` | Ob der Text der Eingabe beim Fokussieren ausgewählt wird. Standard `true`. |
+| `autoResize` | `boolean` | Hält die Vorschau während der Bearbeitung sichtbar (auf Inhaltsgröße skaliert), anstatt sie auszublenden. |
+| `disabled` | `boolean` | Deaktiviert jede Interaktion. |
+| `readOnly` | `boolean` | Verhindert das Betreten des Bearbeitungsmodus, erlaubt aber weiterhin den Fokus. |
+| `required` | `boolean` | Markiert die zugrunde liegende Eingabe als erforderlich. |
+| `invalid` | `boolean` | Markiert das Feld als ungültig. |
+| `placeholder` | `string \| { edit: string; preview: string }` | Platzhaltertext, optional unterschiedlich zwischen Eingabe und Vorschau. |
+| `maxLength` | `number` | Maximale Eingabelänge. |
+| `name` | `string` | Name der zugrunde liegenden Eingabe, für die native Formularübermittlung. |
+| `form` | `string` | Verknüpft die Eingabe über eine id mit einem `<form>`. |
+| `translations` | `Partial<EditableTranslations>` | Überschreibungen für die ARIA-Zeichenketten von Bearbeiten/Übernehmen/Abbrechen/Eingabe. |
+| `size` | `"2xs" \| "xs" \| "sm" \| "md" \| "lg"` | Visuelle Größe. Standard `"md"`. |
+| `onValueChange` | `(details: { value: string }) => void` | Wird aufgerufen, wenn sich der Eingabewert ändert. |
+| `onValueCommit` | `(details: { value: string }) => void` | Wird aufgerufen, wenn der Wert übernommen wird. |
+| `onValueRevert` | `(details: { value: string }) => void` | Wird aufgerufen, wenn die Bearbeitung abgebrochen wird. |
+| `onEditChange` | `(details: { edit: boolean }) => void` | Wird aufgerufen, wenn der Bearbeitungsmodus umschaltet. |
+| `interactive` | `boolean` | Erzwingt (oder unterdrückt) die Hydration als Insel. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+## Standardzusammensetzung
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `label` | `JSX.Element \| string` | Beschriftung, die über dem Feld gerendert wird. |
+| `children` | `JSX.Element` | Zusätzlicher Inhalt, der nach der standardmäßigen Vorschau/Eingabe/Steuerung angehängt wird. |
+
+## Unterkomponenten
+
+| Teil | Beschreibung |
+| --- | --- |
+| `Editable.Label` | `<label>`, das an die Eingabe gebunden ist; ein Klick fokussiert die Vorschau. |
+| `Editable.Area` | Umschließt `Preview` und `Input` im selben Layout-Slot. |
+| `Editable.Preview` | Die schreibgeschützte Anzeige im Nicht-Bearbeitungsmodus; `role="button"`, per Tastatur aktivierbar gemäß `activationMode`. |
+| `Editable.Input` | Die `<input>`, die während der Bearbeitung angezeigt wird; behandelt Escape-zum-Abbrechen und Enter/Blur-zum-Übernehmen gemäß `submitMode`. |
+| `Editable.Control` | Umschließt die Auslöser für Bearbeiten/Übernehmen/Abbrechen. |
+| `Editable.EditTrigger` | Wechselt in den Bearbeitungsmodus. Während der Bearbeitung ausgeblendet. |
+| `Editable.SubmitTrigger` | Übernimmt den Wert und verlässt den Bearbeitungsmodus. Wenn nicht bearbeitet, ausgeblendet. |
+| `Editable.CancelTrigger` | Verwirft Änderungen und verlässt den Bearbeitungsmodus. Wenn nicht bearbeitet, ausgeblendet. |
+| `Editable.Context` | Render-Prop-Zugriff auf den editierbaren Kontext: `<Editable.Context>{(ctx) => ...}</Editable.Context>`. |
+
+# Barrierefreiheit
+
+- `Preview` ist per Tastatur bedienbar (`tabIndex={0}`, Enter/Leertaste), sobald `activationMode` `"click"` oder `"dblclick"` ist; im Modus `"focus"` öffnet allein das Ansteuern mit der Tab-Taste den Bearbeitungsmodus.
+- `EditTrigger` / `SubmitTrigger` / `CancelTrigger` erhalten `aria-label`s aus `translations` und sind (nicht nur visuell, über das Attribut `hidden`) ausgeblendet, wenn sie im aktuellen Modus nicht anwendbar sind.
+- `Input` trägt `aria-invalid`, wenn `invalid` gesetzt ist, sowie `aria-label` aus `translations.input`.

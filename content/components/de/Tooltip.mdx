@@ -1,0 +1,82 @@
+---
+title: Tooltip
+hydration: 1
+category: Overlays
+---
+
+import { Tooltip, Button } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Komponente zum Anzeigen von kontextbezogenen Informationen bei Hover oder Fokus.
+
+# Verwendung
+
+## High-Level-Wrapper
+
+<DemoPreview>
+  <Tooltip content="This is the tooltip content" placement="bottom" showArrow asChild>
+    <Button>Hover me</Button>
+  </Tooltip>
+</DemoPreview>
+
+```tsx
+import { Tooltip } from "../components/ui/tooltip";
+import { Button } from "../components/ui/button";
+
+export default function MyPage() {
+  return (
+    <Tooltip content="This is the tooltip content" placement="bottom" showArrow asChild>
+      <Button>Hover me</Button>
+    </Tooltip>
+  );
+}
+```
+
+Bevorzugen Sie `asChild`, wenn der Auslöser bereits ein fokussierbares Element ist (eine `Button`, ein Link, …): Es führt die `aria-describedby`, Hover/Fokus-Listener und `data-*`-Attribute des Tooltips direkt mit diesem Element zusammen. Ohne `asChild` wird der Auslöser in ein zusätzliches `<div tabindex="0">` eingehüllt – nützlich zum Umhüllen inaktiven Inhalts (einfacher Text, ein Symbol), der selbst nicht fokussierbar ist, fügt aber eine zweite, redundante Tab-Stopp hinzu, wenn das Kind bereits interaktiv ist.
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `tooltip`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar. Der CMS-Auslöser ist eine einfache `triggerText`-Zeichenfolge, die automatisch in eine `Button` mit Umriss und `asChild` eingehüllt wird (dasselbe Muster wie `Popover`/`HoverCard`):
+
+```json
+{
+  "type": "tooltip",
+  "content": "Free cancellation up to 24 hours before check-in.",
+  "triggerText": "Cancellation Policy",
+  "placement": "top",
+  "showArrow": true
+}
+```
+
+# Eigenschaften
+
+## Tooltip (High-Level-Wrapper)
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Das Element, das den Tooltip auslöst. |
+| `content` | `any` | Der im Tooltip anzuzeigende Inhalt. |
+| `showArrow` | `boolean` | Legt fest, ob ein Pfeil zum Auslöser angezeigt wird. |
+
+| `placement` | `"top" | "bottom" | "left" | "right"` | An welcher Seite des Auslösers der Inhalt geöffnet wird. Standard `"top"`. Wechselt bei unzureichendem Viewport-Platz automatisch auf die gegenüberliegende Seite. |
+
+| `open` | `boolean` | Legt fest, ob der Tooltip geöffnet ist (gesteuert). |
+| `defaultOpen` | `boolean` | Anfänglicher Öffnungszustand (ungesteuert). Standard `false`. |
+| `onOpenChange` | `(details: { open: boolean }) => void` | Wird aufgerufen, wenn der Tooltip geöffnet oder geschlossen wird. |
+| `openDelay` | `number` | Verzögerung (ms) vor dem Anzeigen bei Hover. Standard `100`. |
+| `closeDelay` | `number` | Verzögerung (ms) vor dem Ausblenden bei Maus-verlassen. Standard `100`. |
+| `closeOnEscape` | `boolean` | Schließen, wenn Escape gedrückt wird. Standard `true`. |
+| `disabled` | `boolean` | Legt fest, ob der Tooltip deaktiviert ist. |
+| `interactive` | `boolean` | Erzwingt die Hydration als Insel. Standardmäßig `true`. |
+| `id` | `string` | Eindeutige Kennung für den Tooltip. |
+| `asChild` | `boolean` | Legt fest, ob Props mit dem unmittelbaren Kindelement zusammengeführt werden, anstatt in ein `div` eingehüllt zu werden. |
+
+Das Bewegen des Zeigers über den Auslöser oder das Fokussieren des Auslösers öffnet den Tooltip; das Bewegen des Zeigers auf den eigenen Inhalt des Tooltips (z. B. ein Link darin) hält ihn geöffnet, gemäß [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html).
+
+Das Fokussieren des Auslösers (Tastaturnavigation) öffnet ihn sofort, und das Entfokussieren schließt ihn sofort – die `openDelay`/`closeDelay` gelten nur für Hover.
+
+# Einschränkungen
+
+Die interaktive Insel positioniert und dimensioniert den Tooltip relativ zu seinem Auslöser: Er wechselt auf die gegenüberliegende Seite (z. B. `top` → `bottom`), wenn die angeforderte Platzierung den Viewport überlaufen würde, und begrenzt die Querachse, sodass der Inhalt nie außerhalb des Bildschirms gerendert wird. Es verfolgt Scroll-Container oder Resize-Observer nicht so wie Floating UI – die Neupositionierung läuft nur ab, wenn der Tooltip geöffnet wird und beim Fenster-`resize`.

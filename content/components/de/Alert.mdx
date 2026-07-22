@@ -1,0 +1,67 @@
+---
+title: Alert Warnung
+hydration: 3
+category: Feedback
+---
+
+import { Alert, AlertIcon } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Zeigt eine kurze, wichtige Nachricht auf eine Weise an, die die Aufmerksamkeit des Benutzers erregt, ohne dessen Aufgaben zu unterbrechen.
+
+# Verwendung
+
+<DemoPreview>
+  <Alert
+    status="success"
+    title="Success"
+    description="Your changes have been saved."
+    indicator={<AlertIcon />}
+  />
+</DemoPreview>
+
+```tsx
+import { Alert, AlertIcon } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Alert
+      status="success"
+      title="Success"
+      description="Your changes have been saved."
+      indicator={<AlertIcon />}
+    />
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `alert`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "alert",
+  "status": "success",
+  "title": "Success",
+  "description": "Your changes have been saved.",
+  "variant": "subtle"
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `title` | `string` | Der Titel der Warnung. |
+| `description` | `string` | Die Beschreibung der Warnung. |
+| `indicator` | `Child` | Ein Symbol oder Element, das als Indikator gerendert wird. |
+| `children` | `Child` | Zusätzlicher Inhalt, der innerhalb der Komponente gerendert wird. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `status` | \`"info" \ | "success" \ | "warning" \ | "error" \ | "neutral"\` | Die Status-Farbumgebung der Warnung. |
+
+| `variant` | \`"subtle" \ | "solid" \ | "outline"\` | Der visuelle Stil der Warnung. |
+| `aria-live` | \`"polite" \ | "assertive" \ | "off"\` | Die aria-live-Einstellung der Warnung. Standardmäßig "polite". |

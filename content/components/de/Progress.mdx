@@ -1,0 +1,87 @@
+---
+title: Progress Fortschritt
+hydration: 3
+category: Feedback
+---
+
+import { Progress } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Komponente, die den Fortschritt der Abgeschlossenheit einer Operation als lineare Leiste oder kreisförmigen Indikator anzeigt.
+
+# Verwendung
+
+## Linearer Fortschritt
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "320px" }}>
+    <Progress value={72} showValueText />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Progress } from "../components/ui";
+
+export default function MyPage() {
+  return <Progress value={72} showValueText />;
+}
+```
+
+## Zirkulärer Fortschritt
+
+<DemoPreview>
+  <Progress type="circular" value={40} showValueText />
+</DemoPreview>
+
+```tsx
+import { Progress } from "../components/ui";
+
+export default function MyPage() {
+  return <Progress type="circular" value={40} showValueText />;
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `progress`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "progress",
+  "value": 72,
+  "showValueText": true
+}
+```
+
+# Eigenschaften
+
+## Progress
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `value` | \`number \ | null\` | Der aktuelle Wert. |
+
+| `min` | `number` | Der Mindestwert. Standard: `0`. |
+| `max` | `number` | Der Höchstwert. Standard: `100`. |
+| `label` | `Child` | Über dem Indikator anzuzeigende Beschriftung. |
+| `showValueText` | `boolean` | Legt fest, ob der Wertetext angezeigt wird. Standard: `false`. |
+| `valueText` | `Child` | Benutzerdefinierter anzuzeigender Wertetext. |
+
+| `type` | \`"linear" \ | "circular"\` | Der visuelle Stil des Fortschritts. Standard: `"linear"`. |
+| `variant` | \`"solid" \ | "subtle"\` | Die visuelle Variante. |
+
+| `shape` | \`"square" \ | "rounded" \ | "full"\` | Die Form des Indikators. |
+
+| `striped` | `boolean` | Legt fest, ob eine gestreifte Füllung angezeigt wird (linear). |
+| `animated` | `boolean` | Legt fest, ob die Füllung animiert wird. |
+
+| `size` | \`"xs" \ | "sm" \ | "md" \ | "lg" \ | "xl"\` | Die Größe des Indikators. |
+
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+# Unterkomponenten
+
+`Progress.Root`, `Progress.Track`, `Progress.Range`, `Progress.Circle`, `Progress.CircleTrack`, `Progress.CircleRange`, `Progress.Label`, `Progress.ValueText`, `Progress.View`

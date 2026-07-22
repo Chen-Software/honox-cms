@@ -1,0 +1,139 @@
+---
+title: Textarea Textbereich
+hydration: 2
+category: Forms
+---
+
+import { Textarea } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine mehrzeilige Texteingabekomponente, die mit dem `Field`-Kontext integriert. Sie kann eigenständig oder als Teil einer `Field`-Komponente verwendet werden.
+
+# Verwendung
+
+## Eigenständig mit Field-Integration
+
+`Textarea` umschließt sich automatisch mit einem `Field`, wenn Sie `label`, `helperText` usw. angeben.
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "320px" }}>
+    <Textarea
+      label="Bio"
+      placeholder="Write here..."
+      rows={4}
+      minLength={10}
+      interactive
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Textarea } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Textarea
+      label="Bio"
+      placeholder="Write here..."
+      rows={4}
+      minLength={10}
+      interactive
+    />
+  );
+}
+```
+
+## Varianten
+
+```tsx
+import { Stack } from "../design-system/jsx";
+import { Textarea } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Stack gap="4">
+      <Textarea variant="outline" placeholder="Outline" />
+      <Textarea variant="surface" placeholder="Surface" />
+      <Textarea variant="subtle" placeholder="Subtle" />
+      <Textarea variant="flushed" placeholder="Flushed" />
+    </Stack>
+  );
+}
+```
+
+## Größen
+
+```tsx
+import { Stack } from "../design-system/jsx";
+import { Textarea } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Stack gap="4">
+      <Textarea size="xs" placeholder="Extra Small" />
+      <Textarea size="sm" placeholder="Small" />
+      <Textarea size="md" placeholder="Medium" />
+      <Textarea size="lg" placeholder="Large" />
+      <Textarea size="xl" placeholder="Extra Large" />
+    </Stack>
+  );
+}
+```
+
+## Innerhalb einer Field-Komponente
+
+Sie können sie auch innerhalb einer `Field`-Komponente für komplexere Layouts verwenden.
+
+```tsx
+import { Field, Textarea } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Field label="Comments">
+      <Textarea placeholder="Leave a comment..." interactive />
+    </Field>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `textarea`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "textarea",
+  "label": "Bio",
+  "helperText": "Tell us about yourself.",
+  "rows": 4
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+
+| `variant` | `"outline" | "surface" | "subtle" | "flushed"` | Der visuelle Stil des Textbereichs. |
+
+| `size` | `"xs" | "sm" | "md" | "lg" | "xl"` | Die Größe des Textbereichs. |
+
+| `resize` | `"none" | "both" | "horizontal" | "vertical"` | Legt fest, ob der Textbereich in der Größe veränderbar ist. |
+
+| `label` | `string` | Die Beschriftung für das Feld (bei Verwendung als eigenständiges Field). |
+| `helperText` | `string` | Der Hilfetext für das Feld. |
+| `errorText` | `string` | Der Fehlertext für das Feld. |
+| `value` | `string` | Der aktuelle Wert. |
+| `defaultValue` | `string` | Der Anfangswert. |
+| `onValueChange` | `(val: string) => void` | Rückruf, der bei Wertänderung ausgelöst wird. |
+| `onInput` | `(e: any) => void` | Ereignisbehandlung für Eingabeänderungen. |
+| `rows` | `number` | Anzahl der sichtbaren Textzeilen. |
+| `placeholder` | `string` | Platzhaltertext. |
+| `minLength` | `number` | Mindestlängen-Validierung. |
+
+| `validator` | `(val: string) => boolean | string` | Benutzerdefinierte Validierungslogik. |
+
+| `interactive` | `boolean` | Erzwingt die Hydration als Insel. |

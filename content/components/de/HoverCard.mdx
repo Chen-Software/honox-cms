@@ -1,0 +1,74 @@
+---
+title: HoverCard Hoverkarte
+hydration: 1
+category: Overlays
+---
+
+import { HoverCard } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Popover, die beim Darüberfahren mit der Maus über einen Auslöser erscheint und nützlich für die Anzeige von Zusatzinformationen ist.
+
+# Verwendung
+
+## Einfache HoverCard
+
+<DemoPreview>
+  <HoverCard
+    trigger={<a href="#">Hover me</a>}
+    title="Supplementary information"
+    description="Shown on hover, positioned automatically."
+    showArrow
+  />
+</DemoPreview>
+
+```tsx
+import { HoverCard } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <HoverCard.Root>
+      <HoverCard.Trigger>
+        <a href="#">Hover me</a>
+      </HoverCard.Trigger>
+      <HoverCard.Positioner>
+        <HoverCard.Content>
+          Supplementary information shown on hover.
+        </HoverCard.Content>
+      </HoverCard.Positioner>
+    </HoverCard.Root>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `hoverCard`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "hoverCard",
+  "triggerText": "Hover me",
+  "showArrow": true,
+  "title": "Supplementary information",
+  "description": "Shown on hover."
+}
+```
+
+# Eigenschaften
+
+## HoverCard
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `interactive` | `boolean` | Aktiviert die clientseitige Hydration. Standard: `true`. |
+| `open` | `boolean` | Gesteuerter Öffnungszustand. |
+| `openDelay` | `number` | Verzögerung in ms vor dem Öffnen beim Darüberfahren. |
+| `closeDelay` | `number` | Verzögerung in ms vor dem Schließen beim Verlassen. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+# Unterkomponenten
+
+`HoverCard.Root`, `HoverCard.Trigger`, `HoverCard.Positioner`, `HoverCard.Content`, `HoverCard.Arrow`, `HoverCard.ArrowTip`

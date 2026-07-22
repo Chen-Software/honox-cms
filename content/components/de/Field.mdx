@@ -1,0 +1,145 @@
+---
+title: Field Feld
+hydration: 2
+category: Forms
+---
+
+import { Field } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine grundlegende Komponente für Formularfelder, die Beschriftungen, Hilfetext, Fehlermeldungen und Validierungszustand verwaltet. Sie folgt dem „Smart Switcher“-Muster und hydriert bei Bedarf automatisch als interaktive Insel.
+
+# Verwendung
+
+## Intelligente Auto-Hydration
+
+Die `Field`-Komponente bestimmt automatisch, ob sie interaktiv sein soll. Sie wird zu einer Insel, wenn eine der folgenden Props angegeben wird: `interactive`, `onValueChange`, `value`, `defaultValue`, `validator` oder `minLength`.
+
+## Validierung
+
+`Field` unterstützt eingebaute und benutzerdefinierte Validierung.
+
+### Mindestlänge
+
+Über `minLength` wird automatisch eine Fehlermeldung angezeigt, wenn die Eingabe zu kurz ist.
+
+```tsx
+<Field
+  label="Username"
+  minLength={5}
+  placeholder="Enter at least 5 characters"
+/>
+```
+
+### Benutzerdefinierter Validator
+
+Die Prop `validator` akzeptiert eine Funktion, die `true` für gültig, `false` für ungültig (mit Standardfehlermeldung) oder einen `string` als benutzerdefinierte Fehlermeldung zurückgibt.
+
+```tsx
+<Field
+  label="Email"
+  validator={(value) => {
+    if (!value.includes("@")) return "Must be a valid email";
+    return true;
+  }}
+/>
+```
+
+Die einfachste Verwendung von `Field` erfolgt über die vereinfachten Props. Es rendert automatisch eine Eingabe.
+
+<DemoPreview>
+  <div style={{ width: "100%", maxWidth: "320px" }}>
+    <Field
+      label="Username"
+      helperText="Choose a unique username."
+      placeholder="Type here..."
+      minLength={3}
+    />
+  </div>
+</DemoPreview>
+
+```tsx
+import { Field } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Field
+      label="Username"
+      helperText="Choose a unique username."
+      placeholder="Type here..."
+      minLength={3}
+    />
+  );
+}
+```
+
+## Feldsatz-Vererbung
+
+Ein `Field` innerhalb eines `Fieldset` erbt den `disabled`/`required`-Zustand der Gruppe sowie deren `invalid`-Zustand — aber nur, wenn das `Field` keine eigene Validierung besitzt (kein `validator`/`minLength` und keine explizite `invalid`-Prop). Eine explizite Prop auf `Field` hat stets Vorrang vor dem vererbten Wert.
+
+```tsx
+<Fieldset legend="Shipping address" disabled>
+  {/* erbt disabled — muss nicht wiederholt werden */}
+  <Field label="Street" />
+</Fieldset>
+```
+
+Beachten Sie, dass ein nativer `<fieldset disabled>` ebenfalls jede nachgeordnete Formularsteuerung auf Browser-Ebene deaktiviert, unabhängig von dieser Vererbung — die vererbte `disabled`-Prop hält lediglich das Styling/die ARIA des `Field` damit synchron; sie kann von innerhalb eines deaktivierten Feldsatzes nicht wieder auf aktiv gesetzt werden.
+
+## Zusammensetzung
+
+Für mehr Kontrolle können Sie andere Komponenten wie `Textarea` oder benutzerdefinierte Eingaben umschließen. Das `Field` stellt seinen Kindern einen Kontext zur Verfügung.
+
+```tsx
+import { Field, Textarea } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Field
+      label="Bio"
+      helperText="Tell us about yourself."
+      minLength={10}
+    >
+      <Textarea placeholder="A short bio" />
+    </Field>
+  );
+}
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `field`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+
+```json
+{
+  "type": "field",
+  "label": "Username",
+  "helperText": "Choose a unique username.",
+  "required": true
+}
+```
+
+# Eigenschaften
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `children` | `any` | Inhalt, der innerhalb der Komponente gerendert wird. Wenn angegeben, wird die interne Eingabe nicht gerendert. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen. |
+| `id` | `string` | Eindeutige Kennung. Wird eine generiert, falls nicht angegeben. |
+| `label` | `Child` | Die Beschriftung für das Feld. |
+| `helperText` | `Child` | Der Hilfetext für das Feld. |
+| `errorText` | `Child` | Der Fehlertext für das Feld. Wird er als Zeichenkette übergeben, wird sie als Nachricht verwendet. |
+| `disabled` | `boolean` | Ob das Feld deaktiviert ist. |
+| `invalid` | `boolean` | Ob das Feld sich in einem ungültigen Zustand befindet. |
+| `required` | `boolean` | Ob das Feld erforderlich ist. |
+| `readOnly` | `boolean` | Ob das Feld schreibgeschützt ist. |
+| `value` | `string` | Der aktuelle Wert (erzwingt den interaktiven Modus). |
+| `defaultValue` | `string` | Der anfängliche Wert (erzwingt den interaktiven Modus). |
+| `onValueChange` | `(val: string) => void` | Rückruf, der bei Wertänderung ausgelöst wird (erzwingt den interaktiven Modus). |
+| `minLength` | `number` | Mindestlängen-Validierung (erzwingt den interaktiven Modus). |
+
+| `validator` | \`(val: string) => boolean \ | string\` | Benutzerdefinierte Validierungsfunktion (erzwingt den interaktiven Modus). |
+
+| `interactive` | `boolean` | Erzwingt Hydration als Insel. |

@@ -1,0 +1,134 @@
+---
+title: ToggleGroup Umschaltgruppe
+hydration: 2
+category: Forms
+---
+
+import { ToggleGroup, Stack } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Eine Gruppe von Umschalt-Schaltflächen für Einzel- oder Mehrfachauswahl, exklusiv oder inklusiv – z. B. Textformatierungs-Steuerelemente (Fett/Kursiv/Unterstrichen) oder ein Ansichts-Umschalter.
+
+# Hydration
+
+**Stufe 2 – intelligente Auto-Erkennung.** Eine `Umschaltgruppe` wird als statisches HTML gerendert und liefert kein Client-JS, sofern kein Verhaltenssignal vorhanden ist. Übergeben Sie `interactive={true}` zum Erzwingen der Hydration oder `interactive={false}` zum Erzwingen eines statischen Renderns.
+
+Sie hydratisiert als Insel, wenn **eines** der folgenden Signale vorhanden ist (oder `interactive={true}` gesetzt ist):
+
+- `value` (gesteuerte Auswahl)
+- `defaultValue` (ungesteuerte Anfangsauswahl)
+- `onValueChange`
+
+| `interactive`-Eigenschaft | Ergebnis |
+| --- | --- |
+| weggelassen, **kein** Signal | Statisch – kein Client-JS |
+| weggelassen, Signal vorhanden | Hydratisiert als Insel |
+| `true` | Hydratisiert als Insel |
+| `false` | Statisch – kein Client-JS |
+
+# Verwendung
+
+<DemoPreview>
+  <Stack direction="horizontal" gap="6">
+    <ToggleGroup
+      multiple
+      defaultValue={["bold"]}
+      items={[
+        { label: "B", value: "bold" },
+        { label: "I", value: "italic" },
+        { label: "U", value: "underline" },
+      ]}
+      interactive
+    />
+    <ToggleGroup
+      defaultValue={["list"]}
+      items={[
+        { label: "Grid", value: "grid" },
+        { label: "List", value: "list" },
+      ]}
+      interactive
+    />
+  </Stack>
+</DemoPreview>
+
+```tsx
+import { ToggleGroup } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <ToggleGroup
+      multiple
+      defaultValue={["bold"]}
+      items={[
+        { label: "B", value: "bold" },
+        { label: "I", value: "italic" },
+        { label: "U", value: "underline" },
+      ]}
+    />
+  );
+}
+```
+
+## Benutzerdefinierte Zusammensetzung
+
+Übergeben Sie `children` anstelle von `items` für volle Kontrolle über den Inhalt jeder Schaltfläche:
+
+```tsx
+import { ToggleGroup } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <ToggleGroup defaultValue={["list"]}>
+      <ToggleGroup.Item value="grid">Grid</ToggleGroup.Item>
+      <ToggleGroup.Item value="list">List</ToggleGroup.Item>
+    </ToggleGroup>
+  );
+}
+```
+
+# Eigenschaften
+
+## Wurzel
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `value` | `string[]` | Die aktuell gedrückten Werte (gesteuert). |
+| `defaultValue` | `string[]` | Die anfänglich gedrückten Werte (ungesteuert). |
+| `onValueChange` | `(value: string[]) => void` | Wird aufgerufen, wenn sich die Auswahl ändert. |
+| `multiple` | `boolean` | Erlaubt mehr als ein gleichzeitig gedrücktes Element. Standard `false` (einfach, abwählbare Auswahl). |
+| `disabled` | `boolean` | Deaktiviert jedes Element. |
+| `orientation` | `"horizontal" | "vertical"` | Layoutfluss und die Achse, auf der die Pfeiltasten wandern. Standard `"horizontal"`. |
+| `id` | `string` | Die id des Wurzelelements. |
+| `variant` | `"outline" | "ghost"` | Visueller Stil. Standard `"outline"`. |
+| `size` | `"sm" | "md" | "lg"` | Visuelle Größe. Standard `"md"`. |
+| `interactive` | `boolean` | Überschreibt die Hydrationsentscheidung (siehe oben). |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. |
+
+## Standardzusammensetzung
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `items` | `ToggleGroupItem[]` | Zu rendernde Schaltflächen, wenn `children` weggelassen wird. |
+
+## ToggleGroupItem
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+| `value` | `string` | Der eindeutige Wert des Elements. |
+| `label` | `string | JSX.Element` | Der Anzeigeinhalt der Schaltfläche. |
+| `disabled` | `boolean` | Deaktiviert diese Schaltfläche. |
+
+## Unterkomponenten
+
+| Teil | Beschreibung |
+| --- | --- |
+| `ToggleGroup.Item` | Eine Umschalt-Schaltfläche. Benötigt ein `value`-Prop; rendert `role="checkbox"` im `multiple`-Modus bzw. `role="radio"` sonst. |
+
+# Barrierefreiheit
+
+- Das Wurzelelement hat `role="group"`.
+- Elemente rendern `role="checkbox"` + `aria-pressed` bei `multiple` bzw. `role="radio"` + `aria-checked` sonst.
+- Pfeiltasten (Rechts/Runter zum Vorwärtsgehen, Links/Hoch zum Zurückgehen) wandern den Fokus zwischen aktivierten Elementen; Pos1/Ende springen zum ersten/letzten aktivierten Element – passend zu `orientation`.
+- `data-state` (`on`/`off`) und `data-disabled` werden für das Styling auf jedes Element gespiegelt.

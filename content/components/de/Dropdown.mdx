@@ -1,0 +1,295 @@
+---
+title: Dropdown
+hydration: 1
+category: Overlays
+---
+
+import { Dropdown, Button } from "../../../app/components/ui";
+import { DemoPreview } from "../../../app/components/demo-preview";
+
+# Einführung
+
+Ein Aktions- oder Optionsmenü, das bei Auslösen erscheint. Unterstützt benutzerdefinierte Platzierungen mit automatischem Umdrehen bei Viewport-Überlauf, einen optionalen Pfeil mit zentrumsgerichteter Geometrie, Checkbox-/Radio-/Gruppen-Einträge, verschachtelte Untermenüs sowie Klick-/Hover-/Kontextmenü-Auslösemodi.
+
+# Verwendung
+
+## Einfaches Dropdown
+
+<DemoPreview>
+  <Dropdown
+    trigger={<Button>Open Dropdown</Button>}
+    items={[
+      { type: "item", label: "Edit", value: "edit" },
+      { type: "separator" },
+      { type: "checkbox", label: "Bold", value: "bold", checked: true },
+      {
+        type: "radio-group",
+        value: "theme",
+        label: "Theme",
+        items: [
+          { type: "radio", label: "Light", value: "light" },
+          { type: "radio", label: "Dark", value: "dark" },
+        ],
+      },
+    ]}
+  />
+</DemoPreview>
+
+```tsx
+import { Dropdown, Button } from "../components/ui";
+
+export default function MyPage() {
+  return (
+    <Dropdown
+      trigger={<Button>Open Dropdown</Button>}
+      items={[
+        { type: "item", label: "Edit", value: "edit" },
+        { type: "separator" },
+        { type: "checkbox", label: "Bold", value: "bold", checked: true },
+        {
+          type: "radio-group",
+          value: "theme",
+          label: "Theme",
+          items: [
+            { type: "radio", label: "Light", value: "light" },
+            { type: "radio", label: "Dark", value: "dark" },
+          ],
+        },
+      ]}
+    />
+  );
+}
+```
+
+## Schaltfläche mit Dropdown-Menü
+
+```tsx
+import { Dropdown } from "../components/ui";
+
+export default function Page() {
+  return (
+    <Dropdown.Button
+      type="primary"
+      items={[{ type: "item", label: "Submit & Close", value: "close" }]}
+      onClick={() => console.log("Primary click!")}
+    >
+      Submit Action
+    </Dropdown.Button>
+  );
+}
+```
+
+## Benutzerdefiniertes Styling & semantische Klassennamen
+
+```tsx
+<Dropdown
+  trigger={<Button>Styled Dropdown</Button>}
+  classNames={{
+    content: "custom-menu-card",
+    item: "custom-menu-item"
+  }}
+  styles={{
+    content: { boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }
+  }}
+  items={[{ type: "item", label: "Custom Styled Item", value: "styled" }]}
+/>
+```
+
+## Zentrumsgerichteter Pfeil
+
+```tsx
+<Dropdown
+  trigger={<Button>Center Arrow</Button>}
+  arrow={{ pointAtCenter: true }}
+  placement="bottomRight"
+  items={[{ type: "item", label: "Item 1", value: "1" }]}
+/>
+```
+
+## Gruppen und verschachtelte Untermenüs
+
+```tsx
+<Dropdown
+  trigger={<Button>Open Dropdown</Button>}
+  items={[
+    {
+      type: "group",
+      label: "File",
+      items: [
+        { type: "item", label: "New", value: "new" },
+        { type: "item", label: "Open", value: "open" },
+      ],
+    },
+    { type: "separator" },
+    {
+      type: "submenu",
+      label: "Share",
+      items: [
+        { type: "item", label: "Email", value: "email" },
+        { type: "item", label: "Link", value: "link" },
+      ],
+    },
+  ]}
+/>
+```
+
+## Benutzerdefinierte Platzierung, Pfeil und Hover-Auslöser
+
+```tsx
+<Dropdown
+  trigger={<Button>Hover Me</Button>}
+  placement="bottomRight"
+  triggerMode="hover"
+  arrow={true}
+  mouseEnterDelay={100}
+  mouseLeaveDelay={150}
+  items={[
+    { type: "item", label: "Profile", value: "profile" },
+    { type: "item", label: "Settings", value: "settings" },
+    { type: "separator" },
+    { type: "item", label: "Logout", value: "logout" },
+  ]}
+/>
+```
+
+## Kontextmenü
+
+Ein Auslöser, der für `"contextMenu"` verdrahtet ist, öffnet per Rechtsklick am Zeiger verankert, anstatt sich wie eine Schaltfläche zu verhalten:
+
+```tsx
+<Dropdown
+  trigger={<div>Right-click this area</div>}
+  trigger={"contextMenu"}
+  items={[
+    { type: "item", label: "Copy", value: "copy" },
+    { type: "item", label: "Paste", value: "paste" },
+  ]}
+/>
+```
+
+## Gesteuerter Öffnungszustand
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<Dropdown
+  open={open}
+  onOpenChange={setOpen}
+  trigger={<Button>Open Dropdown</Button>}
+  items={[{ type: "item", label: "Edit", value: "edit" }]}
+/>;
+```
+
+## CMS-Seitenbauer
+
+Diese Komponente ist als `menu`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar — der CMS-Block heißt „Menu“, wird aber über diese `Dropdown`-Komponente gerendert:
+
+```json
+{
+  "type": "menu",
+  "triggerText": "Open Dropdown",
+  "items": [
+    { "type": "item", "label": "Edit", "value": "edit" },
+    { "type": "separator" },
+    { "type": "item", "label": "Delete", "value": "delete" }
+  ]
+}
+```
+
+# Eigenschaften
+
+## Dropdown
+
+| Eigenschaft | Typ | Beschreibung | Standard |
+| --- | --- | --- | --- |
+| `trigger` | `JSX.Element` | Element, das das Menü beim Aktivieren öffnet. | - |
+| `items` | `DropdownItem[]` | Die zu rendernden Menüeinträge. | - |
+| `open` | `boolean` | Ob das Menü geöffnet ist (gesteuert). | - |
+| `defaultOpen` | `boolean` | Ob das Menü standardmäßig geöffnet ist (uncontrolled). | `false` |
+| `disabled` | `boolean` | Deaktiviert jeden Auslösemodus und rendert den Auslöser inaktiv. | `false` |
+| `interactive` | `boolean` | Erzwingt Hydration als Insel. Standardmäßig `true`. | `true` |
+
+| `arrow` | \`boolean \ | \{ pointAtCenter?: boolean \}\` | Zeigt einen Zeigerpfeil vom Menü zum Auslöser. Kann exakt mit dem Zentrum des Auslösers ausgerichtet werden. | `false` |
+
+| `placement` | `string` | Menüplatzierung: \`"top" \ | "topLeft" \ | "topRight" \ | "bottom" \ | "bottomLeft" \ | "bottomRight" \ | "left" \ | "leftTop" \ | "leftBottom" \ | "right" \ | "rightTop" \ | "rightBottom"\`. Dash-Case-Aliasse werden ebenfalls akzeptiert. | \`"bottomLeft"\` |
+
+| `trigger` | \`("click" \ | "hover" \ | "contextMenu" \ | "contextDropdown")[] \ | string\` | Auslöseinteraktionsmodi zum Öffnen/Schließen des Menüs. (Alias `triggerMode`). | `["click"]` |
+
+| `mouseEnterDelay` | `number` | Verzögerung in ms vor dem Öffnen, wenn der Auslöser `"hover"` enthält. | `150` |
+| `mouseLeaveDelay` | `number` | Verzögerung in ms vor dem Schließen, wenn der Auslöser `"hover"` enthält. | `100` |
+| `closeOnEscape` | `boolean` | Schließt, wenn Escape gedrückt wird. | `true` |
+
+| `onOpenChange` | \`(open: boolean, info?: \{ source: 'trigger' \ | 'menu' \}) => void\` | Wird aufgerufen, wenn das Menü geöffnet oder geschlossen wird. `source` gibt an, was die Aktion ausgelöst hat. | - |
+
+| `onSelect` | `(value: string) => void` | Wird mit dem `value` eines Eintrags aufgerufen, wenn dieser aktiviert wird. | - |
+
+| `size` | \`"xs" \ | "sm" \ | "md" \ | "lg" \ | "xl"\` | Die Größe des Menüs. | `"md"` |
+
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für das Wurzelelement. | - |
+| `contentClass` | `string` | Benutzerdefinierte CSS-Klassen für das Inhaltselement. | - |
+| `positionerClass` | `string` | Benutzerdefinierte CSS-Klassen für das Positionier-Element. | - |
+| `destroyOnHidden` | `boolean` | Legt fest, ob der Popup-Inhalt bei Ausblendung aus dem DOM entfernt wird. (Alias `destroyPopupOnHide`). | `false` |
+| `popupRender` | `(menu: JSX.Element) => JSX.Element` | Passt den Popup-Inhalt an bzw. kapselt ihn ein. (Alias `dropdownRender`). | - |
+| `classNames` | `Record<string, string>` | Benutzerdefinierte CSS-Klassen für jede semantische Strukturkomponente innerhalb des Dropdown. | - |
+| `styles` | `Record<string, any>` | Benutzerdefinierte Inline-Styles für jede semantische Strukturkomponente innerhalb des Dropdown. | - |
+
+### classNames- und styles-Slots:
+
+- `root` (oder `positioner`): Der absolut positionierte Container für das Overlay.
+- `content`: Die Popup-Karte mit den Listeneinträgen.
+- `item`: Einzelner Listeneintrag (einschließlich Checkbox- und Radio-Einträgen).
+- `trigger`: Die Haupt-Auslöser-Schaltfläche bzw. der Wrapper.
+- `arrow`: Der äußere Pfeil-Wrapper.
+- `arrowTip`: Der formatierte innere Diamant.
+
+### DropdownItem
+
+| Eigenschaft | Typ | Beschreibung |
+| --- | --- | --- |
+
+| `type` | \`"item" \ | "separator" \ | "checkbox" \ | "radio" \ | "radio-group" \ | "submenu" \ | "group"\` | Die Art des Menüeintrags. |
+
+| `label` | `string` | Anzeigetext (für `item`, `checkbox`, `radio`, `submenu` und optional `group`). |
+| `value` | `string` | Eindeutiger Wert (für `item`, `checkbox`, `radio`, `radio-group`). |
+| `checked` | `boolean` | Ausgewählter Zustand (für `checkbox`, `radio`). |
+| `icon` | `JSX.Element` | Führendes Symbol (für `item`, `checkbox`, `radio`, `submenu`). |
+| `indicator` | `JSX.Element` | Benutzerdefiniertes nachgestelltes Indikatorelement (für `item`). |
+| `items` | `DropdownItem[]` | Verschachtelte Einträge (für `radio-group`, `submenu`, `group`). Untermenü-/Gruppen-Einträge können selbst beliebige `DropdownItem`s sein, einschließlich weiterer Untermenüs. |
+| `disabled` | `boolean` | Ob der Eintrag (bzw. bei `submenu` das gesamte verschachtelte Menü) deaktiviert ist. |
+| `class` | `string` | Benutzerdefinierte CSS-Klassen für den Eintrag. |
+
+***
+
+## Dropdown.Button (DropdownButton)
+
+Eine Schaltfläche mit einem Dropdown-Menü, gerendert als zusammenhängende angefügte Schaltflächengruppe.
+
+| Eigenschaft | Typ | Beschreibung | Standard |
+| --- | --- | --- | --- |
+
+| `type` | \`"default" \ | "primary" \ | "dashed" \ | "link" \ | "text" \ | "solid" \ | "outline" \ | "subtle" \ | "plain" \ | "surface"\` | Der Typ der zu rendernden Schaltflächen. | `"outline"` |
+
+| `danger` | `boolean` | Rendert Schaltflächen mit einem Gefahren-Visuallayout. | `false` |
+| `disabled` | `boolean` | Deaktiviert sowohl die primäre Schaltfläche als auch den Dropdown-Auslöser. | `false` |
+| `loading` | `boolean` | Rendert die primäre Schaltfläche im Lade-/Beschäftigt-Zustand. | `false` |
+| `onClick` | `(e: MouseEvent) => void` | Klick-Ereignishandler für die linke/primäre Schaltfläche. | - |
+| `icon` | `JSX.Element` | Symbol für die rechte/Auslöser-Schaltfläche. | `<EllipsisIcon />` |
+| `buttonsRender` | `(buttons: JSX.Element[]) => JSX.Element[]` | Benutzerdefinierte Render-Funktion zur Anpassung beider Schaltflächen. | - |
+
+Unterstützt alle gängigen `Dropdown`-Props wie `items`, `placement`, `arrow`, `classNames`, `styles` usw.
+
+***
+
+# Hinweis
+
+Stellen Sie bitte sicher, dass `trigger` `onMouseEnter`, `onMouseLeave`, `onFocus` und `onClick` akzeptiert — das Auslöserelement wird an Ort und Stelle geklont und mit diesen (sowie den relevanten ARIA-/ `data-*`-)Attributen versehen, anstatt es zu umschließen.
+
+# Einschränkungen
+
+Die interaktive Insel positioniert das Menü relativ zu dem eigenen Wrapper des Auslösers (`position: absolute`, kein Portal): Sie klappt auf die gegenüberliegende Seite um, wenn die angeforderte Platzierung den Viewport überlaufen würde, und klemmt die Querachse so ein, dass das Menü nie außerhalb des Bildschirms gerendert wird. Sie verfolgt Scroll-Container oder Resize-Observer nicht auf die Weise wie Floating UI — die Neupositionierung läuft nur bei einem Fenster-`resize` während der Öffnung erneut, und das Scrollen der Seite bewegt das Menü zusammen mit dem Auslöser mit. Ein aus einem tief verschachtelten Scroll- oder `overflow: hidden`-Container geöffnetes Menü kann dennoch visuell von diesem Container abgeschnitten werden — derselbe Kompromiss wie bei `Popover` und `Tooltip`.
+
+Kontextmenüs und Untermenüs sind die Ausnahme: Da sie nicht an die Box eines Auslösers verankert sind (ein Kontextmenü öffnet am Zeiger; ein Untermenü öffnet neben einem Menüeintrag), werden sie stattdessen mit `position: fixed` und manuell berechneten Koordinaten positioniert und reagieren wie der Rest des Menüs auf Escape/Scroll/Resize.
+
+Jedes Untermenü ist eine eigene verschachtelte interaktive Insel, über einen `data-overlay-root`-Marker gekapselt, sodass die Positionierungs- und Outside-Click-Logik eines übergeordneten Menüs nicht in den eigenen Inhalt eines Untermenüs hineinreicht (und umgekehrt). Das Auswählen eines regulären Eintrags schließt jede geöffnete Menüebene, durch die es nach oben steigt; das Umschalten eines Checkbox-/Radio-Eintrags innerhalb einer beliebigen Ebene hält den gesamten Stapel geöffnet.
+
+Die `_closed`-Exit-Animation (`slide-fade-out`) läuft ab, bevor das Menü tatsächlich aus dem Layout entfernt wird — das Schließen blendet es also nicht sofort aus.
