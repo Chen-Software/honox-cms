@@ -75,6 +75,11 @@
     "newsletterHeading": "Restez à jour",
     "newsletterDescription": "Recevez les derniers articles et perspectives directement dans votre boîte de réception. Pas de spam, juste du contenu de qualité."
   },
+  "hydrationTiers": [
+    { "tier": 1, "label": "Auto-interactif" },
+    { "tier": 2, "label": "Détection automatique intelligente" },
+    { "tier": 3, "label": "Présentationnel" }
+  ],
   "docsUi": {
     "searchPlaceholder": "Rechercher dans les docs...",
     "searchItemLabel": "documents",
