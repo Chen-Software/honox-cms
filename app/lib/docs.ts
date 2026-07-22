@@ -192,7 +192,7 @@ export async function loadDocsSearchIndex(
 	const docs = await loadDocs(locale);
 	return docs.map((doc) => ({
 		key: doc.slug,
-		href: locale !== "en" ? `/${locale}/docs/${doc.slug}` : `/docs/${doc.slug}`,
+		href: locale !== "en" ? `/docs/${locale}/${doc.slug}` : `/docs/${doc.slug}`,
 		title: doc.title,
 		tags: [doc.section, doc.category].filter((tag): tag is string =>
 			Boolean(tag),

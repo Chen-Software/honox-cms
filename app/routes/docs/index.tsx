@@ -20,6 +20,7 @@ import {
 	type DocsNavLinkConfig,
 	loadDocsConfig,
 } from "../../lib/configs";
+import { detectLocale, localiseHref } from "../../lib/i18n";
 import { type DocSummary, loadDocs } from "../../lib/docs";
 
 // ---------------------------------------------------------------------------
@@ -99,16 +100,7 @@ function DocsSidenav({
 	links,
 	currentLocale = "en",
 }: DocsSidenavProps) {
-	const localiseLink = (href: string) => {
-		if (
-			currentLocale === "zh" &&
-			!href.startsWith("/zh") &&
-			href.startsWith("/")
-		) {
-			return `/zh${href}`;
-		}
-		return href;
-	};
+	const localiseLink = (href: string) => localiseHref(href, currentLocale);
 
 	return (
 		<nav
@@ -292,16 +284,7 @@ function DocsHeader({
 	currentLocale,
 }: DocsHeaderProps) {
 	const githubLink = links?.find(isGithubLink);
-	const localiseLink = (href: string) => {
-		if (
-			currentLocale === "zh" &&
-			!href.startsWith("/zh") &&
-			href.startsWith("/")
-		) {
-			return `/zh${href}`;
-		}
-		return href;
-	};
+	const localiseLink = (href: string) => localiseHref(href, currentLocale);
 
 	return (
 		<>
@@ -462,23 +445,14 @@ const docsShellProps = {
 
 export default createRoute(async (c) => {
 	const currentPath = c.req.path;
-	const currentLocale = currentPath.startsWith("/zh") ? "zh" : "en";
+	const currentLocale = detectLocale(currentPath);
 	const [docs, config] = await Promise.all([
 		loadDocs(currentLocale),
-		loadDocsConfig(),
+		loadDocsConfig(currentLocale),
 	]);
 	const groups = buildDocGroups(docs, config);
 
-	const localiseLink = (href: string) => {
-		if (
-			currentLocale === "zh" &&
-			!href.startsWith("/zh") &&
-			href.startsWith("/")
-		) {
-			return `/zh${href}`;
-		}
-		return href;
-	};
+	const localiseLink = (href: string) => localiseHref(href, currentLocale);
 
 	return c.render(
 		<Layout

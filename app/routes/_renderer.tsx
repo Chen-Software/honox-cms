@@ -1,18 +1,12 @@
 import { jsxRenderer } from "hono/jsx-renderer";
 import { Link, Script } from "honox/server";
+import { detectLocale } from "../lib/i18n";
 
 export const __importing_islands = true;
 
 export default jsxRenderer(({ children }, c) => {
 	const currentPath = c.req.path;
-	let currentLocale = "en";
-	if (currentPath.startsWith("/zh")) {
-		currentLocale = "zh";
-	} else if (currentPath.startsWith("/es")) {
-		currentLocale = "es";
-	} else if (currentPath.startsWith("/pt")) {
-		currentLocale = "pt";
-	}
+	const currentLocale = detectLocale(currentPath);
 	return (
 		<html lang={currentLocale}>
 			<head>

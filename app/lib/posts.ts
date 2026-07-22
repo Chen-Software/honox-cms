@@ -98,7 +98,7 @@ export async function loadPosts(locale = "en"): Promise<LoadedPosts> {
 
 			searchEntries.push({
 				key: slug,
-				href: locale === "zh" ? `/zh/blog/${slug}` : `/blog/${slug}`,
+				href: locale !== "en" ? `/blog/${locale}/${slug}` : `/blog/${slug}`,
 				title,
 				description,
 				tags: postTags,

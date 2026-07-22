@@ -1,33 +1,10 @@
 import { css } from "design-system/css";
 import { Button, Dropdown } from "./ui";
-
-const ALL_LOCALES = ["en", "zh", "es", "pt", "fr"] as const;
-
-const LOCALE_NAMES: Record<string, string> = {
-	en: "English",
-	zh: "中文",
-	es: "Español",
-	pt: "Português",
-	fr: "Français",
-};
-
-function stripLocalePrefix(path: string, locale: string): string {
-	if (locale === "en") return path;
-	const prefix = `/${locale}`;
-	if (path === prefix) return "/";
-	if (path.startsWith(`${prefix}/`)) return path.slice(prefix.length);
-	return path;
-}
-
-function getLocaleToggleUrl(
-	currentPath: string,
-	currentLocale: string,
-	targetLocale: string,
-): string {
-	const bare = stripLocalePrefix(currentPath, currentLocale);
-	if (targetLocale === "en") return bare;
-	return bare === "/" ? `/${targetLocale}` : `/${targetLocale}${bare}`;
-}
+import {
+	ALL_LOCALES,
+	LOCALE_NAMES,
+	localeToggleUrl,
+} from "../lib/i18n";
 
 const GlobeIcon = () => (
 	<svg
@@ -128,7 +105,7 @@ export function LanguageSwitcher({
 				>
 					{ALL_LOCALES.map((locale) => {
 						const isCurrent = locale === currentLocale;
-						const toggleUrl = getLocaleToggleUrl(
+						const toggleUrl = localeToggleUrl(
 							currentPath,
 							currentLocale,
 							locale,

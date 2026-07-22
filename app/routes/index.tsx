@@ -1,6 +1,7 @@
 import { css } from "design-system/css";
 import { createRoute } from "honox/factory";
 import { LanguageSwitcher } from "../components/language-switcher";
+import { detectLocale, localiseHref } from "../lib/i18n";
 import {
 	AbsoluteCenter,
 	Alert,
@@ -190,26 +191,10 @@ const customShowcaseSlides = [
 
 export default createRoute((c) => {
 	const currentPath = c.req.path;
-	let currentLocale = "en";
-	if (currentPath.startsWith("/zh")) {
-		currentLocale = "zh";
-	} else if (currentPath.startsWith("/es")) {
-		currentLocale = "es";
-	} else if (currentPath.startsWith("/pt")) {
-		currentLocale = "pt";
-	}
+	const currentLocale = detectLocale(currentPath);
 	const name = c.req.query("name") ?? "Design System";
 
-	const localiseLink = (href: string) => {
-		if (
-			currentLocale === "zh" &&
-			!href.startsWith("/zh") &&
-			href.startsWith("/")
-		) {
-			return `/zh${href}`;
-		}
-		return href;
-	};
+	const localiseLink = (href: string) => localiseHref(href, currentLocale);
 
 	return c.render(
 		<div class={css({ bg: "bg.canvas", minH: "screen", color: "fg.default" })}>

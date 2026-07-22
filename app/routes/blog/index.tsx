@@ -18,6 +18,7 @@ import { ArrowRightIcon } from "../../icons/arrow-right";
 import { FilterIcon } from "../../icons/filter";
 import { MailIcon } from "../../icons/mail";
 import { SearchIcon } from "../../icons/search";
+import { detectLocale, localiseHref } from "../../lib/i18n";
 import { type DocsNavLinkConfig, loadDocsConfig } from "../../lib/configs";
 import { loadPosts } from "../../lib/posts";
 import { filterEntries } from "../../utils/search";
@@ -31,16 +32,7 @@ function BlogHeader({
 	currentPath: string;
 	currentLocale: string;
 }) {
-	const localiseLink = (href: string) => {
-		if (
-			currentLocale !== "en" &&
-			!href.startsWith(`/${currentLocale}`) &&
-			href.startsWith("/")
-		) {
-			return `/${currentLocale}${href}`;
-		}
-		return href;
-	};
+	const localiseLink = (href: string) => localiseHref(href, currentLocale);
 
 	return (
 		<header
@@ -123,28 +115,12 @@ function BlogHeader({
 
 export default createRoute(async (c) => {
 	const currentPath = c.req.path;
-	let currentLocale = "en";
-	if (currentPath.startsWith("/zh")) {
-		currentLocale = "zh";
-	} else if (currentPath.startsWith("/es")) {
-		currentLocale = "es";
-	} else if (currentPath.startsWith("/pt")) {
-		currentLocale = "pt";
-	}
+	const currentLocale = detectLocale(currentPath);
 	const [{ posts: blogPosts, searchEntries, tags }, config] = await Promise.all(
-		[loadPosts(currentLocale), loadDocsConfig()],
+		[loadPosts(currentLocale), loadDocsConfig(currentLocale)],
 	);
 
-	const localiseLink = (href: string) => {
-		if (
-			currentLocale !== "en" &&
-			!href.startsWith(`/${currentLocale}`) &&
-			href.startsWith("/")
-		) {
-			return `/${currentLocale}${href}`;
-		}
-		return href;
-	};
+	const localiseLink = (href: string) => localiseHref(href, currentLocale);
 
 	// Get URL parameters for searching
 	const url = new URL(c.req.url);

@@ -16,6 +16,7 @@ import { ChevronRightIcon } from "../../icons/chevron-right";
 import { ClockIcon } from "../../icons/clock";
 import { EditIcon } from "../../icons/edit";
 import { ShareIcon } from "../../icons/share";
+import { detectLocale, localiseHref } from "../../lib/i18n";
 import { loadPostBySlug, loadPosts } from "../../lib/posts";
 import { markdownContentClass } from "../../utils/markdown-content-style";
 
@@ -30,14 +31,7 @@ export default createRoute(
 	async (c) => {
 		const slug = c.req.param("slug");
 		const currentPath = c.req.path;
-		let currentLocale = "en";
-		if (currentPath.startsWith("/zh")) {
-			currentLocale = "zh";
-		} else if (currentPath.startsWith("/es")) {
-			currentLocale = "es";
-		} else if (currentPath.startsWith("/pt")) {
-			currentLocale = "pt";
-		}
+		const currentLocale = detectLocale(currentPath);
 
 		const post = await loadPostBySlug(slug, currentLocale);
 
@@ -50,16 +44,7 @@ export default createRoute(
 			const relatedPosts = post.relatedPosts;
 			const postUrl = `${c.req.url}`;
 
-			const localiseLink = (href: string) => {
-				if (
-					currentLocale !== "en" &&
-					!href.startsWith(`/${currentLocale}`) &&
-					href.startsWith("/")
-				) {
-					return `/${currentLocale}${href}`;
-				}
-				return href;
-			};
+			const localiseLink = (href: string) => localiseHref(href, currentLocale);
 
 			return c.render(
 				<div

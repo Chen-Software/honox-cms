@@ -21,9 +21,9 @@ import {
 	type DocsNavLinkConfig,
 	loadDocsConfig,
 } from "../../lib/configs";
+import { detectLocale, localiseHref } from "../../lib/i18n";
 import {
 	type DocSummary,
-	LOCALES,
 	loadDocBySlug,
 	loadDocs,
 } from "../../lib/docs";
@@ -65,20 +65,6 @@ const UI_STRINGS: Record<
 		admin: "Administrar",
 	},
 };
-
-/** Prefixes an absolute in-app href with the current locale, e.g.
- * `/docs/Button` → `/es/docs/Button`. No-op for the default locale, for
- * external hrefs, or if already prefixed. */
-function localiseHref(href: string, locale: string): string {
-	if (
-		locale === "en" ||
-		!href.startsWith("/") ||
-		href.startsWith(`/${locale}`)
-	) {
-		return href;
-	}
-	return `/${locale}${href}`;
-}
 
 // ---------------------------------------------------------------------------
 // Inlined docs nav shell.
@@ -552,14 +538,8 @@ export default createRoute(
 		const currentPath = c.req.path;
 		// Content locale drives loadDocs/loadDocBySlug/loadDocsConfig and the
 		// header/sidenav chrome (search placeholder, Edit/Admin, link labels,
-		// locale switcher) uniformly for every entry in LOCALES.
-		const currentLocale = currentPath.startsWith("/zh")
-			? "zh"
-			: currentPath.startsWith("/es")
-				? "es"
-				: currentPath.startsWith("/pt")
-					? "pt"
-					: "en";
+		// locale switcher) uniformly for every locale.
+		const currentLocale = detectLocale(currentPath);
 		const [doc, docs, config] = await Promise.all([
 			loadDocBySlug(slug, currentLocale),
 			loadDocs(currentLocale),
