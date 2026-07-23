@@ -5,8 +5,9 @@
       "type": "alert",
       "title": "Limited-time launch offer",
       "description": "Get 3 months free on annual plans — through July 31.",
-      "variant": "surface",
-      "status": "info"
+      "variant": "solid",
+      "status": "info",
+      "size": "lg"
     },
     {
       "type": "stack",
@@ -18,7 +19,8 @@
           "type": "badge",
           "variant": "subtle",
           "text": "New · Pulse 2.0",
-          "colorPalette": "purple"
+          "colorPalette": "purple",
+          "size": "lg"
         },
         {
           "type": "heading",
@@ -85,31 +87,36 @@
           "type": "badge",
           "variant": "outline",
           "text": "Acme Corp",
-          "colorPalette": "slate"
+          "colorPalette": "slate",
+          "size": "sm"
         },
         {
           "type": "badge",
           "variant": "outline",
           "text": "Globex",
-          "colorPalette": "slate"
+          "colorPalette": "slate",
+          "size": "sm"
         },
         {
           "type": "badge",
           "variant": "outline",
           "text": "Umbrella",
-          "colorPalette": "slate"
+          "colorPalette": "slate",
+          "size": "sm"
         },
         {
           "type": "badge",
           "variant": "outline",
           "text": "Initech",
-          "colorPalette": "slate"
+          "colorPalette": "slate",
+          "size": "sm"
         },
         {
           "type": "badge",
           "variant": "outline",
           "text": "Soylent",
-          "colorPalette": "slate"
+          "colorPalette": "slate",
+          "size": "sm"
         }
       ],
       "columns": "{\"base\": 2, \"sm\": 3, \"md\": 5}",
@@ -145,7 +152,8 @@
           "description": "Live metrics, zero refresh",
           "body": "Track every KPI as it happens with sub-second latency streaming straight from your data warehouse.",
           "image": "",
-          "imagePosition": "top"
+          "imagePosition": "top",
+          "variant": "elevated"
         },
         {
           "type": "card",
@@ -160,7 +168,8 @@
           "title": "Smart Alerts",
           "description": "Know before it breaks",
           "body": "Anomaly detection flags issues automatically and routes them to the right team in Slack or PagerDuty.",
-          "imagePosition": "top"
+          "imagePosition": "top",
+          "variant": "elevated"
         },
         {
           "type": "card",
@@ -175,7 +184,8 @@
           "title": "Team Collaboration",
           "description": "Insights, not silos",
           "body": "Annotate charts, leave comments, and share saved views so everyone works from the same source of truth.",
-          "imagePosition": "top"
+          "imagePosition": "top",
+          "variant": "elevated"
         }
       ],
       "columns": "{\"base\": 1, \"md\": 3}"
@@ -194,7 +204,8 @@
           "type": "badge",
           "variant": "outline",
           "text": "2-minute setup",
-          "colorPalette": "slate"
+          "colorPalette": "slate",
+          "size": "sm"
         }
       ],
       "title": "See your metrics come alive",
@@ -264,7 +275,8 @@
           "description": "$49 / month",
           "body": "Unlimited team members and projects. Priority support. Smart alerts included.",
           "image": "",
-          "imagePosition": "top"
+          "imagePosition": "top",
+          "variant": "elevated"
         },
         {
           "type": "card",
