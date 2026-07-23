@@ -81,6 +81,7 @@
     }
   ],
   "blog": {
+    "excludeUntranslatedFromSearch": true,
     "newsletterHeading": "保持更新",
     "newsletterDescription": "将最新的文章和洞察直接发送到您的邮箱。没有垃圾邮件，只有优质内容。"
   },

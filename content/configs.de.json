@@ -81,6 +81,7 @@
     }
   ],
   "blog": {
+    "excludeUntranslatedFromSearch": false,
     "newsletterHeading": "Bleiben Sie auf dem Laufenden",
     "newsletterDescription": "Erhalten Sie die neuesten Artikel und Einblicke direkt in Ihr Postfach. Kein Spam, nur hochwertige Inhalte."
   },

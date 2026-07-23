@@ -81,6 +81,7 @@
     }
   ],
   "blog": {
+    "excludeUntranslatedFromSearch": false,
     "newsletterHeading": "Restez à jour",
     "newsletterDescription": "Recevez les derniers articles et perspectives directement dans votre boîte de réception. Pas de spam, juste du contenu de qualité."
   },

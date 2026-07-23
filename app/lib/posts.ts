@@ -1,3 +1,4 @@
+import { loadDocsConfig } from "./configs";
 import { TRANSLATED_LOCALES } from "./i18n";
 import {
 	markdownToHtml,
@@ -46,6 +47,12 @@ function resolvePostPath(slug: string, locale: string): string | undefined {
 	return undefined;
 }
 
+/** True when `slug` has an actual translation file for `locale` (as opposed
+ * to `resolvePostPath` having to fall back to the default-locale file). */
+function hasTranslation(slug: string, locale: string): boolean {
+	return locale !== "en" && postFiles[`/content/posts/${locale}/${slug}.md`] !== undefined;
+}
+
 export interface BlogPost {
 	slug: string;
 	title: string;
@@ -79,6 +86,10 @@ export async function loadPosts(locale = "en"): Promise<LoadedPosts> {
 	const searchEntries: SearchIndexEntry[] = [];
 	const allTags = new Set<string>();
 
+	const config = await loadDocsConfig(locale);
+	const excludeUntranslatedFromSearch =
+		config.blog?.excludeUntranslatedFromSearch ?? false;
+
 	// Get all unique base slugs
 	const uniqueSlugs = new Set<string>();
 	for (const path of Object.keys(postFiles)) {
@@ -90,6 +101,12 @@ export async function loadPosts(locale = "en"): Promise<LoadedPosts> {
 			const targetPath = resolvePostPath(slug, locale);
 			const loader = targetPath ? postFiles[targetPath] : undefined;
 			if (!loader) continue;
+
+			// The post still counts for the visible listing (with its English
+			// fallback) even when excluded from search — this option only trims
+			// noisy mixed-language search results, it doesn't hide content.
+			const skipSearchEntry =
+				excludeUntranslatedFromSearch && !hasTranslation(slug, locale);
 
 			const markdown = await (loader as () => Promise<string>)();
 			const { data, content } = parseFrontmatter(markdown);
@@ -119,19 +136,21 @@ export async function loadPosts(locale = "en"): Promise<LoadedPosts> {
 				cover: data.cover,
 			});
 
-			searchEntries.push({
-				key: slug,
-				href: locale !== "en" ? `/blog/${locale}/${slug}` : `/blog/${slug}`,
-				title,
-				description,
-				tags: postTags,
-				haystack: buildHaystack([
+			if (!skipSearchEntry) {
+				searchEntries.push({
+					key: slug,
+					href: locale !== "en" ? `/blog/${locale}/${slug}` : `/blog/${slug}`,
 					title,
 					description,
-					postTags,
-					stripMarkdown(content).slice(0, 5000),
-				]),
-			});
+					tags: postTags,
+					haystack: buildHaystack([
+						title,
+						description,
+						postTags,
+						stripMarkdown(content).slice(0, 5000),
+					]),
+				});
+			}
 		} catch (error) {
 			console.error(`Error loading slug ${slug}:`, error);
 		}

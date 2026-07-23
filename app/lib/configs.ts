@@ -36,6 +36,14 @@ export interface DocsCollectionConfig {
 export interface BlogSiteConfig {
 	newsletterHeading?: string;
 	newsletterDescription?: string;
+	/** When true, this locale's search index (app/lib/posts.ts's `loadPosts`)
+	 * omits any post that has no translation for this locale, instead of
+	 * falling back to its English entry. Off by default, since most locales
+	 * won't have every post translated — turn it on per-locale (this field is
+	 * read from that locale's own configs.<locale>.json, so it need not match
+	 * across locales) only once that locale's translation coverage is
+	 * actually complete, or search will just return fewer results. */
+	excludeUntranslatedFromSearch?: boolean;
 }
 
 /** One entry in the `hydrationTiers` list: the numeric `tier` is a matching

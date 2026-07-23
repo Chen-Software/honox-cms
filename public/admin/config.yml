@@ -2099,3 +2099,16 @@ singletons:
                 required: false
                 i18n: duplicate
                 hint: "Anchor colorPalette token, e.g. blue, purple, green. Defaults to slate if omitted."
+      - label: Blog
+        name: blog
+        widget: object
+        required: false
+        i18n: true
+        hint: "/blog section behavior. (Title/description moved to CMS page-builder content — see content/pages/blog.json.)"
+        fields:
+          - label: Exclude Untranslated Posts From Search
+            name: excludeUntranslatedFromSearch
+            widget: boolean
+            default: false
+            i18n: true
+            hint: "When on, this locale's blog search only returns posts that actually have a translation into it, instead of falling back to the English post. Set per-locale (each locale's own value) — turn on only once that specific locale's translation coverage is complete, or its search just returns fewer results."
