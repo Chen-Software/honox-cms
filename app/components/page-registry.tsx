@@ -55,6 +55,7 @@ import {
 	TagsField,
 	Text,
 	Textarea,
+	Toast,
 	Tooltip,
 } from "./ui";
 
@@ -759,6 +760,10 @@ const registry: Record<string, BlockRenderer> = {
 	avatar: (b) => <Avatar {...propsOf(b)} />,
 	ratingGroup: (b) => <RatingGroup interactive {...propsOf(b)} />,
 	clipboard: (b) => <Clipboard interactive {...propsOf(b)} />,
+	// Renders the global toast host. Pair with a Button whose `onclick` raw
+	// attribute dispatches a `park-ui:toast:create` CustomEvent — this works
+	// without client hydration (see content/components/Toast.mdx).
+	toast: () => <Toast.Toaster />,
 
 	tabs: (b) => {
 		const { items, variant, size, orientation, activationMode, ...rest } =
