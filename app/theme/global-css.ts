@@ -7,7 +7,7 @@ export const globalCss = {
 			"--global-color-focus-ring": "colors.colorPalette.solid.bg",
 		},
 		html: {
-			colorPalette: "cyan",
+			colorPalette: "gray",
 			colorScheme: { _light: "light", _dark: "dark" },
 		},
 		body: {
