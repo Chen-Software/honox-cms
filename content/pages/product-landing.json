@@ -229,6 +229,7 @@
     {
       "type": "stack",
       "direction": "vertical",
+      "gap": "3",
       "backgroundColor": "#eff6ff",
       "padding": "2.5rem",
       "borderRadius": "1.25rem",
@@ -237,13 +238,19 @@
       "boxShadow": "sm",
       "children": [
         {
-          "type": "card",
-          "variant": "subtle",
-          "title": "“Pulse cut our incident response time by 60%.”",
-          "description": "Jane Cooper — VP Engineering, Acme Corp",
-          "body": "We used to stitch together five tools to know something was wrong. Now Pulse tells us before our customers do.",
-          "image": "",
-          "imagePosition": "top"
+          "type": "heading",
+          "text": "“Pulse cut our incident response time by 60%.”",
+          "size": "xl",
+          "as": "p"
+        },
+        {
+          "type": "text",
+          "size": "sm",
+          "content": "Jane Cooper — VP Engineering, Acme Corp"
+        },
+        {
+          "type": "text",
+          "content": "We used to stitch together five tools to know something was wrong. Now Pulse tells us before our customers do."
         }
       ]
     },

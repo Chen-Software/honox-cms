@@ -33,6 +33,9 @@ export default createRoute(
 						mx: "auto",
 						px: "4",
 						py: "12",
+						display: "flex",
+						flexDirection: "column",
+						gap: "10",
 					})}
 				>
 					<title>{data.title}</title>
