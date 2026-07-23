@@ -94,6 +94,49 @@ function renderChildren(children?: ComponentBlock[]): JSX.Element[] {
 	));
 }
 
+// Shared trigger-button builder for dropdown/popover: `triggerIcon` is raw
+// SVG markup (same `svg` field convention as the `icon` block type, see the
+// `icon` registry entry) rendered via `Icon`; `triggerAriaLabel` is required
+// for an icon-only trigger to stay accessible. Either of
+// `triggerText`/`triggerIcon` alone is fine — an icon-only settings-gear
+// trigger has no text, mirroring the icon-only GitHub link elsewhere in the
+// header.
+function buildTrigger({
+	triggerText,
+	triggerIcon,
+	triggerAriaLabel,
+	size,
+}: {
+	triggerText?: unknown;
+	triggerIcon?: unknown;
+	triggerAriaLabel?: unknown;
+	size?: "xs" | "sm" | "md" | "lg" | "xl";
+}): JSX.Element | undefined {
+	if (!triggerText && !triggerIcon) return undefined;
+	return (
+		<Button
+			variant="outline"
+			size={size}
+			aria-label={
+				typeof triggerAriaLabel === "string" ? triggerAriaLabel : undefined
+			}
+		>
+			{typeof triggerIcon === "string" && (
+				<Icon
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					dangerouslySetInnerHTML={{ __html: triggerIcon }}
+				/>
+			)}
+			{typeof triggerText === "string" ? triggerText : undefined}
+		</Button>
+	);
+}
+
 // Dialog/Drawer `footer` is a list of blocks (typically Buttons) rendered
 // side by side — the footer recipe is already `display: flex; gap: 3`, so no
 // extra wrapper is needed beyond a fragment. Unlike `trigger` (singular),
@@ -670,13 +713,22 @@ const registry: Record<string, BlockRenderer> = {
 	},
 
 	dropdown: (b) => {
-		const { triggerText, items, placement, locale, currentPath, ...rest } =
-			propsOf(b);
-		const trigger = triggerText ? (
-			<Button variant="outline" size="sm">
-				{triggerText}
-			</Button>
-		) : undefined;
+		const {
+			triggerText,
+			triggerIcon,
+			triggerAriaLabel,
+			items,
+			placement,
+			locale,
+			currentPath,
+			...rest
+		} = propsOf(b);
+		const trigger = buildTrigger({
+			triggerText,
+			triggerIcon,
+			triggerAriaLabel,
+			size: "sm",
+		});
 		// An `item` entry may carry `toggleLocale` instead of a fixed `href`
 		// (the language-switcher case) — resolved here, server-side, from the
 		// request's current path so the item's target survives into
@@ -709,6 +761,8 @@ const registry: Record<string, BlockRenderer> = {
 		const { children } = b;
 		const {
 			triggerText,
+			triggerIcon,
+			triggerAriaLabel,
 			title,
 			description,
 			body,
@@ -717,9 +771,7 @@ const registry: Record<string, BlockRenderer> = {
 			closable,
 			...rest
 		} = propsOf(b);
-		const trigger = triggerText ? (
-			<Button variant="outline">{triggerText}</Button>
-		) : undefined;
+		const trigger = buildTrigger({ triggerText, triggerIcon, triggerAriaLabel });
 		const content = renderChildren(children as ComponentBlock[]);
 		return (
 			<Popover
