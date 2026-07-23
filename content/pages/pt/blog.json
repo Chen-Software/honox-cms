@@ -1,32 +1,5 @@
 {
   "title": "Blog - Artefact",
-  "headerBrand": [
-    {
-      "type": "stack",
-      "direction": "horizontal",
-      "gap": "3",
-      "align": "center",
-      "children": [
-        { "type": "avatar", "name": "Artefact UI", "size": "sm", "variant": "solid", "colorPalette": "blue" },
-        { "type": "heading", "as": "h1", "text": "Artefact UI", "size": "sm" }
-      ]
-    }
-  ],
-  "headerNav": [
-    {
-      "type": "stack",
-      "direction": "horizontal",
-      "gap": "6",
-      "align": "center",
-      "children": [
-        { "type": "link", "text": "Blog", "href": "/blog/pt", "variant": "plain", "colorPalette": "blue" },
-        { "type": "link", "text": "Documentação", "href": "/docs/pt", "variant": "plain", "colorPalette": "blue" },
-        { "type": "link", "text": "Product", "href": "/pages/pt/product-landing", "variant": "plain", "colorPalette": "blue" },
-        { "type": "link", "text": "Sveltia CMS", "href": "/admin", "variant": "plain", "colorPalette": "blue" }
-      ]
-    }
-  ],
-  "headerActions": [],
   "content": [
     { "type": "text", "content": "Perspectivas, atualizações e histórias da nossa equipe.", "style": "color:#71717a;max-width:42rem;margin-bottom:2rem" }
   ]

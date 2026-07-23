@@ -1,6 +1,8 @@
-import { css } from "design-system/css";
+import { css, cx } from "design-system/css";
+import { button } from "design-system/recipes";
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
+import { LanguageSwitcher } from "../../../components/language-switcher";
 import {
 	Anchor,
 	Avatar,
@@ -16,7 +18,12 @@ import {
 import { ArrowLeftIcon } from "../../../icons/arrow-left";
 import { ArrowRightIcon } from "../../../icons/arrow-right";
 import { UserIcon } from "../../../icons/user";
-import { BLOG_SEARCH_STRINGS, detectLocale } from "../../../lib/i18n";
+import { DEFAULT_DOCS_UI, loadDocsConfig } from "../../../lib/configs";
+import {
+	BLOG_SEARCH_STRINGS,
+	detectLocale,
+	localiseHref,
+} from "../../../lib/i18n";
 import { loadPosts } from "../../../lib/posts";
 
 export default createRoute(
@@ -34,10 +41,14 @@ export default createRoute(
 	async (c) => {
 		const authorParam = decodeURIComponent(c.req.param("author") ?? "");
 		const currentLocale = detectLocale(c.req.path);
+		const localiseLink = (href: string) => localiseHref(href, currentLocale);
 		const searchStrings =
 			BLOG_SEARCH_STRINGS[currentLocale] ?? BLOG_SEARCH_STRINGS.en;
 
-		const { posts } = await loadPosts(currentLocale);
+		const [{ posts }, config] = await Promise.all([
+			loadPosts(currentLocale),
+			loadDocsConfig(currentLocale),
+		]);
 		const blogPosts = posts.filter(
 			(post) =>
 				(post.author || "Artefact Team").toLowerCase() ===
@@ -45,9 +56,84 @@ export default createRoute(
 		);
 
 		const authorName = blogPosts[0]?.author || authorParam;
+		const docsUi = { ...DEFAULT_DOCS_UI, ...config.docsUi };
 
 		return c.render(
-			<Layout
+			<>
+				<header
+					class={css({
+						borderBottomWidth: "1px",
+						borderColor: { _light: "white.a4", _dark: "black.a4" },
+						bg: { _light: "white.a7", _dark: "black.a7" },
+						backdropFilter: "blur(20px) saturate(180%)",
+						position: "sticky",
+						top: "0",
+						zIndex: "10",
+					})}
+				>
+					<div
+						class={css({
+							maxWidth: "7xl",
+							mx: "auto",
+							px: { base: "4", md: "6", lg: "8" },
+							py: "4",
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "space-between",
+							gap: "4",
+						})}
+					>
+						<Anchor
+							href={localiseLink("/")}
+							variant="plain"
+							class={css({ textDecoration: "none", flexShrink: "0" })}
+						>
+							<Heading
+								as="span"
+								class={css({
+									fontSize: "lg",
+									fontWeight: "bold",
+									tracking: "tight",
+								})}
+							>
+								{config.home?.brandName ?? "Artefact UI"}
+							</Heading>
+						</Anchor>
+
+						<nav
+							class={css({
+								display: "flex",
+								gap: { base: "3", md: "6" },
+								alignItems: "center",
+							})}
+						>
+							{config.headerLinks?.map((link) => (
+								<Anchor
+									key={link.href}
+									href={localiseLink(link.href)}
+									variant="plain"
+									class={css({ textStyle: "sm", fontWeight: "medium" })}
+								>
+									{link.label}
+								</Anchor>
+							))}
+							<Anchor
+								href="/admin"
+								class={cx(
+									button({ variant: "outline", size: "sm" }),
+									css({ textStyle: "sm", fontWeight: "medium" }),
+								)}
+							>
+								{docsUi.admin}
+							</Anchor>
+							<LanguageSwitcher
+								currentPath={c.req.path}
+								currentLocale={currentLocale}
+							/>
+						</nav>
+					</div>
+				</header>
+				<Layout
 				class={css({
 					py: { base: "8", md: "12" },
 					px: { base: "4", md: "6", lg: "8" },
@@ -82,7 +168,7 @@ export default createRoute(
 
 						{/* Back Button */}
 						<div class={css({ mb: "6", textAlign: "left" })}>
-							<a href="/blog" style={{ textDecoration: "none" }}>
+							<a href={localiseLink("/blog")} style={{ textDecoration: "none" }}>
 								<Button
 									variant="plain"
 									colorPalette="blue"
@@ -261,7 +347,7 @@ export default createRoute(
 									browsing all articles.
 								</Text>
 								<div class={css({ mt: "8" })}>
-									<a href="/blog" style={{ textDecoration: "none" }}>
+									<a href={localiseLink("/blog")} style={{ textDecoration: "none" }}>
 										<Button variant="solid" colorPalette="blue" size="lg">
 											Browse All Posts
 										</Button>
@@ -345,7 +431,7 @@ export default createRoute(
 									}
 									title={
 										<a
-											href={`/blog/${post.slug}`}
+											href={localiseLink(`/blog/${post.slug}`)}
 											class={css({
 												color: "fg",
 												textDecoration: "none",
@@ -375,7 +461,7 @@ export default createRoute(
 											<Stack gap="3" align="center">
 												{/* Author Avatar */}
 												<Anchor
-													href={`/blog/by-author/${post.author}`}
+													href={localiseLink(`/blog/by-author/${post.author}`)}
 													class={css({
 														display: "inline-flex",
 														alignItems: "center",
@@ -392,7 +478,7 @@ export default createRoute(
 												</Anchor>
 												<div>
 													<Anchor
-														href={`/blog/by-author/${post.author}`}
+														href={localiseLink(`/blog/by-author/${post.author}`)}
 														class={css({
 															textDecoration: "none",
 															color: "fg",
@@ -432,7 +518,7 @@ export default createRoute(
 
 											{/* Read More Button */}
 											<a
-												href={`/blog/${post.slug}`}
+												href={localiseLink(`/blog/${post.slug}`)}
 												class={css({
 													textDecoration: "none",
 													display: "inline-flex",
@@ -491,7 +577,7 @@ export default createRoute(
 												{post.tags.slice(0, 3).map((tag) => (
 													<Anchor
 														key={tag}
-														href={`/blog/by-tag/${tag}`}
+														href={localiseLink(`/blog/by-tag/${tag}`)}
 														variant="plain"
 														class={css({
 															textDecoration: "none",
@@ -543,7 +629,7 @@ export default createRoute(
 				}
 				footer={
 					blogPosts.length > 0 ? (
-						<a href="/blog" style={{ textDecoration: "none" }}>
+						<a href={localiseLink("/blog")} style={{ textDecoration: "none" }}>
 							<Button
 								variant="outline"
 								colorPalette="blue"
@@ -569,7 +655,8 @@ export default createRoute(
 						</a>
 					) : undefined
 				}
-			/>,
+			/>
+			</>,
 		);
 	},
 );

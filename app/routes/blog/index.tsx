@@ -1,7 +1,8 @@
-import { css } from "design-system/css";
+import { css, cx } from "design-system/css";
+import { button } from "design-system/recipes";
 import { createRoute } from "honox/factory";
-import { PageRenderer } from "../../components/page-renderer";
 import { LanguageSwitcher } from "../../components/language-switcher";
+import { PageRenderer } from "../../components/page-renderer";
 import {
 	Anchor,
 	Avatar,
@@ -19,7 +20,7 @@ import { ArrowRightIcon } from "../../icons/arrow-right";
 import { FilterIcon } from "../../icons/filter";
 import { MailIcon } from "../../icons/mail";
 import { SearchIcon } from "../../icons/search";
-import { loadDocsConfig } from "../../lib/configs";
+import { DEFAULT_DOCS_UI, loadDocsConfig } from "../../lib/configs";
 import {
 	BLOG_SEARCH_STRINGS,
 	detectLocale,
@@ -40,6 +41,7 @@ export default createRoute(async (c) => {
 		]);
 
 	const localiseLink = (href: string) => localiseHref(href, currentLocale);
+	const docsUi = { ...DEFAULT_DOCS_UI, ...config.docsUi };
 	const searchStrings =
 		BLOG_SEARCH_STRINGS[currentLocale] ?? BLOG_SEARCH_STRINGS.en;
 
@@ -62,8 +64,6 @@ export default createRoute(async (c) => {
 		<>
 			<title>{data.title ?? "Blog - Artefact"}</title>
 
-			{/* Header — brand/nav/actions are CMS page-builder content
-			    (content/pages/blog.json), edit via /admin. Mirrors app/routes/index.tsx. */}
 			<header
 				class={css({
 					borderBottomWidth: "1px",
@@ -87,7 +87,22 @@ export default createRoute(async (c) => {
 						gap: "4",
 					})}
 				>
-					<PageRenderer content={data.headerBrand ?? []} />
+					<Anchor
+						href={localiseLink("/")}
+						variant="plain"
+						class={css({ textDecoration: "none", flexShrink: "0" })}
+					>
+						<Heading
+							as="span"
+							class={css({
+								fontSize: "lg",
+								fontWeight: "bold",
+								tracking: "tight",
+							})}
+						>
+							{config.home?.brandName ?? "Artefact UI"}
+						</Heading>
+					</Anchor>
 
 					<nav
 						class={css({
@@ -96,12 +111,29 @@ export default createRoute(async (c) => {
 							alignItems: "center",
 						})}
 					>
-						<PageRenderer content={data.headerNav ?? []} />
+						{config.headerLinks?.map((link) => (
+							<Anchor
+								key={link.href}
+								href={localiseLink(link.href)}
+								variant="plain"
+								class={css({ textStyle: "sm", fontWeight: "medium" })}
+							>
+								{link.label}
+							</Anchor>
+						))}
+						<Anchor
+							href="/admin"
+							class={cx(
+								button({ variant: "outline", size: "sm" }),
+								css({ textStyle: "sm", fontWeight: "medium" }),
+							)}
+						>
+							{docsUi.admin}
+						</Anchor>
 						<LanguageSwitcher
 							currentPath={currentPath}
 							currentLocale={currentLocale}
 						/>
-						<PageRenderer content={data.headerActions ?? []} />
 					</nav>
 				</div>
 			</header>

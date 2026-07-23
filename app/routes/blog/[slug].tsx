@@ -2,6 +2,7 @@ import { css, cx } from "design-system/css";
 import { button } from "design-system/recipes";
 import { ssgParams } from "hono/ssg";
 import { createRoute } from "honox/factory";
+import { LanguageSwitcher } from "../../components/language-switcher";
 import {
 	Anchor,
 	Avatar,
@@ -11,12 +12,10 @@ import {
 	Stack,
 	Text,
 } from "../../components/ui";
-import { LanguageSwitcher } from "../../components/language-switcher";
 import { ArrowLeftIcon } from "../../icons/arrow-left";
 import { CalendarIcon } from "../../icons/calendar";
 import { ChevronRightIcon } from "../../icons/chevron-right";
 import { ClockIcon } from "../../icons/clock";
-import { EditIcon } from "../../icons/edit";
 import { ShareIcon } from "../../icons/share";
 import { DEFAULT_DOCS_UI, loadDocsConfig } from "../../lib/configs";
 import { detectLocale, isLocale, localiseHref } from "../../lib/i18n";
@@ -74,8 +73,6 @@ export default createRoute(
 						{currentLocale === "zh" ? "博客" : "Blog"}
 					</title>
 
-					{/* Header — brand + configs.json headerLinks + language switcher,
-					    matching the sticky header on / and /blog. */}
 					<header
 						class={css({
 							borderBottomWidth: "1px",
@@ -140,7 +137,6 @@ export default createRoute(
 										css({ textStyle: "sm", fontWeight: "medium" }),
 									)}
 								>
-									<EditIcon width="16" height="16" />
 									{docsUi.edit}
 								</Anchor>
 								<LanguageSwitcher
