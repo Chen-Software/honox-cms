@@ -73,55 +73,67 @@
       ]
     },
     {
-      "type": "heading",
-      "text": "Trusted by fast-moving teams",
-      "size": "xl",
-      "as": "h2",
-      "style": "text-align:center"
-    },
-    {
-      "type": "grid",
+      "type": "stack",
+      "direction": "vertical",
+      "align": "center",
       "gap": "4",
+      "backgroundColor": "#f8fafc",
+      "padding": "2.5rem 2rem",
+      "borderRadius": "1.25rem",
+      "margin": "3rem 0",
       "children": [
         {
-          "type": "badge",
-          "variant": "outline",
-          "text": "Acme Corp",
-          "colorPalette": "slate",
-          "size": "sm"
+          "type": "heading",
+          "text": "Trusted by fast-moving teams",
+          "size": "xl",
+          "as": "h2",
+          "style": "text-align:center"
         },
         {
-          "type": "badge",
-          "variant": "outline",
-          "text": "Globex",
-          "colorPalette": "slate",
-          "size": "sm"
-        },
-        {
-          "type": "badge",
-          "variant": "outline",
-          "text": "Umbrella",
-          "colorPalette": "slate",
-          "size": "sm"
-        },
-        {
-          "type": "badge",
-          "variant": "outline",
-          "text": "Initech",
-          "colorPalette": "slate",
-          "size": "sm"
-        },
-        {
-          "type": "badge",
-          "variant": "outline",
-          "text": "Soylent",
-          "colorPalette": "slate",
-          "size": "sm"
+          "type": "grid",
+          "gap": "4",
+          "children": [
+            {
+              "type": "badge",
+              "variant": "outline",
+              "text": "Acme Corp",
+              "colorPalette": "slate",
+              "size": "sm"
+            },
+            {
+              "type": "badge",
+              "variant": "outline",
+              "text": "Globex",
+              "colorPalette": "slate",
+              "size": "sm"
+            },
+            {
+              "type": "badge",
+              "variant": "outline",
+              "text": "Umbrella",
+              "colorPalette": "slate",
+              "size": "sm"
+            },
+            {
+              "type": "badge",
+              "variant": "outline",
+              "text": "Initech",
+              "colorPalette": "slate",
+              "size": "sm"
+            },
+            {
+              "type": "badge",
+              "variant": "outline",
+              "text": "Soylent",
+              "colorPalette": "slate",
+              "size": "sm"
+            }
+          ],
+          "columns": "{\"base\": 2, \"sm\": 3, \"md\": 5}",
+          "rows": "",
+          "minChildWidth": ""
         }
-      ],
-      "columns": "{\"base\": 2, \"sm\": 3, \"md\": 5}",
-      "rows": "",
-      "minChildWidth": ""
+      ]
     },
     {
       "type": "heading",
@@ -215,12 +227,25 @@
       "imagePosition": "left"
     },
     {
-      "type": "card",
-      "title": "“Pulse cut our incident response time by 60%.”",
-      "description": "Jane Cooper — VP Engineering, Acme Corp",
-      "body": "We used to stitch together five tools to know something was wrong. Now Pulse tells us before our customers do.",
-      "image": "",
-      "imagePosition": "top"
+      "type": "stack",
+      "direction": "vertical",
+      "backgroundColor": "#eff6ff",
+      "padding": "2.5rem",
+      "borderRadius": "1.25rem",
+      "maxWidth": "42rem",
+      "margin": "3rem auto",
+      "boxShadow": "sm",
+      "children": [
+        {
+          "type": "card",
+          "variant": "subtle",
+          "title": "“Pulse cut our incident response time by 60%.”",
+          "description": "Jane Cooper — VP Engineering, Acme Corp",
+          "body": "We used to stitch together five tools to know something was wrong. Now Pulse tells us before our customers do.",
+          "image": "",
+          "imagePosition": "top"
+        }
+      ]
     },
     {
       "type": "heading",
@@ -449,6 +474,10 @@
       "direction": "vertical",
       "align": "center",
       "gap": "4",
+      "backgroundColor": "#eff6ff",
+      "padding": "4rem 2rem",
+      "borderRadius": "1.25rem",
+      "margin": "3rem 0 1rem",
       "children": [
         {
           "type": "heading",
