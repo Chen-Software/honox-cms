@@ -751,6 +751,7 @@
         {
           "type": "card",
           "title": "Sélecteur de Date",
+          "overflow": "visible",
           "description": "Sélecteurs avancés de date et de plage",
           "children": [
             {
@@ -776,6 +777,7 @@
         {
           "type": "card",
           "title": "Sélection Déroulante",
+          "overflow": "visible",
           "description": "Listes déroulantes accessibles et zones de saisie avec autocomplétion",
           "children": [
             {
@@ -844,6 +846,7 @@
         {
           "type": "card",
           "title": "Sélecteur de Couleur",
+          "overflow": "visible",
           "description": "Sélecteur de spectre de couleurs complet",
           "children": [
             {
@@ -886,6 +889,7 @@
         {
           "type": "card",
           "title": "Popover et Infobulle",
+          "overflow": "visible",
           "description": "Boîtes d'information contextuelles",
           "children": [
             {
@@ -1003,6 +1007,7 @@
         {
           "type": "card",
           "title": "Menus Déroulants d'Action",
+          "overflow": "visible",
           "description": "Déclencheurs de listes d'actions imbricables",
           "children": [
             {
@@ -1045,6 +1050,7 @@
         {
           "type": "card",
           "title": "Carte au Survol",
+          "overflow": "visible",
           "description": "Fenêtre d'information contextuelle au survol",
           "children": [
             {

@@ -751,6 +751,7 @@
         {
           "type": "card",
           "title": "Seletor de Data",
+          "overflow": "visible",
           "description": "Seletores avançados de data e intervalo",
           "children": [
             {
@@ -776,6 +777,7 @@
         {
           "type": "card",
           "title": "Seleção Suspensa",
+          "overflow": "visible",
           "description": "Selects acessíveis e comboboxes com autocompletar",
           "children": [
             {
@@ -844,6 +846,7 @@
         {
           "type": "card",
           "title": "Seletor de Cor",
+          "overflow": "visible",
           "description": "Seletor de espectro completo de cor",
           "children": [
             {
@@ -886,6 +889,7 @@
         {
           "type": "card",
           "title": "Popover e Tooltip",
+          "overflow": "visible",
           "description": "Caixas de informação contextual",
           "children": [
             {
@@ -1003,6 +1007,7 @@
         {
           "type": "card",
           "title": "Menus Suspensos de Ação",
+          "overflow": "visible",
           "description": "Acionadores de listas de ação aninháveis",
           "children": [
             {
@@ -1045,6 +1050,7 @@
         {
           "type": "card",
           "title": "Cartão ao Passar o Mouse",
+          "overflow": "visible",
           "description": "Pop-up de informação ao passar o mouse",
           "children": [
             {

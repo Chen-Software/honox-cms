@@ -333,6 +333,7 @@
         {
           "type": "card",
           "title": "日期选择器",
+          "overflow": "visible",
           "description": "高级日期与范围选择器",
           "children": [
             { "type": "stack", "direction": "vertical", "gap": "4", "children": [
@@ -344,6 +345,7 @@
         {
           "type": "card",
           "title": "下拉选择",
+          "overflow": "visible",
           "description": "无障碍的 select 与自动补全组合框",
           "children": [
             { "type": "stack", "direction": "vertical", "gap": "4", "children": [
@@ -359,6 +361,7 @@
         {
           "type": "card",
           "title": "颜色选择器",
+          "overflow": "visible",
           "description": "全色域选择器",
           "children": [
             { "type": "colorPicker", "trigger": true, "defaultValue": "#3b82f6", "label": "选择主题颜色" }
@@ -384,6 +387,7 @@
         {
           "type": "card",
           "title": "气泡卡片与提示",
+          "overflow": "visible",
           "description": "上下文信息框",
           "children": [
             { "type": "stack", "direction": "horizontal", "align": "start", "gap": "4", "children": [
@@ -415,6 +419,7 @@
         {
           "type": "card",
           "title": "操作下拉菜单",
+          "overflow": "visible",
           "description": "可嵌套的操作列表触发器",
           "children": [
             { "type": "dropdown", "triggerText": "工作区操作", "items": [
@@ -431,6 +436,7 @@
         {
           "type": "card",
           "title": "悬停卡片",
+          "overflow": "visible",
           "description": "悬停时显示的信息弹窗",
           "children": [
             { "type": "hoverCard", "triggerText": "悬停查看作者详情", "showArrow": true, "title": "关于 Jules", "description": "资深 UI 设计师与前端架构师，专注于 HonoX 套件。" }

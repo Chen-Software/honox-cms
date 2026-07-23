@@ -924,6 +924,12 @@ collections:
                       - { label: Body, name: body, widget: string, required: false }
                       - { label: Image, name: image, widget: string, required: false }
                       - { label: Image Position, name: imagePosition, widget: select, options: [top, bottom, left, right], default: top }
+                      - label: Overflow (advanced)
+                        name: overflow
+                        widget: select
+                        options: [visible, hidden, auto]
+                        required: false
+                        hint: "Card clips its content to its rounded corners by default. Set to \"visible\" if this card contains a Popover/Dropdown/Select/DatePicker/ColorPicker/HoverCard, whose overlay would otherwise get cut off at the card's edge."
                       - label: Children
                         name: children
                         widget: list
@@ -1453,6 +1459,12 @@ collections:
               - { label: Body, name: body, widget: string, required: false }
               - { label: Image, name: image, widget: string, required: false }
               - { label: Image Position, name: imagePosition, widget: select, options: [top, bottom, left, right], default: top }
+              - label: Overflow (advanced)
+                name: overflow
+                widget: select
+                options: [visible, hidden, auto]
+                required: false
+                hint: "Card clips its content to its rounded corners by default. Set to \"visible\" if this card contains a Popover/Dropdown/Select/DatePicker/ColorPicker/HoverCard, whose overlay would otherwise get cut off at the card's edge."
               - label: Children
                 name: children
                 widget: list

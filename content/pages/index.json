@@ -333,6 +333,7 @@
         {
           "type": "card",
           "title": "Date Picker",
+          "overflow": "visible",
           "description": "Advanced date and range pickers",
           "children": [
             { "type": "stack", "direction": "vertical", "gap": "4", "children": [
@@ -344,6 +345,7 @@
         {
           "type": "card",
           "title": "Dropdown Selection",
+          "overflow": "visible",
           "description": "Accessible selects & autocomplete comboboxes",
           "children": [
             { "type": "stack", "direction": "vertical", "gap": "4", "children": [
@@ -359,6 +361,7 @@
         {
           "type": "card",
           "title": "Color Picker",
+          "overflow": "visible",
           "description": "Full color spectrum selector",
           "children": [
             { "type": "colorPicker", "trigger": true, "defaultValue": "#3b82f6", "label": "Pick Theme Color" }
@@ -384,6 +387,7 @@
         {
           "type": "card",
           "title": "Popover & Tooltip",
+          "overflow": "visible",
           "description": "Contextual info boxes",
           "children": [
             { "type": "stack", "direction": "horizontal", "align": "start", "gap": "4", "children": [
@@ -415,6 +419,7 @@
         {
           "type": "card",
           "title": "Action Dropdowns",
+          "overflow": "visible",
           "description": "Nestable action list triggers",
           "children": [
             { "type": "dropdown", "triggerText": "Workspace Actions", "items": [
@@ -431,6 +436,7 @@
         {
           "type": "card",
           "title": "Hover Card",
+          "overflow": "visible",
           "description": "Information popup on hover",
           "children": [
             { "type": "hoverCard", "triggerText": "Hover for Author Details", "showArrow": true, "title": "About Jules", "description": "Senior UI designer and front-end architect specializing in HonoX suites." }

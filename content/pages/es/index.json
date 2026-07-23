@@ -751,6 +751,7 @@
         {
           "type": "card",
           "title": "Selector de Fecha",
+          "overflow": "visible",
           "description": "Selectores avanzados de fecha y rango",
           "children": [
             {
@@ -776,6 +777,7 @@
         {
           "type": "card",
           "title": "Selección Desplegable",
+          "overflow": "visible",
           "description": "Selects accesibles y comboboxes con autocompletado",
           "children": [
             {
@@ -844,6 +846,7 @@
         {
           "type": "card",
           "title": "Selector de Color",
+          "overflow": "visible",
           "description": "Selector de espectro completo de color",
           "children": [
             {
@@ -886,6 +889,7 @@
         {
           "type": "card",
           "title": "Popover y Tooltip",
+          "overflow": "visible",
           "description": "Cuadros de información contextual",
           "children": [
             {
@@ -1003,6 +1007,7 @@
         {
           "type": "card",
           "title": "Menús Desplegables de Acción",
+          "overflow": "visible",
           "description": "Activadores de listas de acción anidables",
           "children": [
             {
@@ -1045,6 +1050,7 @@
         {
           "type": "card",
           "title": "Tarjeta al Pasar el Cursor",
+          "overflow": "visible",
           "description": "Ventana emergente de información al pasar el cursor",
           "children": [
             {

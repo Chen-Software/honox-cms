@@ -751,6 +751,7 @@
         {
           "type": "card",
           "title": "Datumsauswahl",
+          "overflow": "visible",
           "description": "Erweiterte Datums- und Bereichsauswahl",
           "children": [
             {
@@ -776,6 +777,7 @@
         {
           "type": "card",
           "title": "Dropdown-Auswahl",
+          "overflow": "visible",
           "description": "Barrierefreie Selects und Comboboxen mit Autovervollständigung",
           "children": [
             {
@@ -844,6 +846,7 @@
         {
           "type": "card",
           "title": "Farbauswahl",
+          "overflow": "visible",
           "description": "Auswahl des vollständigen Farbspektrums",
           "children": [
             {
@@ -886,6 +889,7 @@
         {
           "type": "card",
           "title": "Popover & Tooltip",
+          "overflow": "visible",
           "description": "Kontextbezogene Infoboxen",
           "children": [
             {
@@ -1003,6 +1007,7 @@
         {
           "type": "card",
           "title": "Aktions-Dropdowns",
+          "overflow": "visible",
           "description": "Verschachtelbare Aktionslisten-Auslöser",
           "children": [
             {
@@ -1045,6 +1050,7 @@
         {
           "type": "card",
           "title": "Hover-Karte",
+          "overflow": "visible",
           "description": "Info-Popup bei Hover",
           "children": [
             {

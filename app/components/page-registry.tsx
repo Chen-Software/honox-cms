@@ -249,8 +249,14 @@ const registry: Record<string, BlockRenderer> = {
 
 	card: (b) => {
 		const { children } = b;
-		const { title, description, body, image, imagePosition, ...rest } =
+		const { title, description, body, image, imagePosition, overflow, ...rest } =
 			propsOf(b);
+		// Card's root is `overflow: hidden` by default (clips its image slot to
+		// the border radius) — but that also clips any absolutely-positioned
+		// overlay content rendered inside it (Popover/Dropdown/Select/DatePicker/
+		// ColorPicker/HoverCard aren't portaled). An inline style beats the
+		// recipe's class specificity, so this reliably overrides it per-card.
+		const style = overflow ? `overflow: ${overflow}` : undefined;
 		return (
 			<Card
 				title={title}
@@ -258,6 +264,7 @@ const registry: Record<string, BlockRenderer> = {
 				body={body}
 				image={image}
 				imagePosition={imagePosition}
+				style={style}
 				{...rest}
 			>
 				{renderChildren(children as ComponentBlock[])}
