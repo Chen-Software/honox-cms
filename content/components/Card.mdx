@@ -68,9 +68,23 @@ This component is available as a `card` block in the [Page Builder](/docs/PageBu
   "title": "Project title",
   "description": "A short description of the project.",
   "body": "Main content of the card goes here.",
-  "variant": "elevated"
+  "variant": "elevated",
+  "boxShadow": "lg",
+  "overflow": "visible"
 }
 ```
+
+A CMS card defaults `boxShadow` to `"sm"` even when unset, so setting some
+other layout-style field (e.g. `margin`) doesn't silently zero out the
+recipe's own default shadow. `overflow` overrides the card's default
+`overflow: hidden` (which normally clips the image slot to the border
+radius) — set it to `"visible"` when the card contains an unportaled overlay
+(Popover, Dropdown, Select, DatePicker, ColorPicker, HoverCard) that would
+otherwise be clipped at the card boundary. `boxShadow` and the other shared
+layout-style fields (margin/padding/maxWidth/borderRadius/backgroundColor/
+backgroundImage/backgroundFit/textAlign/opacity) are documented once, for
+every block that supports them, under [Page Builder → Advanced Escape
+Hatches](/docs/PageBuilder#advanced-escape-hatches).
 
 # Props
 
@@ -97,6 +111,8 @@ This component is available as a `card` block in the [Page Builder](/docs/PageBu
 | `imageClass` | `string` | Custom CSS classes for the image. |
 
 | `variant` | \`"elevated" \ | "outline" \ | "subtle"\` | The visual style of the card. |
+
+| `overflow` | `CSS overflow` | Overrides the card's default `overflow: hidden`. CMS-only field — set to `"visible"` for a card containing an unportaled overlay (Popover, Dropdown, ColorPicker, etc). |
 
 | `interactive` | `boolean` | Enable client-side hydration. |
 | `class` | `string` | Custom CSS classes for the root element. |

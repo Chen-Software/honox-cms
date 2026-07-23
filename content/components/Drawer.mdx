@@ -45,7 +45,7 @@ export default function MyPage() {
 
 ## CMS Page Builder
 
-This component is available as a `drawer` block in the [Page Builder](/docs/PageBuilder) (`content/pages/*.json`). `trigger` is a nested block list (the CMS always submits an array):
+This component is available as a `drawer` block in the [Page Builder](/docs/PageBuilder) (`content/pages/*.json`). `trigger` is a nested block list (the CMS always submits an array), and so is `footer` — a row of blocks (typically Buttons) rendered alongside the dedicated Confirm/Cancel shortcuts:
 
 ```json
 {
@@ -54,7 +54,8 @@ This component is available as a `drawer` block in the [Page Builder](/docs/Page
   "description": "Adjust your preferences.",
   "confirmText": "Save",
   "cancelText": "Close",
-  "trigger": [{ "type": "button", "text": "Open Drawer" }]
+  "trigger": [{ "type": "button", "text": "Open Drawer" }],
+  "footer": [{ "type": "button", "variant": "outline", "text": "Reset" }]
 }
 ```
 
@@ -69,7 +70,7 @@ This component is available as a `drawer` block in the [Page Builder](/docs/Page
 | `title` | \`string \ | JSX.Element\` | The drawer title. |
 | `description` | \`string \ | JSX.Element\` | The drawer description. |
 | `body` | \`string \ | JSX.Element\` | The main body content. |
-| `footer` | \`string \ | JSX.Element\` | Custom footer content. |
+| `footer` | \`string \ | JSX.Element\` | Custom footer content. In CMS content this field is a block list, rendered as a fragment. For `start`/`end` placements the footer is pinned to the bottom of the panel regardless of body length. |
 
 | `cancel` | `JSX.Element` | Element rendered as a close (cancel) trigger. |
 | `confirm` | `JSX.Element` | Element rendered as an action trigger. |

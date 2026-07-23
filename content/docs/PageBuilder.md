@@ -6,7 +6,7 @@ title: CMS Page Builder
 
 The [Sveltia CMS](https://sveltiacms.app/en/docs/intro) based dynamic Page Builder allows non-technical editors to create complex, recursively nested pages entirely through the CMS user interface (`/admin/`).
 
-Page layouts are saved as JSON files in `content/pages/*.json` and are compiled on demand or statically pre-generated (via Hono SSG) at `/pages/[slug]`. The homepage (`/`) is itself a Page Builder page — `app/routes/index.tsx` renders `content/pages/index.json` through the same `<PageRenderer />` pipeline, with only the header/footer chrome hardcoded around it.
+Page layouts are saved as JSON files in `content/pages/*.json` and are compiled on demand or statically pre-generated (via Hono SSG) at `/pages/[slug]`. The homepage (`/`) is itself a Page Builder page — `app/routes/index.tsx` renders `content/pages/index.json` through the same `<PageRenderer />` pipeline. Even the header is page-builder content: `headerBrand`, `headerNav`, and `headerActions` are ordinary block arrays on that same JSON file, rendered through `<PageRenderer>` inside a hardcoded `<header>` shell (the border/blur/sticky styling stays in code; only the brand lockup, nav links, and header buttons are CMS-editable). `content/pages/blog.json` carries the identical three fields for `/blog`'s header. Only the footer (and, for `/blog`, the post carousel/search/newsletter widgets) stay outside the Page Builder, since those need live post data or bespoke styling the generic block system doesn't support.
 
 ***
 
@@ -33,7 +33,7 @@ The Page Builder supports a rich palette of over 40 layout, typography, decorati
 
 * **Alert**: Renders warning/success/error/info alerts with standard statuses and icons.
 * **Badge**: Colored metadata labels with custom color palettes and styles.
-* **Card**: A rich container supporting nested blocks, headers, footers, and top/bottom/left/right image positions.
+* **Card**: A rich container supporting nested blocks, headers, footers, and top/bottom/left/right image positions. Defaults to a subtle drop shadow and clips its own content to its rounded corners — see "Advanced Escape Hatches" below for the fields that override both.
 * **Progress**: Renders linear or circular progress indicators.
 * **Skeleton**: Highly customisable placeholder skeletons (supports circle and multi-line text shapes).
 * **Loader** / **Spinner**: Loading indicators, with optional accompanying text.
@@ -43,14 +43,15 @@ The Page Builder supports a rich palette of over 40 layout, typography, decorati
 ### 4. Interactive & Overlays
 
 * **Button**: Primary clickable targets supporting custom palettes, sizes, and styling variants.
+* **Field** / **Textarea**: Labeled single/multi-line text inputs. Both take an advanced "Validator" field — a raw JS function expression (e.g. `(value) => value.length >= 3 || "Must be at least 3 characters"`), reconstructed client-side via `new Function`; same trust model as Button's Custom onClick below.
 * **Checkbox**: Tick boxes for Boolean input with accessible aria bindings.
 * **Combobox**: Dropdowns with clear actions and items lists.
 * **Collapsible**: Disclosure containers that show/hide nested component trees.
 * **Popover**: Floating descriptive content anchored to standard text triggers.
 * **Tooltip**: Contextual hint text anchored to a trigger button on hover/focus.
 * **HoverCard**: Richer hover-triggered content than a Tooltip, with an optional title/description.
-* **Dialog**: Fully focus-trapped modal boxes with custom Confirm/Cancel buttons and custom children list.
-* **Drawer**: Responsive side panels sliding in from the page edge with custom children list.
+* **Dialog**: Fully focus-trapped modal boxes with custom Confirm/Cancel buttons, an optional list of extra Footer buttons alongside them, and a custom children list.
+* **Drawer**: Responsive side panels sliding in from the page edge, with the same Confirm/Cancel + extra Footer buttons as Dialog, and a custom children list.
 * **Dropdown** (block type `menu`): Action menus with custom checkable, selectable, separator, and nested-submenu options (one level of `items` nesting, since Sveltia's list widget can't self-reference).
 * **Toast**: Renders the global toast host (`Toast.Toaster`). Has no configurable fields itself — pair it with a `Button` whose advanced "Custom onClick" field dispatches a `park-ui:toast:create` `CustomEvent`; see the homepage's "Clipboard & Toast" card for a working example.
 
@@ -97,12 +98,14 @@ We utilise advanced **YAML Anchors and Aliases** (`&` and `*`) to work around YA
 
 ### 3. Advanced Escape Hatches
 
-A couple of fields exist purely so a non-technical editor can reproduce behaviour that would otherwise need real code:
+A handful of fields exist purely so a non-technical editor can reproduce behaviour that would otherwise need real code. All are deliberately unsanitised — treat CMS write access the same as code-commit access:
 
 * **Button → "Custom onClick"**: a raw inline JS string, forwarded verbatim as the DOM `onclick` attribute. Works without client hydration (see `content/components/Toast.mdx`) — used for things like smooth-scrolling to an anchor or dispatching a `park-ui:toast:create` `CustomEvent` to show a toast.
 * **Heading → "Anchor ID"**: sets a DOM `id` on the heading, so a Button's "Custom onClick" can `document.getElementById(...)` scroll to it.
-
-Both are deliberately unsanitised — treat CMS write access the same as code-commit access.
+* **Field / Textarea → "Validator"**: a raw JS function expression string. `app/components/page-registry.tsx` passes it straight through to the component, which sends it across the island-hydration boundary as `validatorSource` (functions themselves don't survive JSON serialization) and reconstructs it client-side via `new Function`.
+* **Card → "Overflow"**: overrides Card's default `overflow: hidden` (which exists to clip the image slot to the border radius) — set to `visible` when a card contains a Popover/Dropdown/Select/DatePicker/ColorPicker/HoverCard, whose floating overlay would otherwise get cut off at the card's edge.
+* **Card → "Box Shadow"**: same validated token pipeline as Stack/Grid/Layout's Box Shadow field (`none`/`2xs`/`xs`/`sm`/`md`/`lg`/`xl`/`2xl`) — Card already defaults to a subtle `sm` shadow, so this is only needed to raise or remove it on a specific card.
+* **Dialog / Drawer → "Footer"**: a list of extra blocks (typically Buttons) rendered in the footer alongside the dedicated Confirm/Cancel buttons — e.g. a "Reload Table" button with a Custom onClick that dispatches a refresh event, or an "Email Us Instead" button that navigates to a `mailto:` link.
 
 ***
 

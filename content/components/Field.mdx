@@ -127,6 +127,19 @@ This component is available as a `field` block in the [Page Builder](/docs/PageB
 }
 ```
 
+`validator` also accepts a plain string in CMS content — a JS expression that
+evaluates to a function, since a live function can't survive the CMS's JSON
+serialization. It's reconstructed client-side via `new Function()`, so it
+must not close over any outer variable:
+
+```json
+{
+  "type": "field",
+  "label": "Email",
+  "validator": "(value) => value.includes('@') || 'Must be a valid email'"
+}
+```
+
 # Props
 
 | Prop | Type | Description |

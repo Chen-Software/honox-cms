@@ -111,6 +111,18 @@ This component is available as a `textarea` block in the [Page Builder](/docs/Pa
 }
 ```
 
+Like Field, `validator` also accepts a plain string in CMS content — a JS
+expression evaluating to a function, reconstructed client-side via
+`new Function()` (it can't close over any outer variable):
+
+```json
+{
+  "type": "textarea",
+  "label": "Bio",
+  "validator": "(value) => value.length <= 280 || 'Keep it under 280 characters'"
+}
+```
+
 # Props
 
 | Prop | Type | Description |

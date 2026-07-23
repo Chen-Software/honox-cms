@@ -70,7 +70,7 @@ export default function MyPage() {
 
 ## CMS Page Builder
 
-This component is available as a `dialog` block in the [Page Builder](/docs/PageBuilder) (`content/pages/*.json`). `trigger` is a nested block list (the CMS always submits an array):
+This component is available as a `dialog` block in the [Page Builder](/docs/PageBuilder) (`content/pages/*.json`). `trigger` is a nested block list (the CMS always submits an array), and so is `footer` — a row of blocks (typically Buttons) rendered alongside the dedicated Confirm/Cancel shortcuts, for actions that don't fit `confirmText`/`cancelText` (e.g. a "Refresh" button dispatching a custom event):
 
 ```json
 {
@@ -79,7 +79,8 @@ This component is available as a `dialog` block in the [Page Builder](/docs/Page
   "description": "Are you sure you want to continue?",
   "confirmText": "Confirm",
   "cancelText": "Cancel",
-  "trigger": [{ "type": "button", "text": "Open Dialog" }]
+  "trigger": [{ "type": "button", "text": "Open Dialog" }],
+  "footer": [{ "type": "button", "variant": "outline", "text": "Refresh" }]
 }
 ```
 
@@ -94,7 +95,7 @@ This component is available as a `dialog` block in the [Page Builder](/docs/Page
 | `title` | \`string \ | JSX.Element\` | The dialog title. |
 | `description` | \`string \ | JSX.Element\` | The dialog description. |
 | `body` | \`string \ | JSX.Element\` | The main body content. |
-| `footer` | \`string \ | JSX.Element\` | Custom footer content. |
+| `footer` | \`string \ | JSX.Element\` | Custom footer content. In CMS content this field is a block list, rendered as a fragment. |
 
 | `cancel` | `JSX.Element` | Element rendered as a close (cancel) trigger. |
 | `confirm` | `JSX.Element` | Element rendered as an action trigger. |

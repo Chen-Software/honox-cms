@@ -72,6 +72,13 @@ Locale-agnostic **language homepages** live at the bare locale segment (`/fr`, `
 
 Supported locales are declared once, in `ALL_LOCALES` / `TRANSLATED_LOCALES` (`app/lib/i18n.ts`) — this list must stay in sync with `public/admin/config.yml`'s `i18n.locales` and the mirrored `app/routes/<locale>/` route directories.
 
+#### Two ways to localize a route, and why both exist
+
+- **Directory-per-locale re-export** (`/`, `/blog`, `/blog/:slug`, `/docs`, `/docs/:doc`, …): a real static directory per locale (`app/routes/blog/zh/index.tsx`) containing a one-line `export { default } from "../index"`. This only works because the locale segment is a **literal, static** path component — required here specifically because a *dynamic* `blog/[lang]/index.tsx` would match the exact same shape (`/blog/:something`) as the already-existing `blog/[slug].tsx` (an individual post), and Hono's router does not prefer the static-looking route over the dynamic one just because it "looks" more specific — the two would genuinely collide. `blog/[slug].tsx` works around this collision with an explicit `isLocale(slug)` guard that calls `next()` to defer to the locale-specific file when the "slug" param is actually a locale code.
+- **Dynamic `[lang]` segment** (`/blog/:lang/by-tag/:tag`, `/blog/:lang/by-author/:author`, `/api/posts/:lang/search.json`): a single file (`app/routes/blog/[lang]/by-tag/[tag].tsx`) handling every locale, because nothing else registers a route at that specific, one-level-deeper path shape — so there's no ambiguity to guard against. This needs its own `ssgParams` (not a re-export of the base route's), since the base route's `ssgParams` only enumerates `{tag}`/`{author}`, and SSG needs the full `{lang, tag}` cross product to pre-render every combination; the actual per-request handler is still reused directly (`createRoute`'s `createHandlers` returns a typed tuple, so `[, handler] = require("../../by-tag/[tag]")` pulls it out without duplicating any logic).
+
+Picking the wrong one for a new route either silently fails to build (missing `lang` in ssgParams → that locale's static page never gets generated) or silently shadows an existing route (a dynamic segment colliding with a static one at the same depth) — when adding a new locale-scoped route, check whether anything else already claims that exact path shape before choosing.
+
 ***
 
 ## Component Architecture
@@ -134,9 +141,11 @@ The repository uses a three-tier hydration classification model, configured via 
 
 ### i18n and Adding a New Translation Locale
 
-Sveltia CMS is configured for internationalization (i18n) under `public/admin/config.yml` supporting locales `en`, `zh`, `es`, `pt`, `fr`, and `de`, with English (`en`) as the default. It uses the `multiple_folders` structure with `omit_default_locale_from_file_path: true`, keeping default locale files in original root paths and placing translations under locale subfolders (for docs/components/pages) or using `.<locale>` suffixes (for configs and posts).
+Sveltia CMS is configured for internationalization (i18n) under `public/admin/config.yml` supporting locales `en`, `zh`, `es`, `pt`, `fr`, and `de`, with English (`en`) as the default. It uses the `multiple_folders` structure with `omit_default_locale_from_file_path: true`, keeping default locale files in original root paths and placing translations under locale subfolders — `content/<collection>/<locale>/<slug>.<ext>` — for every collection: docs, components, pages, **and posts**. (Configs is the one exception, since it's a singleton file rather than a folder collection: translations there use a `content/configs.<locale>.json` suffix instead.)
 
-`pages` (`content/pages/*.json`) follows the same subfolder convention as docs/components — `content/pages/<locale>/<slug>.json` — loaded by `app/lib/pages.ts`'s `loadPage(slug, locale)`, which falls back to the default-locale file when a translation doesn't exist. This backs both `/pages/<locale>/<slug>` and the locale-aware homepage (`app/routes/index.tsx` loading `content/pages/<locale>/index.json`).
+`pages` (`content/pages/*.json`) follows this same subfolder convention — `content/pages/<locale>/<slug>.json` — loaded by `app/lib/pages.ts`'s `loadPage(slug, locale)`, which falls back to the default-locale file when a translation doesn't exist. This backs both `/pages/<locale>/<slug>` and the locale-aware homepage (`app/routes/index.tsx` loading `content/pages/<locale>/index.json`). The homepage's header (brand lockup, nav links, header actions) is itself CMS page-builder content — `headerBrand`/`headerNav`/`headerActions` arrays on that same JSON file, rendered through `<PageRenderer>` inside a hardcoded `<header>` shell — and `content/pages/blog.json` carries the identical three fields for `/blog`'s header.
+
+`posts` (`content/posts/*.md`) follows the identical convention — `content/posts/<locale>/<slug>.md` — via `app/lib/posts.ts`'s `parsePostPath`/`resolvePostPath`, with the same default-locale fallback. Each locale gets its own search index at `/api/posts/:lang/search.json` (`app/routes/api/posts/[lang]/search.json.ts`); a locale whose `content/configs.<locale>.json` sets `blog.excludeUntranslatedFromSearch: true` drops any post lacking a real translation from *that locale's search results only* (the post still appears, English-titled, in the ordinary blog listing/tag/author pages — this only trims mixed-language search noise once a locale's translation coverage is actually complete).
 
 To add a new translation locale to the repository, follow this step-by-step workflow:
 
@@ -144,8 +153,10 @@ To add a new translation locale to the repository, follow this step-by-step work
 2. **Translation Keys:** Create a matching config file under `content/configs.<locale>.json` with the localized translation keys.
 3. **Language Switcher Registration:** Register the locale code and its human-readable name in `ALL_LOCALES` and `LOCALE_NAMES` inside `app/components/language-switcher.tsx`.
 4. **Docs Loader Array:** Add the locale code to the `LOCALES` array inside `app/lib/docs.ts`.
-5. **Route Re-export:** Re-export the standard routes by creating a directory `app/routes/<locale>/` matching the root route files structure.
-6. **Translations:** Provide translations for the markdown/MDX docs, component references, and page layouts under `content/docs/<locale>/*.md`, `content/components/<locale>/*.mdx`, and `content/pages/<locale>/*.json` respectively — only for the specific docs/components/pages that actually need translating, since each loader falls back to the default-locale file otherwise.
+5. **Route Re-export:** Re-export the standard routes by creating a directory `app/routes/<locale>/` matching the root route files structure. This also covers `app/lib/posts.ts`'s `parsePostPath`, which validates the locale segment in a translated post's path against `TRANSLATED_LOCALES` (`app/lib/i18n.ts`) — a locale missing from that list is silently treated as a plain (non-locale) folder and its posts get skipped.
+6. **Translations:** Provide translations for the markdown/MDX docs, component references, page layouts, and blog posts under `content/docs/<locale>/*.md`, `content/components/<locale>/*.mdx`, `content/pages/<locale>/*.json`, and `content/posts/<locale>/*.md` respectively — only for the specific docs/components/pages/posts that actually need translating, since each loader falls back to the default-locale file otherwise.
+
+Note `by-tag`/`by-author`/search routes one level under `/blog/` use a different technique than step 5's directory-per-locale re-export — see "Locale Routing and Legacy Redirects" above for why.
 
 ***
 
