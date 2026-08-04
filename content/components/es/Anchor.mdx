@@ -57,19 +57,24 @@ import { Anchor } from "../components/ui";
 
 ## Constructor de Páginas CMS
 
-Este componente está disponible como un bloque `link` en el [Constructor de Páginas](/docs/PageBuilder) (`content/pages/*.json`):
+Este componente está disponible como un bloque `anchor` en el [Constructor de Páginas](/docs/PageBuilder) (`content/pages/*.json`):
 
 ```json
 {
-  "type": "link",
-  "text": "View Pricing",
+  "blockType": "anchor",
   "href": "/pricing",
   "variant": "underline",
-  "colorPalette": "blue"
+  "colorPalette": "blue",
+  "children": [
+    {
+      "blockType": "text",
+      "content": "View Pricing"
+    }
+  ]
 }
 ```
 
-`text` se convierte en los hijos del anchor; todos los demás campos se transmiten directamente a `Anchor`.
+`children` se convierten en los hijos del anchor; todos los demás campos se transmiten directamente a `Anchor`.
 
 # Propiedades
 

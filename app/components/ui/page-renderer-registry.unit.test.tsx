@@ -26,6 +26,10 @@ test("resolveType normalises kebab aliases to canonical camelCase keys", () => {
 	expect(resolveType("radio-card-group")).toBe("radioCardGroup");
 	expect(resolveType("radio-group")).toBe("radioGroup");
 	expect(resolveType("segment-group")).toBe("segmentGroup");
+	// `link` is a legacy alias for the canonical `anchor` block — old
+	// content (and tooling) may still emit it, but `anchor` is the name
+	// new content and the CMS config use.
+	expect(resolveType("link")).toBe("anchor");
 	// Already-canonical and unknown types pass through unchanged.
 	expect(resolveType("hoverCard")).toBe("hoverCard");
 	expect(resolveType("nope")).toBe("nope");
@@ -38,6 +42,7 @@ test("every alias target resolves to a registered renderer", () => {
 		"radio-card-group": "radioCardGroup",
 		"radio-group": "radioGroup",
 		"segment-group": "segmentGroup",
+		link: "anchor",
 	};
 	for (const target of Object.values(aliases)) {
 		expect(typeof registry[target]).toBe("function");

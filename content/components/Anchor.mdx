@@ -11,7 +11,7 @@ import { DemoPreview } from "../../app/components/demo-preview";
 
 The `Anchor` component is a styled hyperlink wrapper (`<a>`) used for smooth internal site routing and safe external web navigation. It automatically manages accessibility security standards (such as appending target safety tags for external links) and coordinates color pallets.
 
-This component is fully integrated as a `link` block inside the **Page Builder**, allowing content writers and CMS administrators to construct, arrange, and style text links, icon links, or call-to-actions directly.
+This component is fully integrated as an `anchor` block inside the **Page Builder**, allowing content writers and CMS administrators to construct, arrange, and style text links, icon links, or call-to-actions directly.
 
 ---
 
@@ -29,7 +29,7 @@ A standard textual hyperlink featuring the default underline indicator style. Id
 
 ```json
 {
-  "blockType": "link",
+  "blockType": "anchor",
   "href": "/docs",
   "variant": "underline",
   "colorPalette": "blue",
@@ -52,7 +52,7 @@ Renders a link with default text coloring and removes the standard underline sty
 
 ```json
 {
-  "blockType": "link",
+  "blockType": "anchor",
   "href": "/blog",
   "variant": "plain",
   "colorPalette": "slate",
@@ -77,7 +77,7 @@ Safely opens external websites in a new browser tab. The underlying engine autom
 
 ```json
 {
-  "blockType": "link",
+  "blockType": "anchor",
   "href": "https://github.com",
   "target": "_blank",
   "colorPalette": "purple",

@@ -138,7 +138,7 @@
           "gap": "6",
           "children": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -149,7 +149,7 @@
               "href": "/docs"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -161,7 +161,7 @@
               "href": "/support"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",

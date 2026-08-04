@@ -44,7 +44,7 @@ const ITEM_PLACEHOLDER = /^\{\{item\.(\w+)\}\}$/;
  * missing on this item (e.g. a project/assignee has no `colorPalette`) — is
  * dropped from the block entirely so the component's own default applies,
  * rather than passing an explicit `undefined`/empty value. Recurses into
- * `children` so a template can nest (e.g. a `link` wrapping a `badge`). */
+ * `children` so a template can nest (e.g. an `anchor` wrapping a `badge`). */
 function interpolateBlock(
 	block: ComponentBlock,
 	item: Record<string, unknown>,
@@ -80,7 +80,7 @@ function interpolateBlock(
  *
  * `each` is the generic repeater: given a named data source (or a literal
  * `items` array, for hand-authored CMS content), it renders one copy of
- * `template` — an ordinary block list, e.g. a `link` wrapping a `badge` —
+ * `template` — an ordinary block list, e.g. an `anchor` wrapping a `badge` —
  * per resolved item, with that item's fields filled into any
  * `"{{item.foo}}"` placeholder. It has no rendering opinion of its own (see
  * the trivial `each` renderer in page-registry.tsx); layout (e.g. a

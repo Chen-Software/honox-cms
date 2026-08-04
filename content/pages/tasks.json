@@ -2,7 +2,7 @@
   "title": "Tasks - Artefact",
   "headerBrand": [
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "href": "/",
       "variant": "plain",
       "style": "flex-shrink:0;text-decoration:none",
@@ -19,7 +19,7 @@
       "gap": "6",
       "children": [
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "href": "/projects",
           "variant": "plain",
           "children": [
@@ -27,7 +27,7 @@
           ]
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "href": "/tasks",
           "variant": "plain",
           "children": [
@@ -35,7 +35,7 @@
           ]
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "href": "/settings",
           "variant": "plain",
           "children": [
@@ -63,7 +63,7 @@
           "dataSource": "projects",
           "template": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "href": "{{item.href}}",
               "variant": "plain",
               "style": "text-decoration:none",
@@ -89,7 +89,7 @@
           "dataSource": "taskAssignees",
           "template": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "href": "{{item.href}}",
               "variant": "plain",
               "style": "text-decoration:none",
@@ -115,7 +115,7 @@
           "dataSource": "taskStatuses",
           "template": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "href": "{{item.href}}",
               "variant": "plain",
               "style": "text-decoration:none",
@@ -141,7 +141,7 @@
           "dataSource": "taskPriorities",
           "template": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "href": "{{item.href}}",
               "variant": "plain",
               "style": "text-decoration:none",

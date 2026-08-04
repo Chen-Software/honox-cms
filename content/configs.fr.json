@@ -112,7 +112,7 @@
           "style": "flex-shrink:0",
           "children": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -122,7 +122,7 @@
               "href": "/blog"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -132,7 +132,7 @@
               "href": "/docs"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -142,7 +142,7 @@
               "href": "/about"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -279,7 +279,7 @@
               ]
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "href": "https://github.com/Chen-Software/honox-cms",
               "target": "_blank",
               "aria-label": "View on GitHub",
@@ -303,7 +303,7 @@
   ],
   "headerItems": [
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "children": [
         {
           "blockType": "text",
@@ -313,7 +313,7 @@
       "href": "/blog"
     },
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "children": [
         {
           "blockType": "text",
@@ -323,7 +323,7 @@
       "href": "/docs"
     },
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "children": [
         {
           "blockType": "text",
@@ -333,7 +333,7 @@
       "href": "/about"
     },
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "children": [
         {
           "blockType": "text",
@@ -470,7 +470,7 @@
       ]
     },
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "href": "https://github.com/Chen-Software/honox-cms",
       "target": "_blank",
       "aria-label": "View on GitHub",

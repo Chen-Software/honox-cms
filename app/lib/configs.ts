@@ -151,7 +151,7 @@ export interface DocsConfig {
 	 * are hand-duplicated from `headerItems` rather than shared — a
 	 * deliberate choice (over threading `headerItems` into a placeholder
 	 * slot here) so this stays one plain, directly-editable content tree.
-	 * The nav cluster's `link` block with `href: "/admin"` is the one part
+	 * The nav cluster's `anchor` block with `href: "/admin"` is the one part
 	 * `app/routes/docs/[doc].tsx` patches at render time (see
 	 * `withDocEditLink` there) — swapped for an Edit deep-link on an
 	 * individual doc page. Its `variant`/`class` combine the plain anchor
@@ -174,7 +174,7 @@ export interface DocsConfig {
 	 * block list (Button/Badge/Link/Icon, no containers), rendered via
 	 * page-registry's `renderBlocks` so the CMS can offer richer items than
 	 * a plain link (e.g. a badge, an icon, or a button with a custom
-	 * onClick), not just {label, href}. Any `link` block's `href` is one
+	 * onClick), not just {label, href}. Any `anchor` block's `href` is one
 	 * canonical relative path shared across every locale file (i18n:
 	 * duplicate in config.yml) — renderBlocks must be called with
 	 * `{ locale }` as its second argument so page-registry's `anchor`

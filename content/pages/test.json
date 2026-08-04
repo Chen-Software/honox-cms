@@ -415,7 +415,7 @@
           "gap": "2",
           "children": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -425,7 +425,7 @@
               "href": "#"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -435,7 +435,7 @@
               "href": "#"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",

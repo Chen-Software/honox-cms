@@ -57,19 +57,24 @@ import { Anchor } from "../components/ui";
 
 ## CMS 页面构建器
 
-该组件在 [页面构建器](/docs/PageBuilder) (`content/pages/*.json`) 中作为 `link` 区块提供：
+该组件在 [页面构建器](/docs/PageBuilder) (`content/pages/*.json`) 中作为 `anchor` 区块提供：
 
 ```json
 {
-  "type": "link",
-  "text": "View Pricing",
+  "blockType": "anchor",
   "href": "/pricing",
   "variant": "underline",
-  "colorPalette": "blue"
+  "colorPalette": "blue",
+  "children": [
+    {
+      "blockType": "text",
+      "content": "View Pricing"
+    }
+  ]
 }
 ```
 
-`text` 会成为 anchor 的子内容；其余字段直接传递给 `Anchor`。
+`children` 会成为 anchor 的子内容；其余字段直接传递给 `Anchor`。
 
 # 属性
 

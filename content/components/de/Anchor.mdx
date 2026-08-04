@@ -57,19 +57,24 @@ import { Anchor } from "../components/ui";
 
 ## CMS-Seitenbauer
 
-Diese Komponente ist als `link`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
+Diese Komponente ist als `anchor`-Block im [Seitenbauer](/docs/PageBuilder) (`content/pages/*.json`) verfügbar:
 
 ```json
 {
-  "type": "link",
-  "text": "View Pricing",
+  "blockType": "anchor",
   "href": "/pricing",
   "variant": "underline",
-  "colorPalette": "blue"
+  "colorPalette": "blue",
+  "children": [
+    {
+      "blockType": "text",
+      "content": "View Pricing"
+    }
+  ]
 }
 ```
 
-`text` wird zu den Kindelementen des Ankers; jedes andere Feld wird direkt an `Anchor` durchgereicht.
+`children` werden zu den Kindelementen des Ankers; jedes andere Feld wird direkt an `Anchor` durchgereicht.
 
 # Eigenschaften
 

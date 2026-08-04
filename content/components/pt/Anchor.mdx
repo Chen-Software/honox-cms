@@ -11,7 +11,7 @@ import { DemoPreview } from "../../../app/components/demo-preview";
 
 O componente `Anchor` é um wrapper de hiperlink estilizado (`<a>`) usado para roteamento interno suave do site e navegação web externa segura. Ele gerencia automaticamente os padrões de segurança de acessibilidade (como anexar tags de segurança de destino para links externos) e coordena as paletas de cores.
 
-Este componente está totalmente integrado como um bloco `link` dentro do **Page Builder**, permitindo que redatores de conteúdo e administradores de CMS construam, organizem e estilizem links de texto, links de ícone ou chamadas à ação diretamente.
+Este componente está totalmente integrado como um bloco `anchor` dentro do **Page Builder**, permitindo que redatores de conteúdo e administradores de CMS construam, organizem e estilizem links de texto, links de ícone ou chamadas à ação diretamente.
 
 ---
 
@@ -29,7 +29,7 @@ Um hiperlink textual padrão com o estilo de indicador de sublinhado padrão. Id
 
 ```json
 {
-  "blockType": "link",
+  "blockType": "anchor",
   "href": "/docs",
   "variant": "underline",
   "colorPalette": "blue",
@@ -52,7 +52,7 @@ Renderiza um link com a cor de texto padrão e remove o estilo de sublinhado pad
 
 ```json
 {
-  "blockType": "link",
+  "blockType": "anchor",
   "href": "/blog",
   "variant": "plain",
   "colorPalette": "slate",
@@ -77,7 +77,7 @@ Abre sites externos com segurança em uma nova aba do navegador. O mecanismo sub
 
 ```json
 {
-  "blockType": "link",
+  "blockType": "anchor",
   "href": "https://github.com",
   "target": "_blank",
   "colorPalette": "purple",

@@ -40,19 +40,19 @@
               "style": "flex-wrap:wrap;justify-content:flex-end;min-width:0",
               "children": [
                 {
-                  "blockType": "link",
+                  "blockType": "anchor",
                   "href": "/de/blog",
                   "variant": "plain",
                   "children": [{ "blockType": "text", "content": "Blog" }]
                 },
                 {
-                  "blockType": "link",
+                  "blockType": "anchor",
                   "href": "/de/docs",
                   "variant": "plain",
                   "children": [{ "blockType": "text", "content": "Docs" }]
                 },
                 {
-                  "blockType": "link",
+                  "blockType": "anchor",
                   "href": "/de/about",
                   "variant": "plain",
                   "children": [{ "blockType": "text", "content": "Über" }]
@@ -73,7 +73,7 @@
                   ]
                 },
                 {
-                  "blockType": "link",
+                  "blockType": "anchor",
                   "href": "/admin",
                   "variant": "plain",
                   "class": "button button--variant_outline button--size_sm",
@@ -465,7 +465,7 @@
           "gap": "4",
           "children": [
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",
@@ -477,7 +477,7 @@
               "class": "button button--variant_solid button--size_lg"
             },
             {
-              "blockType": "link",
+              "blockType": "anchor",
               "children": [
                 {
                   "blockType": "text",

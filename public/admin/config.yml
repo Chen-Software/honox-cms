@@ -417,16 +417,16 @@ collections:
                                 options: [2xs, xs, sm, md, lg, xl]
                                 default: md
                               - { label: Accessible Label, name: ariaLabel, widget: string, required: false, hint: "Leave blank for a decorative icon" }
-                          - label: Link
-                            name: link
+                          - label: Anchor
+                            name: anchor
                             widget: object
-                            fields: &link_fields
+                            fields: &anchor_fields
                               - { label: Href, name: href, widget: string }
                               - label: Children
                                 name: children
                                 widget: list
                                 typeKey: blockType
-                                hint: "The link's content — usually a single Text block; add an Icon block instead (or alongside) for a brand-mark/icon link like GitHub."
+                                hint: "The anchor's content — usually a single Text block; add an Icon block instead (or alongside) for a brand-mark/icon link like GitHub."
                                 types:
                                   - label: Text
                                     name: text
@@ -1376,10 +1376,10 @@ collections:
                     name: displayValue
                     widget: object
                     fields: *displayValue_fields
-                  - label: Link
-                    name: link
+                  - label: Anchor
+                    name: anchor
                     widget: object
-                    fields: *link_fields
+                    fields: *anchor_fields
                   - label: Icon
                     name: icon
                     widget: object
@@ -2255,11 +2255,11 @@ singletons:
         widget: list
         required: false
         i18n: true
-        hint: "Items shown in the header nav on both the docs and blog sections — links, badges, icons, or buttons (plus a fixed, hand-authored Search box, appearance popover, and language dropdown not offered as addable types here). A Link's URL is one canonical relative path shared across every locale (translated at render time), not a separate value per locale."
+        hint: "Items shown in the header nav on both the docs and blog sections — links, badges, icons, or buttons (plus a fixed, hand-authored Search box, appearance popover, and language dropdown not offered as addable types here). An Anchor's URL is one canonical relative path shared across every locale (translated at render time), not a separate value per locale."
         typeKey: blockType
         types: &header_item_types
-          - label: Link
-            name: link
+          - label: Anchor
+            name: anchor
             widget: object
             fields:
               - { label: Href, name: href, widget: string, i18n: duplicate }
@@ -2268,7 +2268,7 @@ singletons:
                 widget: list
                 typeKey: blockType
                 i18n: true
-                hint: "The link's content — usually a single Text block; add an Icon block instead (or alongside) for a brand-mark/icon link like GitHub."
+                hint: "The anchor's content — usually a single Text block; add an Icon block instead (or alongside) for a brand-mark/icon link like GitHub."
                 types:
                   - label: Text
                     name: text

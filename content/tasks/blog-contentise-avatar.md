@@ -19,7 +19,7 @@ Part of `blog-page-contentisation` (the `/blog/[slug]` half). Migrate the `Avata
 The `avatar` block type **already exists** in the registry (`page-registry.tsx:1108`: `avatar: (b) => <Avatar {...propsOf(b)} />`). Template JSON:
 
 ```json
-{ "blockType": "link", "href": "/blog/by-author/{{post.author}}",
+{ "blockType": "anchor", "href": "/blog/by-author/{{post.author}}",
   "children": [ { "blockType": "avatar", "size": "md", "variant": "solid", "name": "{{post.author}}" } ] }
 ```
 

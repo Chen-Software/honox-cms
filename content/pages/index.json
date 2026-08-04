@@ -30,7 +30,7 @@
       "align": "center",
       "children": [
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "children": [
             {
               "blockType": "text",
@@ -41,7 +41,7 @@
           "variant": "plain"
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "children": [
             {
               "blockType": "text",
@@ -52,7 +52,7 @@
           "variant": "plain"
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "children": [
             {
               "blockType": "text",
@@ -63,7 +63,7 @@
           "variant": "plain"
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "children": [
             {
               "blockType": "text",

@@ -662,7 +662,7 @@
           ]
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "variant": "plain",
           "children": [
             {

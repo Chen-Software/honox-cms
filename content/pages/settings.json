@@ -2,7 +2,7 @@
   "title": "Settings - Artefact",
   "headerBrand": [
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "href": "/",
       "variant": "plain",
       "style": "flex-shrink:0;text-decoration:none",
@@ -19,7 +19,7 @@
       "gap": "6",
       "children": [
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "href": "/projects",
           "variant": "plain",
           "children": [
@@ -27,7 +27,7 @@
           ]
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "href": "/tasks",
           "variant": "plain",
           "children": [
@@ -35,7 +35,7 @@
           ]
         },
         {
-          "blockType": "link",
+          "blockType": "anchor",
           "href": "/settings",
           "variant": "plain",
           "children": [
@@ -54,7 +54,7 @@
       "style": "color:#71717a;margin-bottom:0.5rem"
     },
     {
-      "blockType": "link",
+      "blockType": "anchor",
       "href": "/admin/",
       "variant": "underline",
       "children": [

@@ -106,6 +106,10 @@ const TYPE_ALIASES: Record<string, string> = {
 	"grid-row": "grid",
 	"color-picker": "colorPicker",
 	menu: "dropdown",
+	// Legacy name for the `anchor` block — `anchor` is canonical and is what
+	// the CMS config emits now; this alias keeps pre-rename content (and any
+	// tooling still writing `blockType: "link"`) resolving to the same
+	// renderer.
 	link: "anchor",
 	tagsInput: "tagsField",
 };
@@ -442,7 +446,7 @@ const registry: Record<string, BlockRenderer> = {
 		// anchors never pass this, so they're unaffected.
 		//
 		// `toggleLocale` is the language-switcher case: instead of a fixed
-		// `href`, it names the locale this link should switch *to* — the
+		// `href`, it names the locale this anchor should switch *to* — the
 		// actual target is computed from the current request's path (also an
 		// extraProp, see `renderBlocks` call sites) so the switch preserves
 		// whatever page you're on, e.g. `/docs/foo` -> `/docs/de/foo`.
@@ -451,7 +455,7 @@ const registry: Record<string, BlockRenderer> = {
 		// blocks rendered via `renderChildren`, same convention as every other
 		// container block (Stack/Card/...): usually a single `text` leaf for a
 		// plain label, or an `icon` leaf (plus optional `text`) for a brand-mark
-		// link like GitHub.
+		// anchor like GitHub.
 		const { children } = b;
 		const { href, locale, currentPath, toggleLocale, ...rest } = propsOf(b);
 		let resolvedHref = href;
@@ -882,7 +886,7 @@ const registry: Record<string, BlockRenderer> = {
 		// (the language-switcher case) — resolved here, server-side, from the
 		// request's current path so the item's target survives into
 		// `DropdownItemItem.href` (see dropdown.tsx) exactly like a normal
-		// CMS-authored link. Same mechanism as `anchor`'s `toggleLocale`.
+		// CMS-authored anchor. Same mechanism as `anchor`'s `toggleLocale`.
 		const resolvedItems = (
 			items as (BlockProps & { toggleLocale?: string })[] | undefined
 		)?.map((item) =>
