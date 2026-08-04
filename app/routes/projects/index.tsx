@@ -250,9 +250,7 @@ export default createRoute(async (c) => {
 								id={`project-${project.slug}`}
 								data-project-slug={project.slug}
 								data-project-status={project.status}
-								data-project-status-hidden={
-									!isStatusMatch ? "true" : undefined
-								}
+								data-project-status-hidden={!isStatusMatch ? "true" : undefined}
 								hidden={isHidden}
 								href={`/projects/${project.slug}`}
 								variant="plain"
