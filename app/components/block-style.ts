@@ -17,7 +17,37 @@ import { css } from "design-system/css";
 // reaching the DOM, since (unlike the rest of the CMS schema) these values
 // are free-text and this is the only place they're checked.
 
+// Every `--cms-*` custom property this class reads must also be reset to
+// `initial` right here. Custom properties inherit through the DOM by
+// default, so without this reset, a nested block that also carries this
+// class (e.g. a `heading`/`text` inside a hero `stack` that sets
+// `--cms-bg-image`) silently inherits its *ancestor's* --cms-* values —
+// its own `var(--cms-x, initial)` fallback never kicks in because
+// `--cms-x` isn't actually unset, just inherited. Declaring `initial` here
+// makes it guaranteed-invalid on every element using this class, which
+// this same element's own inline `style` (higher specificity) still wins
+// over when it sets that var itself.
 const layoutStyleClass = css({
+	"--cms-margin": "initial",
+	"--cms-padding": "initial",
+	"--cms-max-width": "initial",
+	"--cms-border-radius": "initial",
+	"--cms-bg-color": "initial",
+	"--cms-bg-image": "initial",
+	"--cms-bg-image-light": "initial",
+	"--cms-bg-fit": "initial",
+	"--cms-text-align": "initial",
+	"--cms-opacity": "initial",
+	"--cms-box-shadow": "initial",
+	"--cms-border-width": "initial",
+	"--cms-border-style": "initial",
+	"--cms-border-color": "initial",
+	"--cms-margin-bottom": "initial",
+	"--cms-padding-bottom": "initial",
+	"--cms-min-width": "initial",
+	"--cms-row-gap": "initial",
+	"--cms-width": "initial",
+	"--cms-font-size": "initial",
 	margin: "var(--cms-margin, initial)",
 	padding: "var(--cms-padding, initial)",
 	maxWidth: "var(--cms-max-width, initial)",
